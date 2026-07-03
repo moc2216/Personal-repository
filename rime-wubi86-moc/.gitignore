@@ -1,0 +1,19 @@
+# 上游仓库 clone（build 时由脚本拉取，不入库；~1.5G）
+work/sources/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# 现代汉语常用词表（版权词表，不入库；从 https://github.com/Favsum/chinese-words 下载到 work/data/）
+work/data/xdhycyc.txt
+
+# 构建迭代备份（dist_v* / dist_old 由开发过程产生，不入库）
+dist_old/
+dist_v*/
+
+# 源码备份
+*.bak

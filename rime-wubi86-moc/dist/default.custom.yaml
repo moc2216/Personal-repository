@@ -1,0 +1,21 @@
+# moc 86 五笔方案注册 + 常用键位（分号选2 / 单引号选3 / 方括号翻页 / Shift 切中英 / Shift+Ctrl+0 方案切换）
+patch:
+  schema_list:
+    - schema: moc_wubi86_simp
+    - schema: moc_wubi86_simp_plus
+    - schema: moc_reverse       # 反查字典配套（visible:false，仅编译 prism 用）
+
+  switcher:
+    hotkeys:
+      - "Shift+Control+0"
+    abbreviate_options: true
+    caption: "【输入法设置】"
+    option_list_separator: "｜"
+
+  key_binder:
+    bindings:
+      - { when: has_menu, accept: semicolon, send: 2 }
+      - { when: has_menu, accept: apostrophe, send: 3 }
+      - { when: has_menu, accept: bracketleft, send: Page_Up }
+      - { when: has_menu, accept: bracketright, send: Page_Down }
+      - { accept: Shift_L, toggle: ascii_mode }
