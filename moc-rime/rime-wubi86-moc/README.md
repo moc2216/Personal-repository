@@ -4,9 +4,20 @@
 
 **版本：2026.10.06-clean，试用版。** 适用于已安装 Rime 且支持 librime-lua 的 macOS、Windows、Linux。使用数据包无需 Python、安装脚本或额外下载词库。
 
+## 特性
+
+- **简体日常字词**：以通用规范汉字表一级、二级字为范围，精确规避低需求单字、古旧词语及零散专名；保留常见词、成语和有实际用途的低频工程词。
+- **双模式**：纯净使用极点基础字词，全功能追加补充词组和英文；共用个人词库，在Rime方案菜单切换。
+- **五笔补全**：不必一次记住词组完整码。输入前缀可找候选，注释提示还缺哪些编码。
+- **拼音找字**：反引号引导拼音反查，候选显示五笔编码，适合遇到不会拆的字。
+- **中英混输**：全功能中直接输入英文拼写，提供英文候选；无候选时可提交原始字母。
+- **日常工具**：日期、时间、计算器、金额大写、农历转换和常用符号；保留原选词、翻页和中英切换习惯。
+- **个人词条可维护**：修改共用个人表后重新部署，也可配合 [五笔编码助手](https://github.com/moc2216/Personal-repository/tree/main/moc-rime/wubi-code-assistant) 计算、查重后添加。
+- **内容审核可追溯**：删除理由、来源内词频分位、原记录及前后候选对照在源码报告中；不把各来源原始数值直接混合。
+
 ## 下载和部署
 
-下载 Release 中的 `moc-wubi86-data-2026.10.06.zip`。仓库尚未发布 Release 时，可用 **Code → Download ZIP**，只取其中的 `moc-rime/rime-wubi86-moc/data/`。
+下载 [Release中的数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07/moc-wubi86-data-2026.10.06.zip)。也可用 **Code → Download ZIP**，只取其中的 `moc-rime/rime-wubi86-moc/data/`。
 
 1. 将 `data/` 里的 YAML 文件和 `lua/` 文件夹合并到自己的 Rime 用户资料夹。
 2. **已有 `moc_wubi86_user.dict.yaml` 时保留原文件，不用空模板覆盖。** 其他同名方案数据会更新，建议先备份；`lua/` 只合并本方案文件，保留其他 Lua。
@@ -58,7 +69,7 @@ patch:
 
 基础词库与扩展词库各保存一份；扩展词库合并补充词组与英文。两个小聚合字典分别组合对应词库，个人词表始终优先加载。纯净方案复用全功能方案的通用配置，仅改变身份和所加载的字典。本轮已按普通内地用户及本科工科场景清理1234条主记录（978条中文词组、35条单字编码记录、221条英文记录），同步21条反查；保留词的编码、权重、有效 stem 和记录顺序不变。冷门与否包含个人用途判断，不能承诺剩余词条都适合所有人。五份 Lua 按功能独立，避免覆盖使用者已有的 `rime.lua`。
 
-从此前单方案数据升级后，旧 `moc_wubi86_words.dict.yaml` 不再被本套方案引用；新数据包已移除该文件。
+旧 `moc_wubi86_words.dict.yaml` 不再被本套方案引用；本版分别保存基础和扩展数据，数据包已移除旧文件。
 
 macOS 鼠须管已隔离编译并对比7322组输入，完整编码保留候选顺序与一二级简码首选通过验证；宽前缀补全队列会随删词变化。Windows/Linux尚未前端实机验证。原有金额Lua在部分不完整输入时可能出现类型诊断；现存用户补丁也可能影响实际行为。
 
@@ -66,4 +77,35 @@ macOS 鼠须管已隔离编译并对比7322组输入，完整编码保留候选�
 
 词频审核采用各来源内部的相对排名，按相同词条集合和词长分组；缺失为未知，现有排序权重不充当真实词频。维护用删除明细、来源尺度说明和候选前后对照在源码仓库的 `reports/`，不进入部署包。
 
-来源与许可见 [NOTICE.md](NOTICE.md)。维护资料与工具仅在源码仓库提供，默认部署包不包含它们。
+## 数据与工具从哪里来
+
+本版的直接基线是 [原 moc 项目的已发布数据](https://github.com/moc2216/Personal-repository/tree/a21d6894e03ea01c5af04fbfa1248e552b9d8132/rime-wubi86-moc/dist)。下表说明其上游分工，以及后续审核使用的参考资料；固定核验版本和许可见 [NOTICE.md](NOTICE.md)。
+
+| 来源 | 在本项目中的作用 |
+| --- | --- |
+| [KyleBing/rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian) | 极点86基础单字与词组、五笔编码及常用简码基础 |
+| [gaboolic/rime-frost](https://github.com/gaboolic/rime-frost) | 补充五笔词组、英文词库、拼音反查单字来源；知乎与维基词频用于审核参考 |
+| [Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime) | 原 moc 生成脚本导入金额大写、农历Lua的上游；本版沿用该基线中的组件 |
+| 原 moc 项目自写组件 | 日期时间、计算器、无候选原文提交及五笔方案配置 |
+| [Unicode 16.0 Unihan](https://www.unicode.org/Public/16.0.0/ucd/Unihan.zip) 与 [general_standard_chinese](https://github.com/ben-hua/general_standard_chinese) | 规范字范围的正式字段核对与名单交叉核验 |
+| [first20hours/google-10000-english](https://github.com/first20hours/google-10000-english) | 英文词序排名参考；英文独立判断，不与中文频数合并 |
+
+金额Lua内部另保留98wubi-tables来源，农历Lua内部保留rime-fast-xhup来源。组件经过多个项目传承，这些署名继续保留。鼠须管原有玫枫亮／暗外观位于 `optional/macos/squirrel.custom.yaml`，默认数据包保持平台中立。
+
+## 发展过程
+
+1. **原 moc 上游生成版**：组合极点基础、白霜扩展与英文、拼音反查及oh-my-rime工具；提供两套方案，并尝试按编码内排名融合处理候选权重。历史 [README](https://github.com/moc2216/Personal-repository/blob/a21d6894e03ea01c5af04fbfa1248e552b9d8132/rime-wubi86-moc/README.md) 和 [生成脚本](https://github.com/moc2216/Personal-repository/blob/a21d6894e03ea01c5af04fbfa1248e552b9d8132/rime-wubi86-moc/work/build_moc_wubi86.py) 保留该阶段的方法。
+2. **简体日常审核**：核对一级、二级6500字范围，补充缺码和修正旧名单；对繁体、异体、古旧词及个人场景低需求字做精确处理。姓名、地名和工程词不能仅凭生僻或低频一概删除。
+3. **双模式共用数据**：基础独立保存，补充词组与英文合并成扩展；两个小入口组合相应词库，配置、反查和Lua共用。移除安装器和默认全局外观覆盖，改为已有Rime直接复制部署。
+4. **2026-10-06冷门清理**：删除1234条主记录及21条反查。知乎与维基各在相同词条交集、相同词长分组中取来源内分位；缺失保留为未知。用途判断与频率证据结合，低频工程词保留；删除清单可恢复本轮清理前记录。
+5. **2026-10-07同仓库整理**：与五笔编码助手合并为moc-rime，数据与助手独立下载。合并不改变14个部署文件；助手独立按固定单字表生成规则码，词库只参与查重。
+
+旧版的排序校准尝试和本次的冷门审核是两个阶段。**本次没有重新校准所有保留词的排序权重**，不能据此保证候选顺序等于个人真实使用频率。当前验证确认一二级简码首选、完整码保留候选的相对顺序和个人词优先；详细结果见 [清理报告](https://github.com/moc2216/Personal-repository/blob/main/moc-rime/rime-wubi86-moc/reports/cleanup.md)。
+
+## 维护、许可与致谢
+
+当前 `data/` 是定稿源数据；`tools/` 提供审核算法和打包，`tests/` 保存自动检查与实机记录，`reports/` 保存清理证据，详见源码中的 [维护说明](https://github.com/moc2216/Personal-repository/blob/main/moc-rime/rime-wubi86-moc/MAINTAIN.md)。这些维护材料不进入默认部署ZIP。
+
+原版从上游生成的流程在历史项目中保留；当前工具不会从原始上游语料完整重建所有精简结果。旧流程还依赖未随仓库提供的版权词表，其旧安装脚本会清空用户资料夹，不用于本版部署。
+
+感谢极点86、白霜、oh-my-rime及各项底层词表和Lua组件的作者与维护者。本项目组合分发按GPL-3.0提供，各组件保留自身的Apache-2.0、MIT及Unicode声明；来源与完整条款见 [NOTICE.md](NOTICE.md) 和随附许可。
