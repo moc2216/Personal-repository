@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-07",
+  "version": "1.2",
+  "build": 3,
+  "platform": "macOS Apple Silicon",
+  "universal_binary": [
+    "arm64",
+    "x86_64"
+  ],
+  "minimum_macos": "13.0",
+  "signature_valid": true,
+  "rules_and_decomposition_visible_in_real_app": true,
+  "confirmation_and_cancel_without_real_write": true,
+  "window_close_process_termination": true,
+  "isolated_deployed_schema_checks": [
+    "moc_wubi86_simp",
+    "moc_wubi86_simp_plus"
+  ],
+  "unit_checks": 34,
+  "optional_isolated_test_skipped_in_default_run": 1,
+  "limitations": [
+    "Intel只编译与签名核验，未实机运行",
+    "当前方案识别基于最近选择记录，不是每个应用的实时会话",
+    "App使用本机签名，未Apple公证",
+    "固定单字表范围为6500个规范字"
+  ],
+  "download_zip_checksum_passed": true,
+  "extracted_app_signature_valid": true,
+  "extracted_app_matches_built_bytes": true,
+  "standalone_character_bundle_in_download": true,
+  "gif_resources_unchanged": true,
+  "original_projects_unchanged": true,
+  "archive_bytes": 9657773,
+  "zip_file_count": 3513,
+  "existing_live_reference_sources_unchanged": true,
+  "real_user_dictionary_write_tests": false,
+  "download_app_startup_and_rules_verified": true,
+  "personal_dictionary_missing_blocks_add_button": true,
+  "download_app_missing_personal_disables_add_verified": true,
+  "download_app_window_close_terminates": true
+}

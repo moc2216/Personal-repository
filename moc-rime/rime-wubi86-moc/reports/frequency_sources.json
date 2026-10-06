@@ -1,0 +1,43 @@
+{
+  "sources": {
+    "zhihu": {
+      "rows": 2128233,
+      "sum_of_listed_counts": 258166355,
+      "max": 15370318,
+      "duplicates": 0,
+      "invalid": 0,
+      "matched_current_texts": 120777,
+      "sha256": "f26460863d89cce5bc079b1b7a6bfb08ec24052178172e6a7b2b7fd83c06aec8",
+      "url": "https://github.com/gaboolic/rime-frost/blob/4a5457badafbdc733b09a350aeb3e8b076f025d8/others/知频.txt",
+      "unit": "上游分词统计值，未当作跨来源统一次数"
+    },
+    "wiki": {
+      "rows": 2920638,
+      "sum_of_listed_counts": 746842193,
+      "max": 32063321,
+      "duplicates": 0,
+      "invalid": 0,
+      "matched_current_texts": 117031,
+      "sha256": "b4072d54058ec87adb2c62658174a7b4328b2a06590e3a141e7459724120e25f",
+      "url": "https://github.com/gaboolic/rime-frost/blob/4a5457badafbdc733b09a350aeb3e8b076f025d8/others/维基频.txt",
+      "unit": "上游分词统计值，未当作跨来源统一次数"
+    }
+  },
+  "normalization": "每来源独立稀有分位；同一交集词条集，按1/2/3/4及以上词长分组，并列取中点；缺失unknown，禁止原始数值相加、取max或共用次数阈值",
+  "reference_band_sizes": {
+    "1": 6337,
+    "2": 57526,
+    "3": 6916,
+    "4": 45440
+  },
+  "source_sums_are_not_verified_corpus_sizes": true,
+  "english": "既有Google20k通用词排名独立保护，不与中文数值合并",
+  "dictionary_weight": "Rime排序权重不作词频；本轮保留词权重和顺序未变",
+  "selection": "相对频率只是待审证据，删除需要明确用途理由；单个来源偏高、偏低或缺失均不直接决定删除",
+  "english_source": {
+    "url": "https://github.com/first20hours/google-10000-english/blob/cb727a8ef0932d7d9519e8fe3973ad0a9600170d/20k.txt",
+    "sha256": "4ed6e5336d7760d281f7e72df31827da880c861363e820d8c65666b0f10d9ac0",
+    "unit": "词序排名，越小越靠前；英文单独判断",
+    "matched_upstream_bytes": true
+  }
+}

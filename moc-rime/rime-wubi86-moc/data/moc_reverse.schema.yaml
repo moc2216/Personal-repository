@@ -1,0 +1,12 @@
+# 主方案声明的拼音反查编译依赖，无需加入方案菜单。
+schema:
+  schema_id: moc_reverse
+  name: moc 拼音反查
+  version: "2026.10.06-clean"
+engine:
+  translators: [table_translator]
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " '"
+translator:
+  dictionary: moc_reverse

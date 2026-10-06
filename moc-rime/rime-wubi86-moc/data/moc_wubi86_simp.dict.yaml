@@ -1,0 +1,9 @@
+# 个人词表优先；纯净模式只加载基础字词。
+---
+name: moc_wubi86_simp
+version: "2026.10.06-clean"
+sort: by_weight
+import_tables:
+  - moc_wubi86_user
+  - moc_wubi86_core
+...

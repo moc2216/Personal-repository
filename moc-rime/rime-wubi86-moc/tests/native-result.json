@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-06",
+  "version": "2026.10.06-clean",
+  "platform": "macOS",
+  "frontend": "Squirrel 1.16.0",
+  "status": "passed",
+  "results_by_mode": {
+    "moc_wubi86_simp": {
+      "inputs": 3500,
+      "short_codes": 637,
+      "affected_codes": 904,
+      "changed_candidate_lists": 2195,
+      "changed_first_candidates": 1075,
+      "completion_tail_refills": 420,
+      "exact_match_order_mismatches": 0,
+      "prefix_completion_order_changes": 420
+    },
+    "moc_wubi86_simp_plus": {
+      "inputs": 3822,
+      "short_codes": 638,
+      "affected_codes": 1222,
+      "changed_candidate_lists": 2657,
+      "changed_first_candidates": 1190,
+      "completion_tail_refills": 690,
+      "exact_match_order_mismatches": 0,
+      "prefix_completion_order_changes": 690
+    }
+  },
+  "synthetic_personal_dictionary_checks_per_mode": 4,
+  "completion_and_auxiliary_functions_passed_both_modes": true,
+  "removed_terms_absent_from_real_candidates": true,
+  "limitations": [
+    "Windows/Linux尚未实机验证",
+    "现有金额Lua部分不完整输入诊断尚未修复",
+    "保留词权重未重新校准，本轮统一词频只用于内容审核"
+  ],
+  "shipped_zip_files": 20,
+  "shipped_zip_registered_from_readme_and_compiled": true,
+  "shipped_zip_native_checks_by_mode": {
+    "moc_wubi86_simp": 17,
+    "moc_wubi86_simp_plus": 17
+  },
+  "shipped_zip_cleanup_cases_per_mode": 8,
+  "shipped_zip_matches_source_bytes": true,
+  "short_code_first_candidates_unchanged": true,
+  "synthetic_personal_priority_passed_both_modes": true,
+  "zip_checksum_verified": true,
+  "live_source_hashes_unchanged": true,
+  "original_baseline_hashes_unchanged": true,
+  "new_deploy_data_bytes": 2842104,
+  "archive_bytes": 1119201,
+  "repack_date": "2026-10-07"
+}

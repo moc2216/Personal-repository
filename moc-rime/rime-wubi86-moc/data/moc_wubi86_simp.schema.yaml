@@ -1,0 +1,11 @@
+# 复用通用功能，只切换词库范围；来源见 NOTICE.md。
+__include: moc_wubi86_simp_plus.schema:/
+
+schema:
+  schema_id: moc_wubi86_simp
+  name: "moc 极点86五笔-纯净"
+  description: |
+    简体基础五笔字词与个人词表；保留补全、拼音反查和辅助功能，不加载扩展词组与英文词库。
+
+translator:
+  dictionary: moc_wubi86_simp

@@ -1,0 +1,111 @@
+# Rime schema
+# encoding: utf-8
+# moc 86 五笔个性化数据；来源见 NOTICE.md。
+
+schema:
+  schema_id: moc_wubi86_simp_plus
+  name: "moc 极点86五笔-全功能"
+  version: "2026.10.06-clean"
+  dependencies:
+    - moc_reverse
+  author:
+    - "moc local package, from pinned upstream sources"
+  description: |
+    简体基础五笔字词、扩展词组与英文混输；保留补全、拼音反查和辅助功能，不自动学习。
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中, En ]
+  - name: full_shape
+    reset: 0
+    states: [ 半角, 全角 ]
+  - name: ascii_punct
+    reset: 0
+    states: [ 。，, ．， ]
+
+ascii_composer:
+  good_old_caps_lock: true
+  switch_key:
+    Caps_Lock: clear
+    Shift_L: commit_text
+    Shift_R: commit_text
+    Control_L: noop
+    Control_R: noop
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - lua_processor@*moc_clear_empty
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator
+    - reverse_lookup_translator
+    - lua_translator@*moc_date_time
+    - lua_translator@*moc_calculator
+    - lua_translator@*moc_number_translator
+    - lua_translator@*moc_chineseLunarCalendar_translator
+  filters:
+    - uniquifier
+
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcbaABCDEFGHIJKLMNOPQRSTUVWXYZ/;.
+  initials: zyxwvutsrqponmlkjihgfedcbaABCDEFGHIJKLMNOPQRSTUVWXYZ/
+  delimiter: " '"
+  max_code_length: 32
+  auto_clear: max_length
+
+translator:
+  dictionary: moc_wubi86_simp_plus
+  initial_quality: 1.2
+  enable_charset_filter: false
+  enable_completion: true
+  enable_sentence: false
+  enable_user_dict: false
+  enable_encoder: false
+  encode_commit_history: false
+
+reverse_lookup:
+  dictionary: moc_reverse
+  prefix: "`"
+  tips: "〔拼音反查〕"
+  enable_completion: true
+
+punctuator:
+  import_preset: default
+  symbols:
+    "/fh": [ "，", "。", "、", "；", "：", "？", "！", "《》", "（）", "【】" ]
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "^`[a-z]*'?$"
+    date: "^/(rq|sj)$"
+    calculator: "^/calc[-+*/().0-9]+$"
+    rmb: "^R[0-9]+[.]?[0-9]*$"
+    gregorian_to_lunar: "^N[0-9]{1,8}$"
+    punct: "^/fh$"
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { when: has_menu, accept: semicolon, send: 2 }
+    - { when: has_menu, accept: apostrophe, send: 3 }
+    - { when: has_menu, accept: bracketleft, send: Page_Up }
+    - { when: has_menu, accept: bracketright, send: Page_Down }
+
+menu:
+  page_size: 6

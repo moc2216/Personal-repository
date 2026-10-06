@@ -1,0 +1,60 @@
+{
+  "status": "applied",
+  "date": "2026-10-06",
+  "before_records": {
+    "core": 73145,
+    "extra": 63584,
+    "reverse": 6838
+  },
+  "before_sha256": {
+    "core": "172c4b23b457c9801ac400c95dd8bc69c682c36865fd176395a6a3f2fb461a02",
+    "extra": "ee0548a30a9e0089aba33ffc53655ac6d1682901d8386bf5499460b078f67778",
+    "reverse": "b071d79a3b49917dc8eff5c407987b99df1cde791b97dd4e8f176100eb3dc4b6"
+  },
+  "before_main_sha256": "b8aba0a280f093230cde1c1015ab79d6a2c4fc33b8fcbaf3c40fbd51c91299db",
+  "selected_texts": 1208,
+  "retained_engineering_aliases": [
+    "CodeBox",
+    "CodeKit",
+    "EduTools",
+    "FeHelper",
+    "Fyne",
+    "Grand Central Dispatch",
+    "IEPL",
+    "IPLC",
+    "IPN",
+    "International Ethernet Private Line",
+    "International Private Leased Circuit",
+    "g11n",
+    "m17n",
+    "multilingualization",
+    "p13n",
+    "t9n"
+  ],
+  "after_records": {
+    "core": 72241,
+    "extra": 63254,
+    "reverse": 6817
+  },
+  "removed_rows_by_table": {
+    "moc_wubi86_core": 904,
+    "moc_wubi86_extra": 330,
+    "moc_reverse": 21
+  },
+  "removed_rows_by_reason": {
+    "古旧书面表达，按现代日常及工科用途审核": 545,
+    "古旧称谓、文言短词或低需求历史用语": 334,
+    "零散地方设施、品牌或人名，非通用词汇": 27,
+    "低需求冷僻单字；含字词组保留": 35,
+    "不完整片段、明显错误或过度零散的口语拼接": 46,
+    "零散体育人物专名或圈内用语": 2,
+    "低需求游戏、影视专名及圈内用语": 24,
+    "低需求英文专名、来源昵称或拼写问题，英文常用词独立保护": 179,
+    "细分旧设备及系统版本名称，保留通用产品名称": 42
+  },
+  "removed_single_chars": "兕卣埴埸墀庑笾簋耜虿觚觯赍辂闼阃阆阊阍黻黼",
+  "removed_main_records": 1234,
+  "removed_reverse_records": 21,
+  "semantic_review": "Agent按普通内地用户及本科工科场景作出的用途判断；不是官方词语分类，未知不视为零",
+  "retained_weights_and_order_unchanged": true
+}

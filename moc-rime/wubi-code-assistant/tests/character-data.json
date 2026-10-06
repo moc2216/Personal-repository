@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-07",
+  "characters": 6500,
+  "sha256": "6b251753f19b192269904c7d723f429dda1db09d175666f80cfff9f6e74e6c15",
+  "upstream_sha256": "89df3685e4a0c3d319a1c56a3a64e3df4ee3bfa3ba3892a6dadc77b21c989c5b",
+  "source": "https://github.com/KyleBing/rime-wubi86-jidian/blob/513954b197907cb6c5892e6ca2c548c164f8caac/wubi86_jidian.dict.yaml",
+  "selection": "6500个一二级规范字。每字选最长字母码；等长时采用上游较优排序项，再按编码字序确定。不使用运行中的词库或跨来源频数。",
+  "supplement_chars": "㤘㧐㧟㸆䁖䏝䥽䦃𠳐𥻗𬉼",
+  "supplement_source": "沿用已核对的单字补充：前8字白霜固定提交，后三字原交叉核验。",
+  "frost_source": "https://github.com/gaboolic/rime-frost/tree/4a5457badafbdc733b09a350aeb3e8b076f025d8",
+  "manual_sources": [
+    "https://zidian.kxue.com/zi/bang60.html",
+    "https://zidian.kxue.com/zi/cha118.html",
+    "https://www.pc0359.cn/downinfo/140830.html"
+  ],
+  "limit": "只覆盖规范字一级二级6500字，不支持范围之外的自动码；可手动填写。固定完整码由上游固定选择，可能存在合法编码变体。"
+}
