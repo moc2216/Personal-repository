@@ -79,14 +79,14 @@ macOS 鼠须管已隔离编译并对比7322组输入，完整编码保留候选�
 
 ## 数据与工具从哪里来
 
-本版的直接基线是 [原 moc 项目的已发布数据](https://github.com/moc2216/Personal-repository/tree/a21d6894e03ea01c5af04fbfa1248e552b9d8132/rime-wubi86-moc/dist)。下表说明其上游分工，以及后续审核使用的参考资料；固定核验版本和许可见 [NOTICE.md](NOTICE.md)。
+本方案整合极点86、白霜和oh-my-rime的相关数据与组件，并按简体日常场景审核。定稿数据完整保存在本模块的 `data/`，下表说明上游分工和审核参考；固定核验版本和许可见 [NOTICE.md](NOTICE.md)。
 
 | 来源 | 在本项目中的作用 |
 | --- | --- |
 | [KyleBing/rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian) | 极点86基础单字与词组、五笔编码及常用简码基础 |
 | [gaboolic/rime-frost](https://github.com/gaboolic/rime-frost) | 补充五笔词组、英文词库、拼音反查单字来源；知乎与维基词频用于审核参考 |
-| [Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime) | 原 moc 生成脚本导入金额大写、农历Lua的上游；本版沿用该基线中的组件 |
-| 原 moc 项目自写组件 | 日期时间、计算器、无候选原文提交及五笔方案配置 |
+| [Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime) | 金额大写、农历Lua的上游；保留组件内的进一步来源署名 |
+| 本项目自写组件 | 日期时间、计算器、无候选原文提交及五笔方案配置 |
 | [Unicode 16.0 Unihan](https://www.unicode.org/Public/16.0.0/ucd/Unihan.zip) 与 [general_standard_chinese](https://github.com/ben-hua/general_standard_chinese) | 规范字范围的正式字段核对与名单交叉核验 |
 | [first20hours/google-10000-english](https://github.com/first20hours/google-10000-english) | 英文词序排名参考；英文独立判断，不与中文频数合并 |
 
@@ -94,7 +94,7 @@ macOS 鼠须管已隔离编译并对比7322组输入，完整编码保留候选�
 
 ## 发展过程
 
-1. **原 moc 上游生成版**：组合极点基础、白霜扩展与英文、拼音反查及oh-my-rime工具；提供两套方案，并尝试按编码内排名融合处理候选权重。历史 [README](https://github.com/moc2216/Personal-repository/blob/a21d6894e03ea01c5af04fbfa1248e552b9d8132/rime-wubi86-moc/README.md) 和 [生成脚本](https://github.com/moc2216/Personal-repository/blob/a21d6894e03ea01c5af04fbfa1248e552b9d8132/rime-wubi86-moc/work/build_moc_wubi86.py) 保留该阶段的方法。
+1. **上游数据整合**：组合极点基础、白霜扩展与英文、拼音反查及oh-my-rime工具；提供两套方案，并尝试按编码内排名融合处理候选权重。
 2. **简体日常审核**：核对一级、二级6500字范围，补充缺码和修正旧名单；对繁体、异体、古旧词及个人场景低需求字做精确处理。姓名、地名和工程词不能仅凭生僻或低频一概删除。
 3. **双模式共用数据**：基础独立保存，补充词组与英文合并成扩展；两个小入口组合相应词库，配置、反查和Lua共用。移除安装器和默认全局外观覆盖，改为已有Rime直接复制部署。
 4. **2026-10-06冷门清理**：删除1234条主记录及21条反查。知乎与维基各在相同词条交集、相同词长分组中取来源内分位；缺失保留为未知。用途判断与频率证据结合，低频工程词保留；删除清单可恢复本轮清理前记录。
@@ -106,6 +106,6 @@ macOS 鼠须管已隔离编译并对比7322组输入，完整编码保留候选�
 
 当前 `data/` 是定稿源数据；`tools/` 提供审核算法和打包，`tests/` 保存自动检查与实机记录，`reports/` 保存清理证据，详见源码中的 [维护说明](https://github.com/moc2216/Personal-repository/blob/main/moc-rime/rime-wubi86-moc/MAINTAIN.md)。这些维护材料不进入默认部署ZIP。
 
-原版从上游生成的流程在历史项目中保留；当前工具不会从原始上游语料完整重建所有精简结果。旧流程还依赖未随仓库提供的版权词表，其旧安装脚本会清空用户资料夹，不用于本版部署。
+定稿数据、维护工具、验证记录和来源说明均在本项目内，维护以这里的 `data/` 为准。当前工具不会从原始上游语料完整重建所有精简结果，普通部署及当前维护流程不需要另行取得版权词表。
 
 感谢极点86、白霜、oh-my-rime及各项底层词表和Lua组件的作者与维护者。本项目组合分发按GPL-3.0提供，各组件保留自身的Apache-2.0、MIT及Unicode声明；来源与完整条款见 [NOTICE.md](NOTICE.md) 和随附许可。
