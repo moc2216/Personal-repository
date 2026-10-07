@@ -4,17 +4,17 @@
 
 **数据包：2026.10.07，试用版。** 适用于支持 librime-lua 的 macOS、Windows、Linux Rime 输入法。词库版本为2026.10.06-clean。
 
-[下载最新数据包](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-ready/moc-wubi86-data-2026.10.07.zip)
+[macOS 鼠须管数据包（含两套外观）](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/moc-wubi86-macos-2026.10.07.zip) · [Windows／Linux 通用数据包](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/moc-wubi86-data-2026.10.07.zip)
 
 ## 第一次使用：复制后部署
 
-开始前看一眼你的 Rime 用户资料夹：**如果里面已经有 `default.custom.yaml` 或 `moc_wubi86_user.dict.yaml`，保留原文件，先看下方“已有配置或个人词库”说明。** 这两个文件分别保存你的设置和个人词条。
+开始前看一眼你的 Rime 用户资料夹：**如果里面已经有 `default.custom.yaml`、`squirrel.custom.yaml` 或 `moc_wubi86_user.dict.yaml`，保留原文件，先看下方“已有配置或个人词库”说明。** 这些文件保存你的设置、外观和个人词条。
 
-1. **下载并解压。** 打开解压后的 `data` 文件夹，它已经包含方案注册文件，不需要自己新建或编写配置。
+1. **下载并解压。** macOS 选择鼠须管数据包，Windows／Linux 选择通用数据包。打开解压后的 `data` 文件夹；方案注册文件已经备好，macOS 包还自带玫枫外观，不需要自己新建配置。
 2. **复制数据。** 打开输入法菜单中的“用户资料夹”，将 `data` **里面的全部文件及 `lua` 文件夹**复制进去。复制后，用户资料夹里应直接看到 `default.custom.yaml` 和各个字典文件。`lua` 文件夹与已有文件夹合并，保留其他方案的 Lua。
 3. **重新部署并开始输入。** 在输入法菜单选择“重新部署（Deploy）”，等部署结束。打开一个可输入文字的窗口，切换到 Rime；打开方案菜单，选择“moc 极点86五笔-纯净”。输入 `trw` 应能找到“我们”。需要补充词组和英文时，切换到“moc 极点86五笔-全功能”。
 
-方案菜单的默认快捷键是 **Control＋反引号键**（通常在数字1的左边），也可尝试 **Control＋Shift＋反引号键** 或 **F4**。如果以前修改过快捷键，以自己的设置为准。纯净和全功能已一起注册，以后直接在方案菜单切换。
+本套方案菜单快捷键是 **Control＋Shift＋0**（主键盘数字0）。保留自己的注册配置时，以其中的快捷键为准。纯净和全功能已一起注册，以后直接在方案菜单切换。
 
 找不到“用户资料夹”入口时，可以按下面的位置打开。自定义目录和 Linux XDG 设置可能改变位置，以输入法实际使用的目录为准。
 
@@ -26,9 +26,27 @@
 | Linux Fcitx5-Rime | 文件管理器打开 `~/.local/share/fcitx5/rime` |
 | Linux Fcitx-Rime | 文件管理器打开 `~/.config/fcitx/rime` |
 
+## macOS 两套外观切换
+
+macOS 数据包同时保存两套外观，首次复制 `data` 后默认使用玫枫。保留解压后的下载包，以后可以反复切换。
+
+| 外观 | 下载包中的配置文件 |
+| --- | --- |
+| 玫枫，默认 | `data/squirrel.custom.yaml` |
+| 蓝色遐想，备用 | `optional/macos/blue-reverie/squirrel.custom.yaml` |
+
+1. 在解压后的包中找到想用的外观文件。
+2. **只复制这个 `squirrel.custom.yaml`** 到鼠须管用户资料夹，替换当前同名文件。
+3. 在鼠须管菜单点“重新部署”。切回另一套时重复这三步，词库无需再复制。
+
+两套外观都包含亮色、深色配色，跟随 macOS 系统外观；横排候选保留五笔补全提示。默认英文场景相同：**PyCharm、系统终端、electerm、系统密码授权弹窗**。这是进入这些场景时的初始状态，不是锁定英文。密码窗还受 macOS 安全输入机制控制。
+
+如果已在外观文件中加入自己的应用规则或其他设置，先备份当前文件，再把要保留的设置合并到所选皮肤，避免替换时丢失。已有输入方案、个人词条和方案快捷键不随皮肤切换改变。
+
 ## 已有配置或个人词库
 
 - **已有 `moc_wubi86_user.dict.yaml`：** 复制时跳过这个文件，继续使用自己的个人词库。
+- **已有 `squirrel.custom.yaml`（macOS）：** 先跳过它。希望采用本包外观时，备份原文件后按上方步骤替换；自定义设置按说明合并。
 - **已有 `default.custom.yaml`：** 复制时跳过这个文件，保留自己的设置及其他输入方案。只需把两个模式加入现有方案列表，再重新部署。
 
 已有 `schema_list:` 时，在那个列表末尾追加 `moc_wubi86_simp` 和 `moc_wubi86_simp_plus` 两项，与原有条目保持相同缩进。已注册的模式无需重复添加。
@@ -44,7 +62,14 @@ patch:
 
 文件已经有 `patch:` 时，只把 `schema_list/+` 这一项及其下的两行放到现有 `patch:` 内，保留其他设置，不再添加第二个 `patch:`。YAML缩进使用空格。仅需一个模式时可只注册对应项，仍保留完整方案数据。
 
-`moc_reverse` 是自动编译的拼音找字依赖，无需注册。数据包的注册模板只设置两个方案，不设置平台外观；已有皮肤可继续使用。
+`moc_reverse` 是自动编译的拼音找字依赖，无需注册。注册模板配置两个模式及 Control＋Shift＋0；平台外观由独立的 `squirrel.custom.yaml` 管理。
+
+若保留自己的 `default.custom.yaml`，又希望使用本套快捷键，将下面内容合并到已有 `patch:` 中，再重新部署。已有自己习惯的快捷键时可以继续保留。
+
+```yaml
+  switcher/hotkeys:
+    - "Shift+Control+0"
+```
 
 依据：[Rime用户资料说明](https://github.com/rime/home/wiki/UserData)、[配置合并语法](https://github.com/rime/home/wiki/Configuration)。
 
@@ -82,7 +107,7 @@ patch:
 
 macOS 鼠须管已隔离编译并对比7322组输入，完整编码保留候选顺序与一二级简码首选通过验证；宽前缀补全队列会随删词变化。Windows/Linux尚未前端实机验证。原有金额Lua在部分不完整输入时可能出现类型诊断；现存用户补丁也可能影响实际行为。
 
-鼠须管外观是可选项，单独放在仓库 `optional/macos/squirrel.custom.yaml`，不在默认数据包中；已有皮肤时请自行合并。
+macOS 包自带玫枫及备用蓝色遐想；Windows／Linux 通用包不包含鼠须管外观。两套皮肤独立保存，共用默认英文场景，切换说明见上方。
 
 词频审核采用各来源内部的相对排名，按相同词条集合和词长分组；缺失为未知，现有排序权重不充当真实词频。维护用删除明细、来源尺度说明和候选前后对照在源码仓库的 `reports/`，不进入部署包。
 
@@ -99,7 +124,7 @@ macOS 鼠须管已隔离编译并对比7322组输入，完整编码保留候选�
 | [Unicode 16.0 Unihan](https://www.unicode.org/Public/16.0.0/ucd/Unihan.zip) 与 [general_standard_chinese](https://github.com/ben-hua/general_standard_chinese) | 规范字范围的正式字段核对与名单交叉核验 |
 | [first20hours/google-10000-english](https://github.com/first20hours/google-10000-english) | 英文词序排名参考；英文独立判断，不与中文频数合并 |
 
-金额Lua内部另保留98wubi-tables来源，农历Lua内部保留rime-fast-xhup来源。组件经过多个项目传承，这些署名继续保留。鼠须管原有玫枫亮／暗外观位于 `optional/macos/squirrel.custom.yaml`，默认数据包保持平台中立。
+金额Lua内部另保留98wubi-tables来源，农历Lua内部保留rime-fast-xhup来源。组件经过多个项目传承，这些署名继续保留。鼠须管原有玫枫亮／暗外观位于 `optional/macos/squirrel.custom.yaml`，蓝色遐想来自 [hunter-ji/blue-reverie-rime-theme](https://github.com/hunter-ji/blue-reverie-rime-theme)，两套随macOS包提供，通用包保持平台中立。
 
 ## 发展过程
 

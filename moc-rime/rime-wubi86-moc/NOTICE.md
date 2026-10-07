@@ -3,6 +3,7 @@
 本数据包包含白霜派生词库、本项目自写Lua及上游组件，组合分发按根 `LICENSE` 中的 GPL-3.0 提供。Apache-2.0、MIT、Unicode 来源的声明继续保留在 `licenses/`；不能将整包只标为 MIT。
 
 - 本项目自写配置和Lua保留MIT署名与条款，见 `licenses/MIT.txt`。
+- 蓝色遐想外观：[hunter-ji/blue-reverie-rime-theme](https://github.com/hunter-ji/blue-reverie-rime-theme/tree/762595ce2ebf6ad4eedc0237b207ab7a85d9914e)，MIT，Copyright (c) 2025 Hunter Ji；版权与完整条款保留在 `licenses/MIT.txt`。本项目提高亮色补全注释对比度、设置选中注释颜色、规范参数写法，并补入共用默认英文规则。玫枫保留本项目原有亮暗配色。
 - 极点86五笔字表来源：[KyleBing/rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian/tree/513954b197907cb6c5892e6ca2c548c164f8caac)，[上游 Apache-2.0](https://github.com/KyleBing/rime-wubi86-jidian/blob/513954b197907cb6c5892e6ca2c548c164f8caac/LICENSE)。
 - 白霜词组、英文、拼音数据与中文词频参考：[gaboolic/rime-frost](https://github.com/gaboolic/rime-frost/tree/4a5457badafbdc733b09a350aeb3e8b076f025d8)，[上游 GPL-3.0](https://github.com/gaboolic/rime-frost/blob/4a5457badafbdc733b09a350aeb3e8b076f025d8/LICENSE)。
 - 金额与农历Lua来自 [Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)，随数据包提供并更名以避免冲突。金额文件保留 [yanhuacuo/98wubi-tables](https://github.com/yanhuacuo/98wubi-tables) 来源，农历文件保留 [boomker/rime-fast-xhup](https://github.com/boomker/rime-fast-xhup) 来源。最初导入时的oh-my-rime提交未确认，不编造固定版本。日期时间、计算器、无候选提交Lua为本项目自写组件。
@@ -11,8 +12,10 @@
 
 **版本依据**：定稿数据在 `data/`，当前记录摘要在源码 `tests/expected.json`，清理前后摘要与原记录在 `reports/cleanup_summary.json`、`reports/removed.tsv`。极点、白霜和英文固定版本用于核验、补码或审核参考，不表示所有记录都在本轮由这些版本重新生成。早期整理曾使用未分发的《现代汉语常用词表》作为排序参考，本版不包含该版权词表，也不要求使用者下载它。来源、许可和维护证据均随本项目保存。
 
-**本次修改（2026-10-06）**：沿用此前审核的简体日常词库；基础字词独立保存，额外词组与英文合并为扩展字典；删除无内容的尾部 stem 列分隔符，保留有效 stem与保留记录的顺序、编码及权重。另按普通内地用户及本科工科用途审核清理1234条主记录及21条反查；删除理由和原记录保存在源码仓库reports/removed.tsv。恢复纯净与全功能两个方案，纯净复用通用配置，仅加载个人表和基础字词，全功能额外加载扩展字典；将反查设为两个方案的编译依赖。保留空个人表和必要 Lua，平台皮肤单独可选。词频只作分来源、分词长的相对排名证据，不混用原始数值；缺失未知，语义分类是本项目用途判断。私人词条不公开。
+**本次修改（2026-10-06）**：沿用此前审核的简体日常词库；基础字词独立保存，额外词组与英文合并为扩展字典；删除无内容的尾部 stem 列分隔符，保留有效 stem与保留记录的顺序、编码及权重。另按普通内地用户及本科工科用途审核清理1234条主记录及21条反查；删除理由和原记录保存在源码仓库reports/removed.tsv。恢复纯净与全功能两个方案，纯净复用通用配置，仅加载个人表和基础字词，全功能额外加载扩展字典；将反查设为两个方案的编译依赖。保留空个人表和必要 Lua；macOS包随附两套外观，通用包沿用前端现有外观。词频只作分来源、分词长的相对排名证据，不混用原始数值；缺失未知，语义分类是本项目用途判断。私人词条不公开。
 
 YAML 字典、方案和 Lua 都是可编辑源文件，数据包随附完整许可。没有二进制词库、私人数据库或运行缓存。后续再分发请保留许可、来源和修改声明。
 
 **部署包更新（2026-10-07）**：随data提供两个模式的注册模板，纯净排在首位，首次使用复制后即可部署。已有配置和个人词库须保留并按README合并。词库、编码、排序权重及Lua未改。
+
+**外观与按键更新（2026-10-07）**：恢复 Control＋Shift＋0 方案菜单快捷键；保留玫枫并加入蓝色遐想，macOS包首次复制即可带入默认外观。两套皮肤统一配置PyCharm、系统终端、electerm及密码授权弹窗默认英文。词库、编码、排序权重、Lua和助手未改。

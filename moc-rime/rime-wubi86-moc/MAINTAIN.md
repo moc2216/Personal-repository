@@ -8,7 +8,7 @@
 
 | 文件 | 作用 |
 | --- | --- |
-| `default.custom.yaml` | 首次使用的双模式注册模板，纯净排在首位；已有同名配置时保留并合并 |
+| `default.custom.yaml` | 首次使用的双模式注册模板，纯净排在首位，Control＋Shift＋0打开菜单；已有同名配置时保留并合并 |
 | `moc_wubi86_core.dict.yaml` | 共用基础字词 |
 | `moc_wubi86_extra.dict.yaml` | 全功能补充词组和英文 |
 | `moc_wubi86_user.dict.yaml` | 共用个人表模板 |
@@ -31,13 +31,13 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 tools/pack.py
 ```
 
-输出 `releases/moc-wubi86-data-2026.10.07.zip` 与SHA256SUMS。ZIP只含15个数据文件、README、NOTICE、LICENSE及三份许可，共21文件；不含optional、tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式，空个人模板不可覆盖已有个人词。
+输出通用 `releases/moc-wubi86-data-2026.10.07.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.07.zip` 与SHA256SUMS。通用ZIP包含15个数据文件及6份说明许可，共21文件；macOS ZIP再映射默认玫枫为data/squirrel.custom.yaml，并附备用蓝色文件，共23文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时合并switcher/hotkeys。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
 
-源文件上传GitHub，ZIP与校验作为Release附件；不制作重复源码ZIP，不上传缓存、原语料、私人备份。默认无皮肤，数据三平台共用，鼠须管外观可选项在optional。
+源文件上传GitHub，ZIP与校验作为Release附件；不制作重复源码ZIP，不上传缓存、原语料、私人备份。通用包无皮肤，数据三平台共用。macOS包默认玫枫，备用蓝色；原玫枫源在optional/macos/squirrel.custom.yaml，蓝色源在其blue-reverie子目录。两套完整配置的默认英文场景一致：PyCharm、Terminal、electerm、SecurityAgent和authorizationhost。后两项对应同一类系统密码授权场景。
 
 ## 验证与留痕
 
-21项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
+26项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
 
 真实鼠须管（librime 1.16.0）隔离验证：纯净3500组、全功能3822组输入，包括全部637/638个现有一二级简码、各1000个固定随机种子的四码、删除影响编码及补全/反查/辅助用例。短码首选不变，保留词完整编码候选相对顺序通过，删除词不再出现；各4组人造个人词优先检查通过。删除会改变宽前缀补全队列，不能宣称所有补全尾页顺序不变。最终ZIP在临时目录直接复制data内容后部署；已有配置的合并路径另外验证，结果在tests/native-result.json。
 
@@ -52,3 +52,13 @@ Windows/Linux前端尚未实测；用户补丁与Lua版本可能影响效果。�
 ## 同仓库整理 · 2026-10-07
 
 本模块位于moc-rime/rime-wubi86-moc，兄弟目录wubi-code-assistant提供独立编码助手。原有14个数据文件不变，新增方案注册模板后共15文件；更新复制部署说明，重打ZIP并隔离验证。助手单字表与本模块词库精简解耦，不复制完整词库到App。
+
+## 外观与快捷键回归 · 2026-10-07
+
+恢复注册模板的Control＋Shift＋0；两套皮肤都包含五笔补全注释和同一组默认英文规则。蓝色遐想采用固定上游提交，补全注释对比度和参数写法的修改见NOTICE。原玫枫preset颜色块保持字节一致。
+
+打包时给两套皮肤不同的ZIP修改时间（相差2秒，符合ZIP精度）。librime按源文件时间判定是否更新配置；不能把两套同名皮肤固定成同一时间，否则替换后可能仍沿用缓存。自动检查断言不同时间，原生验证按ZIP时间解压、复制保留元数据，并在同一临时目录完成玫枫→蓝色→玫枫，确认每次部署后的亮暗选择与五项应用规则一致。
+
+26项自动检查通过；原生librime验证快捷键实际打开双模式菜单，两个模式的补全、分号／单引号选词、方括号翻页和Shift切中英通过。配置使用本机Squirrel 1.1.2的librime 1.16.0部署，结果记录在tests/native-result.json。四类英文场景完成部署配置核验，PyCharm、Terminal和electerm应用标识与本机安装核对；未自动操作真实密码弹窗或逐个应用交互，不将这些核验写成全部前端场景实测。真实用户配置和个人词库均未写入。
+
+来源依据：[Squirrel部署入口](https://github.com/rime/squirrel/blob/master/sources/SquirrelApplicationDelegate.swift)、[librime配置变化检测](https://github.com/rime/librime/blob/master/src/rime/lever/deployment_tasks.cc)。

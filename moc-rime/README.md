@@ -15,12 +15,15 @@ Rime数据以 [极点86](https://github.com/KyleBing/rime-wubi86-jidian) 基础�
 
 ## 下载
 
-[Release下载页面](https://github.com/moc2216/Personal-repository/releases/tag/moc-rime-2026.10.07-ready)分别提供两个下载物，按需要选择：
+[Release下载页面](https://github.com/moc2216/Personal-repository/releases/tag/moc-rime-2026.10.07-appearance)提供以下下载物，按平台和需要选择：
 
-- [Rime数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-ready/moc-wubi86-data-2026.10.07.zip)：输入法数据，已包含方案注册配置；首次使用将data内的内容复制到用户资料夹并重新部署。已有设置和个人词库须保留，详见包内说明。
-- [macOS助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-ready/wubi-code-assistant-macos-1.2.zip)：Apple Silicon与Intel通用App，解压后运行。首次使用前按助手说明准备个人词库。
+- [macOS 鼠须管数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/moc-wubi86-macos-2026.10.07.zip)：包含输入法数据、默认玫枫及备用蓝色遐想。首次复制data内容后部署，以后换皮肤只替换外观文件并重新部署。
+- [Windows／Linux 通用数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/moc-wubi86-data-2026.10.07.zip)：包含双模式注册和 Control＋Shift＋0，沿用自己前端的外观。
+- [macOS助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/wubi-code-assistant-macos-1.2.zip)：Apple Silicon与Intel通用App，解压后运行。首次使用前按助手说明准备个人词库。
 
-本项目保存在Personal-repository的 `moc-rime/` 目录。也可通过Code → Download ZIP获取源码，Rime数据在 `moc-rime/rime-wubi86-moc/data/`；助手源码在 `moc-rime/wubi-code-assistant/Source/`，需要macOS开发工具构建。源码仓库不保存打包App、构建缓存或私人词库。
+已有设置和个人词库须保留，复制前查看包内说明。
+
+本项目保存在Personal-repository的 `moc-rime/` 目录。也可通过Code → Download ZIP获取源码，Rime数据在 `moc-rime/rime-wubi86-moc/data/`；助手源码在 `moc-rime/wubi-code-assistant/Source/`，需要macOS开发工具构建。macOS 用户希望一次复制包含外观时，使用上面的鼠须管数据ZIP。源码仓库不保存打包App、构建缓存或私人词库。
 
 ## 配合使用
 
@@ -32,7 +35,7 @@ Rime数据同时提供首次使用的方案注册模板和空个人表模板；�
 
 - **日常五笔**：基础字词来自极点86；全功能模式补充白霜词组和英文，纯净模式保留基础范围。
 - **不会完整编码时的辅助**：保留前缀补全与缺码提示；不会打单字时可用拼音反查，候选显示五笔编码。
-- **常用工具**：日期、时间、计算、金额大写、农历转换及符号。鼠须管外观单独可选，详见数据模块。
+- **常用工具**：日期、时间、计算、金额大写、农历转换及符号。macOS 包附带两套外观，详见数据模块。
 - **个人词库**：两种模式共用个人表；助手按规则计算编码，个人与方案词库只参与查重，确认后再添加。
 
 项目沿着“上游数据整合 → 简体日常审核 → 双模式共用数据 → 冷门内容清理 → 与编码助手合并”发展。数据模块首页提供 [功能说明、来源分工和发展记录](rime-wubi86-moc/README.md#发展过程)，各来源的许可和固定核验版本见NOTICE。

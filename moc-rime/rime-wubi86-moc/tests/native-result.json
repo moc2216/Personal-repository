@@ -52,7 +52,7 @@
   "initial_release_source_commit": "3a899f6cc6e3d089fbdae72bf6bf6ccac491c1d1",
   "single_project_verification": {
     "directory": "moc-rime",
-    "data_checks": 21,
+    "data_checks": 26,
     "relative_document_links_within_project": true,
     "compiled_schemas": [
       "moc_wubi86_simp",
@@ -231,5 +231,81 @@
     "packaged_default_custom_yaml": true,
     "fresh_default_mode": "moc_wubi86_simp"
   },
-  "release_tag": "moc-rime-2026.10.07-ready"
+  "release_tag": "moc-rime-2026.10.07-appearance",
+  "shipped_macos_zip_files": 23,
+  "macos_appearance_regression": {
+    "date": "2026-10-07",
+    "unit_checks": 26,
+    "generic_zip_files": 21,
+    "macos_zip_files": 23,
+    "cases": [
+      {
+        "skin": "roseo_maple",
+        "compiled_frontend": true,
+        "light_dark_palettes": true,
+        "english_app_rules": 5,
+        "scheme_menu_hotkey_opens_both_modes": true,
+        "completion_checks": 3,
+        "selection_and_paging_keys": true,
+        "shift_english_toggle": true,
+        "case": "fresh_roseo"
+      },
+      {
+        "skin": "blue_reverie",
+        "compiled_frontend": true,
+        "light_dark_palettes": true,
+        "english_app_rules": 5,
+        "scheme_menu_hotkey_opens_both_modes": true,
+        "completion_checks": 3,
+        "selection_and_paging_keys": true,
+        "shift_english_toggle": true,
+        "case": "roseo_to_blue"
+      },
+      {
+        "skin": "roseo_maple",
+        "compiled_frontend": true,
+        "light_dark_palettes": true,
+        "english_app_rules": 5,
+        "scheme_menu_hotkey_opens_both_modes": true,
+        "completion_checks": 3,
+        "selection_and_paging_keys": true,
+        "shift_english_toggle": true,
+        "case": "blue_to_roseo"
+      }
+    ],
+    "timestamp_regression": {
+      "before_failed": true,
+      "preserved_zip_mtimes_tested": true,
+      "fixed_by_distinct_zip_skin_timestamps": true
+    },
+    "real_user_configuration_written": false,
+    "application_bundle_ids_checked": [
+      "com.jetbrains.pycharm",
+      "com.apple.Terminal",
+      "org.electerm.electerm"
+    ],
+    "application_rules_verified_in_deployed_config": true,
+    "password_dialog_interactively_tested": false,
+    "apps_interactively_tested": false,
+    "runtime_payload_sha256": {
+      "optional/macos/blue-reverie/squirrel.custom.yaml": "cbd594573d30ca19fdd1a5443104c590e410dd579c611b8401c9183b6fb7649d",
+      "data/moc_reverse.dict.yaml": "2928c41545f4d6a5cf802ed1fea222db26ec72ed74ca41bfb1eff9bc14450c76",
+      "data/moc_wubi86_core.dict.yaml": "5e4e9da539a7e124983a4e7bde8d9f70aa201d90b5ab4732ad4a61d92c6dbff2",
+      "data/moc_reverse.schema.yaml": "ad96e1bc6e2dbd07bef135bce7bce8426a971d70ff1c5108aac12853478eda7d",
+      "data/moc_wubi86_simp_plus.schema.yaml": "6468edfc21e0ed534d6621ba08b4e4f23210052b5f630c79580996ea424f55fc",
+      "data/moc_wubi86_simp_plus.dict.yaml": "37ea33f2a9a6e76a9dd09d4f5b73a01f7c6e0fda485873e4bd63e38e54ba8c0e",
+      "data/moc_wubi86_simp.dict.yaml": "84d95ed43da1c5861ba05f5db68ede888d756f600aa8879694553a7b0f76c072",
+      "data/moc_wubi86_extra.dict.yaml": "5b0bf44cb88c549f451efde74fa58181cc9d0aa77c279b4954311631eb603de0",
+      "data/squirrel.custom.yaml": "765566db049e6e04262807d921ed4f9d2a83c10339c60e7f705171f1b0bdd3d5",
+      "data/default.custom.yaml": "dfa2c4dd6880b8e1ece1437bf8c55463f450090f1b70a4ba0757bea9ff6376ae",
+      "data/moc_wubi86_simp.schema.yaml": "9649a307988b9bbbb957cbd65229239c167b1c63c2943ab3719165b055b2900d",
+      "data/moc_wubi86_user.dict.yaml": "a18d0988070fbfa09bf6ee8472f3efda09e0fcac239cc3076cc527382b47f40b",
+      "data/lua/moc_number_translator.lua": "29a1e787dd9ec93717f28397bbb34afc17f736331e8342f389c980733234a995",
+      "data/lua/moc_clear_empty.lua": "0bbd98bdb97f48af4b2b364fae48f09913675dba3639a6966e7495bcad1b2c20",
+      "data/lua/moc_chineseLunarCalendar_translator.lua": "3e4bd6c0c136625230fa938790ba3e33a925d262b6c82e186bb33138d39d0a8a",
+      "data/lua/moc_calculator.lua": "01ab3421cfb521b96357a97dca51f64604f8c3a7d94423ef2977c61ccc823246",
+      "data/lua/moc_date_time.lua": "f83acd3426a71dbaa293b8fbe706e9832d95502a3c0e02be7f28ffb401e07e30"
+    },
+    "original_dictionary_schema_and_lua_bytes_unchanged": true
+  }
 }

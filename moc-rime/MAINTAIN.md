@@ -2,7 +2,7 @@
 
 ## 交付边界
 
-项目保存在 [Personal-repository/moc-rime](https://github.com/moc2216/Personal-repository/tree/main/moc-rime)。两个目录独立取用，Release分别提供Rime数据ZIP和macOS助手ZIP。源码不含App二进制、编译缓存、真实个人词条或私人备份；普通使用不依赖Python。
+项目保存在 [Personal-repository/moc-rime](https://github.com/moc2216/Personal-repository/tree/main/moc-rime)。两个目录独立取用，Release提供通用Rime数据ZIP、含两套皮肤的macOS数据ZIP和macOS助手ZIP。源码不含App二进制、编译缓存、真实个人词条或私人备份；普通使用不依赖Python。
 
 Rime数据提供已有Rime用户直接复制部署的个性化数据，不提供安装器。助手按五笔86规则生成编码，查重、确认后加入个人词库。moc-rime是唯一维护入口，所需源数据、来源说明、许可、审核记录与工具都在本项目内。
 
@@ -20,11 +20,11 @@ Rime部署源为15文件，含首次使用的方案注册模板：共用基础�
 
 ## 验证与发布
 
-- 数据：21项自动检查；既有7322组隔离候选对比；新数据ZIP直接复制后编译及两种已有配置合并通过；既有候选记录为两个模式各17组输入检查。
+- 数据：26项自动检查；既有7322组隔离候选对比；新数据ZIP直接复制后编译及两种已有配置合并通过；既有候选记录为两个模式各17组输入检查。
 - 助手：34项Swift检查，默认1项可选隔离测试跳过，另行在两套临时部署目录分别通过；真实App验证规则码、图解、确认取消与关窗退出。写入与备份仅使用临时个人表。
-- 下载物：数据21文件，App包含独立单字资源；解压后逐文件核验、SHA256、签名、arm64/x86_64与macOS13最低版本核验。
+- 下载物：通用数据21文件、macOS数据23文件，App包含独立单字资源；解压后逐文件核验、SHA256、签名、arm64/x86_64与macOS13最低版本核验。
 
-维护命令分别见两个模块README/MAINTAIN。数据包2026.10.07，词库沿用2026.10.06-clean，助手1.2/build3。Release标签moc-rime-2026.10.07-ready，上传两份ZIP及合并SHA256SUMS；只提交moc-rime目录，不改其他仓库内容。具体验证记录在各模块tests/native-result.json。
+维护命令分别见两个模块README/MAINTAIN。数据包2026.10.07，词库沿用2026.10.06-clean，助手1.2/build3。Release标签moc-rime-2026.10.07-appearance，上传三份ZIP及合并SHA256SUMS；只提交moc-rime目录，不改其他仓库内容。具体验证记录在各模块tests/native-result.json。
 
 ## 已知限制
 
@@ -37,3 +37,9 @@ Rime数据三平台共用，Windows/Linux未实机验证。助手仅macOS；Inte
 复核功能说明、组件代码和Lua署名后，补回首页特性、各上游分工、发展过程与致谢。固定核验版本不能冒充所有记录最初生成时的上游版本；oh-my-rime最初导入提交未确认，明确保留这个信息缺口。早期排序校准与本轮冷门审核分开说明，不声称已经校准所有保留词。
 
 数据包提供default.custom.yaml注册模板，首次复制后可部署；原有14个数据文件及助手不变。README、NOTICE与SHA256SUMS随包更新，Release提供当前下载物。当前维护流程是针对本目录定稿数据的检查、审核与打包；尚不提供从原始语料完整重建精简数据的能力。
+
+## macOS外观与按键 · 2026-10-07
+
+原玫枫保留，新增蓝色遐想，分别保存完整配置。macOS包首次复制data即带入玫枫；以后用下载包中选定的squirrel.custom.yaml替换并部署，词库不再复制。两套共用PyCharm、Terminal、electerm及系统授权弹窗默认英文，Control＋Shift＋0在注册模板中恢复。
+
+26项检查及保留ZIP时间的玫枫→蓝色→玫枫隔离部署通过，实际菜单快捷键、补全及选词／翻页／中英切换验证通过。部署配置核验不能冒充真实密码弹窗交互实测。词库、Lua和助手源码／下载物保持不变；本轮不写真实Rime配置。打包给两套皮肤不同修改时间，避免Rime缓存未识别切换；见模块维护说明及native-result.json。
