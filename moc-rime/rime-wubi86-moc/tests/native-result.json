@@ -2,7 +2,7 @@
   "date": "2026-10-06",
   "version": "2026.10.06-clean",
   "platform": "macOS",
-  "frontend": "Squirrel 1.16.0",
+  "frontend": "Squirrel 1.1.2",
   "status": "passed",
   "results_by_mode": {
     "moc_wubi86_simp": {
@@ -34,7 +34,7 @@
     "现有金额Lua部分不完整输入诊断尚未修复",
     "保留词权重未重新校准，本轮统一词频只用于内容审核"
   ],
-  "shipped_zip_files": 20,
+  "shipped_zip_files": 21,
   "shipped_zip_registered_from_readme_and_compiled": true,
   "shipped_zip_native_checks_by_mode": {
     "moc_wubi86_simp": 17,
@@ -45,23 +45,190 @@
   "short_code_first_candidates_unchanged": true,
   "synthetic_personal_priority_passed_both_modes": true,
   "zip_checksum_verified": true,
-  "new_deploy_data_bytes": 2842104,
-  "archive_bytes": 1121846,
+  "new_deploy_data_bytes": 2842490,
+  "archive_bytes": 1122855,
   "repack_date": "2026-10-07",
-  "documentation_revision": "2026-10-07 仅保留现役文件说明",
-  "deploy_data_unchanged_from_initial_release": true,
+  "documentation_revision": "2026-10-07 新手复制后部署",
   "initial_release_source_commit": "3a899f6cc6e3d089fbdae72bf6bf6ccac491c1d1",
   "single_project_verification": {
     "directory": "moc-rime",
-    "data_checks": 20,
+    "data_checks": 21,
     "relative_document_links_within_project": true,
     "compiled_schemas": [
       "moc_wubi86_simp",
       "moc_wubi86_simp_plus",
       "moc_reverse"
     ],
-    "deployment_data_unchanged": true,
     "assistant_archive_unchanged": true,
-    "self_contained_project": true
+    "self_contained_project": true,
+    "deployment_files": 15,
+    "original_14_deployment_files_unchanged": true
+  },
+  "librime": "1.16.0",
+  "package_version": "2026.10.07",
+  "original_14_deployment_files_unchanged": true,
+  "copy_only_registration_regression": {
+    "date": "2026-10-07",
+    "before_copy_only_missing_registered_modes": {
+      "exit_code": 0,
+      "moc_schemas_compiled": {
+        "moc_wubi86_simp": false,
+        "moc_wubi86_simp_plus": false
+      }
+    },
+    "fresh_copy_only": {
+      "exit_code": 0,
+      "compiled_schemas": [
+        "moc_wubi86_simp",
+        "moc_wubi86_simp_plus",
+        "moc_reverse"
+      ],
+      "schema_list": [
+        "moc_wubi86_simp",
+        "moc_wubi86_simp_plus"
+      ],
+      "compiled_dictionary_and_prism_files": [
+        {
+          "name": "moc_wubi86_simp.prism.bin",
+          "bytes": 570684
+        },
+        {
+          "name": "moc_wubi86_simp.table.bin",
+          "bytes": 1983604
+        },
+        {
+          "name": "moc_wubi86_simp.reverse.bin",
+          "bytes": 629852
+        },
+        {
+          "name": "moc_wubi86_simp_plus.prism.bin",
+          "bytes": 937276
+        },
+        {
+          "name": "moc_wubi86_simp_plus.table.bin",
+          "bytes": 3407044
+        },
+        {
+          "name": "moc_wubi86_simp_plus.reverse.bin",
+          "bytes": 1212204
+        },
+        {
+          "name": "moc_reverse.prism.bin",
+          "bytes": 4412
+        },
+        {
+          "name": "moc_reverse.table.bin",
+          "bytes": 76868
+        },
+        {
+          "name": "moc_reverse.reverse.bin",
+          "bytes": 46792
+        }
+      ]
+    },
+    "existing_config_merge": {
+      "exit_code": 0,
+      "compiled_schemas": [
+        "moc_wubi86_simp",
+        "moc_wubi86_simp_plus",
+        "moc_reverse"
+      ],
+      "schema_list": [
+        "luna_pinyin",
+        "moc_wubi86_simp",
+        "moc_wubi86_simp_plus"
+      ],
+      "other_settings_preserved": true,
+      "synthetic_personal_dictionary_preserved": true,
+      "compiled_dictionary_and_prism_files": [
+        {
+          "name": "moc_wubi86_simp.prism.bin",
+          "bytes": 570684
+        },
+        {
+          "name": "moc_wubi86_simp.table.bin",
+          "bytes": 1983628
+        },
+        {
+          "name": "moc_wubi86_simp.reverse.bin",
+          "bytes": 629856
+        },
+        {
+          "name": "moc_wubi86_simp_plus.prism.bin",
+          "bytes": 937276
+        },
+        {
+          "name": "moc_wubi86_simp_plus.table.bin",
+          "bytes": 3407052
+        },
+        {
+          "name": "moc_wubi86_simp_plus.reverse.bin",
+          "bytes": 1212232
+        },
+        {
+          "name": "moc_reverse.prism.bin",
+          "bytes": 4412
+        },
+        {
+          "name": "moc_reverse.table.bin",
+          "bytes": 76868
+        },
+        {
+          "name": "moc_reverse.reverse.bin",
+          "bytes": 46792
+        }
+      ]
+    },
+    "existing_config_append": {
+      "exit_code": 0,
+      "other_schemes_preserved": true,
+      "other_settings_preserved": true,
+      "moc_modes_registered": [
+        "moc_wubi86_simp",
+        "moc_wubi86_simp_plus"
+      ],
+      "compiled_dictionary_and_prism_files": [
+        {
+          "name": "moc_wubi86_simp.prism.bin",
+          "bytes": 570684
+        },
+        {
+          "name": "moc_wubi86_simp.table.bin",
+          "bytes": 1983604
+        },
+        {
+          "name": "moc_wubi86_simp.reverse.bin",
+          "bytes": 629852
+        },
+        {
+          "name": "moc_wubi86_simp_plus.prism.bin",
+          "bytes": 937276
+        },
+        {
+          "name": "moc_wubi86_simp_plus.table.bin",
+          "bytes": 3407044
+        },
+        {
+          "name": "moc_wubi86_simp_plus.reverse.bin",
+          "bytes": 1212204
+        },
+        {
+          "name": "moc_reverse.prism.bin",
+          "bytes": 4412
+        },
+        {
+          "name": "moc_reverse.table.bin",
+          "bytes": 76868
+        },
+        {
+          "name": "moc_reverse.reverse.bin",
+          "bytes": 46792
+        }
+      ]
+    },
+    "real_user_directory_written": false,
+    "unit_checks": 21,
+    "packaged_default_custom_yaml": true,
+    "fresh_default_mode": "moc_wubi86_simp"
   }
 }

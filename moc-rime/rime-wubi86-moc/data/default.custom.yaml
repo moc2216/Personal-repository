@@ -1,0 +1,7 @@
+# 首次使用：将 data 内的全部内容复制到 Rime 用户资料夹，然后重新部署。
+# 已有同名文件时保留原文件，按 README 的“已有配置”说明添加两个方案。
+# 默认使用纯净模式；需要补充词组和英文时，在方案菜单切换到全功能。
+patch:
+  schema_list:
+    - schema: moc_wubi86_simp
+    - schema: moc_wubi86_simp_plus

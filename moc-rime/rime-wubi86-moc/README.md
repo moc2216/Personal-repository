@@ -1,8 +1,52 @@
 # moc 86 五笔 · 简体日常数据
 
-一套可直接部署的 Rime 个性化五笔数据，提供“纯净”和“全功能”两个方案。两者都保留简体五笔、补全与缺码提示、拼音反查、选词翻页键和现有辅助功能；全功能额外加载补充词组与英文词库。
+给已安装 Rime 的用户使用的简体五笔86数据。提供“纯净”和“全功能”两个模式，默认纯净；两者都支持五笔补全、拼音找字和日常工具。
 
-**版本：2026.10.06-clean，试用版。** 适用于已安装 Rime 且支持 librime-lua 的 macOS、Windows、Linux。使用数据包无需 Python、安装脚本或额外下载词库。
+**数据包：2026.10.07，试用版。** 适用于支持 librime-lua 的 macOS、Windows、Linux Rime 输入法。词库版本为2026.10.06-clean。
+
+[下载最新数据包](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07/moc-wubi86-data-2026.10.07.zip)
+
+## 第一次使用：复制后部署
+
+开始前看一眼你的 Rime 用户资料夹：**如果里面已经有 `default.custom.yaml` 或 `moc_wubi86_user.dict.yaml`，保留原文件，先看下方“已有配置或个人词库”说明。** 这两个文件分别保存你的设置和个人词条。
+
+1. **下载并解压。** 打开解压后的 `data` 文件夹，它已经包含方案注册文件，不需要自己新建或编写配置。
+2. **复制数据。** 打开输入法菜单中的“用户资料夹”，将 `data` **里面的全部文件及 `lua` 文件夹**复制进去。复制后，用户资料夹里应直接看到 `default.custom.yaml` 和各个字典文件。`lua` 文件夹与已有文件夹合并，保留其他方案的 Lua。
+3. **重新部署并开始输入。** 在输入法菜单选择“重新部署（Deploy）”，等部署结束。打开一个可输入文字的窗口，切换到 Rime；打开方案菜单，选择“moc 极点86五笔-纯净”。输入 `trw` 应能找到“我们”。需要补充词组和英文时，切换到“moc 极点86五笔-全功能”。
+
+方案菜单的默认快捷键是 **Control＋反引号键**（通常在数字1的左边），也可尝试 **Control＋Shift＋反引号键** 或 **F4**。如果以前修改过快捷键，以自己的设置为准。纯净和全功能已一起注册，以后直接在方案菜单切换。
+
+找不到“用户资料夹”入口时，可以按下面的位置打开。自定义目录和 Linux XDG 设置可能改变位置，以输入法实际使用的目录为准。
+
+| 输入法 | 打开用户资料夹 |
+| --- | --- |
+| macOS 鼠须管 | Finder中按Command＋Shift＋G，输入 `~/Library/Rime` |
+| Windows 小狼毫 | 按Win＋R，输入 `%APPDATA%\Rime` |
+| Linux IBus-Rime | 文件管理器打开 `~/.config/ibus/rime` |
+| Linux Fcitx5-Rime | 文件管理器打开 `~/.local/share/fcitx5/rime` |
+| Linux Fcitx-Rime | 文件管理器打开 `~/.config/fcitx/rime` |
+
+## 已有配置或个人词库
+
+- **已有 `moc_wubi86_user.dict.yaml`：** 复制时跳过这个文件，继续使用自己的个人词库。
+- **已有 `default.custom.yaml`：** 复制时跳过这个文件，保留自己的设置及其他输入方案。只需把两个模式加入现有方案列表，再重新部署。
+
+已有 `schema_list:` 时，在那个列表末尾追加 `moc_wubi86_simp` 和 `moc_wubi86_simp_plus` 两项，与原有条目保持相同缩进。已注册的模式无需重复添加。
+
+没有 `schema_list:` 时，可合并下面的配置：
+
+```yaml
+patch:
+  schema_list/+:
+    - schema: moc_wubi86_simp
+    - schema: moc_wubi86_simp_plus
+```
+
+文件已经有 `patch:` 时，只把 `schema_list/+` 这一项及其下的两行放到现有 `patch:` 内，保留其他设置，不再添加第二个 `patch:`。YAML缩进使用空格。仅需一个模式时可只注册对应项，仍保留完整方案数据。
+
+`moc_reverse` 是自动编译的拼音找字依赖，无需注册。数据包的注册模板只设置两个方案，不设置平台外观；已有皮肤可继续使用。
+
+依据：[Rime用户资料说明](https://github.com/rime/home/wiki/UserData)、[配置合并语法](https://github.com/rime/home/wiki/Configuration)。
 
 ## 特性
 
@@ -14,39 +58,6 @@
 - **日常工具**：日期、时间、计算器、金额大写、农历转换和常用符号；保留原选词、翻页和中英切换习惯。
 - **个人词条可维护**：修改共用个人表后重新部署，也可配合 [五笔编码助手](https://github.com/moc2216/Personal-repository/tree/main/moc-rime/wubi-code-assistant) 计算、查重后添加。
 - **内容审核可追溯**：删除理由、来源内词频分位、原记录及前后候选对照在源码报告中；不把各来源原始数值直接混合。
-
-## 下载和部署
-
-下载 [Release中的数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07/moc-wubi86-data-2026.10.06.zip)。也可用 **Code → Download ZIP**，只取其中的 `moc-rime/rime-wubi86-moc/data/`。
-
-1. 将 `data/` 里的 YAML 文件和 `lua/` 文件夹合并到自己的 Rime 用户资料夹。
-2. **已有 `moc_wubi86_user.dict.yaml` 时保留原文件，不用空模板覆盖。** 其他同名方案数据会更新，建议先备份；`lua/` 只合并本方案文件，保留其他 Lua。
-3. 在 `default.custom.yaml` 的方案列表中加入下面两个方案。未定义方案列表时可用：
-
-```yaml
-patch:
-  schema_list/+:
-    - schema: moc_wubi86_simp
-    - schema: moc_wubi86_simp_plus
-```
-
-已有 `patch:` 时把这一项合并到其下，不重复创建 `patch:`；已有显式 `schema_list:` 时直接在该列表末尾追加。已注册的方案无需重复添加。只需要一个模式时，可以只注册对应方案，但仍复制完整 `data/`。
-
-4. 在 Rime 菜单选择 **重新部署**，然后在方案菜单中选择 **moc 极点86五笔-纯净** 或 **moc 极点86五笔-全功能**。以后直接在方案菜单切换，无需改词库或再次部署。
-
-`moc_reverse` 是两个方案自动编译的反查依赖，无需单独注册。数据包不提供全局配置覆盖文件，不改变其他方案或平台皮肤。
-
-常见用户资料夹（以输入法的“用户资料夹”入口为准；自定义目录及 Linux XDG 设置可能改变位置）：
-
-| 前端 | 常见位置 |
-| --- | --- |
-| 鼠须管 | `~/Library/Rime` |
-| 小狼毫 | `%APPDATA%\Rime` |
-| IBus-Rime | `~/.config/ibus/rime` |
-| Fcitx5-Rime | `~/.local/share/fcitx5/rime` |
-| Fcitx-Rime | `~/.config/fcitx/rime` |
-
-依据：[Rime 用户资料说明](https://github.com/rime/home/wiki/UserData)、[配置合并语法](https://github.com/rime/home/wiki/Configuration)。
 
 ## 使用
 

@@ -1,4 +1,5 @@
 import importlib.util
+import re
 import shutil
 import tempfile
 import unittest
@@ -10,6 +11,16 @@ spec=importlib.util.spec_from_file_location('pack',ROOT/'tools/pack.py')
 pack=importlib.util.module_from_spec(spec);spec.loader.exec_module(pack)
 
 class PackageTests(unittest.TestCase):
+    def test_copy_only_package_registers_both_modes_with_pure_first(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path=pack.archive(Path(tmp)/'data.zip')
+            with zipfile.ZipFile(path) as z:
+                config=z.read('data/default.custom.yaml').decode('utf-8')
+                self.assertEqual(re.findall(r'^\s+- schema: (\S+)$',config,re.MULTILINE),
+                                 ['moc_wubi86_simp','moc_wubi86_simp_plus'])
+                self.assertIn('\n  schema_list:\n',config)
+                self.assertNotIn('schema_list/+:',config)
+
     def test_zip_only_contains_deploy_data_and_necessary_notices(self):
         with tempfile.TemporaryDirectory() as tmp:
             path=pack.archive(Path(tmp)/'data.zip')
@@ -17,7 +28,7 @@ class PackageTests(unittest.TestCase):
                 names=set(z.namelist())
                 self.assertEqual(names,{'data/'+n for n in pack.DATA_FILES}|set(pack.SUPPORT_FILES))
                 self.assertEqual(set(pack.DATA_FILES),FILES)
-                self.assertEqual(len(names),20)
+                self.assertEqual(len(names),21)
                 self.assertFalse(any(Path(n).suffix in ['.py','.sh','.command','.cmd','.bin'] for n in names))
                 self.assertFalse(any(n.startswith(('tools/','tests/','optional/','vendor/')) for n in names))
 

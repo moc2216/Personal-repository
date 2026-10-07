@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DATA=ROOT/'data'
 EXPECTED=json.loads((ROOT/'tests/expected.json').read_text(encoding='utf-8'))
-FILES={'moc_wubi86_simp.schema.yaml','moc_wubi86_simp.dict.yaml',
+FILES={'default.custom.yaml','moc_wubi86_simp.schema.yaml','moc_wubi86_simp.dict.yaml',
        'moc_wubi86_simp_plus.schema.yaml','moc_wubi86_simp_plus.dict.yaml',
        'moc_reverse.schema.yaml','moc_reverse.dict.yaml','moc_wubi86_user.dict.yaml',
        'moc_wubi86_core.dict.yaml','moc_wubi86_extra.dict.yaml'} | {'lua/'+n for n in EXPECTED['lua_sha256']}
