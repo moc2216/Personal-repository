@@ -45,19 +45,15 @@
   "short_code_first_candidates_unchanged": true,
   "synthetic_personal_priority_passed_both_modes": true,
   "zip_checksum_verified": true,
-  "live_source_hashes_unchanged": true,
-  "original_baseline_hashes_unchanged": true,
   "new_deploy_data_bytes": 2842104,
-  "archive_bytes": 1121932,
+  "archive_bytes": 1121846,
   "repack_date": "2026-10-07",
-  "documentation_revision": "2026-10-07 单目录独立使用与维护",
+  "documentation_revision": "2026-10-07 仅保留现役文件说明",
   "deploy_data_unchanged_from_initial_release": true,
   "initial_release_source_commit": "3a899f6cc6e3d089fbdae72bf6bf6ccac491c1d1",
   "single_project_verification": {
     "directory": "moc-rime",
     "data_checks": 20,
-    "legacy_directory_present": false,
-    "legacy_directory_links": 0,
     "relative_document_links_within_project": true,
     "compiled_schemas": [
       "moc_wubi86_simp",
@@ -65,6 +61,7 @@
       "moc_reverse"
     ],
     "deployment_data_unchanged": true,
-    "assistant_archive_unchanged": true
+    "assistant_archive_unchanged": true,
+    "self_contained_project": true
   }
 }
