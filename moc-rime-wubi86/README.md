@@ -1,10 +1,10 @@
-# moc-rime
+# moc-rime-wubi86
 
 面向普通内地用户的五笔86日常输入方案，以及添加个人词条的编码助手。两部分可分别使用。
 
 Rime数据以 [极点86](https://github.com/KyleBing/rime-wubi86-jidian) 基础字词为底，配合 [白霜](https://github.com/gaboolic/rime-frost) 词组、英文和拼音数据，以及 [oh-my-rime](https://github.com/Mintimate/oh-my-rime) 来源的金额、农历工具。本项目在此基础上审核简体日常用字和冷门词，保留纯净／全功能两个入口、五笔补全和拼音反查，并提供独立的个人词库编码助手。
 
-**`moc-rime/` 是唯一项目入口。** 输入法数据、编码助手、来源说明、许可和维护资料都保存在这个文件夹内。
+**`moc-rime-wubi86/` 是唯一项目入口。** 输入法数据、编码助手、来源说明、许可和维护资料都保存在这个文件夹内。
 
 精简的对象是部署数据、重复词库和运行依赖。功能介绍、上游贡献与发展记录保留在项目中，方便使用者理解和后续维护。
 
@@ -15,15 +15,15 @@ Rime数据以 [极点86](https://github.com/KyleBing/rime-wubi86-jidian) 基础�
 
 ## 下载
 
-[Release下载页面](https://github.com/moc2216/Personal-repository/releases/tag/moc-rime-2026.10.07-appearance)提供以下下载物，按平台和需要选择：
+[Release下载页面](https://github.com/moc2216/Personal-repository/releases/tag/moc-rime-wubi86-2026.10.08)提供以下下载物，按平台和需要选择：
 
-- [macOS 鼠须管数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/moc-wubi86-macos-2026.10.07.zip)：包含输入法数据、默认玫枫及备用蓝色遐想。首次复制data内容后部署，以后换皮肤只替换外观文件并重新部署。
-- [Windows／Linux 通用数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/moc-wubi86-data-2026.10.07.zip)：包含双模式注册和 Control＋Shift＋0，沿用自己前端的外观。
-- [macOS助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/wubi-code-assistant-macos-1.2.zip)：Apple Silicon与Intel通用App，解压后运行。首次使用前按助手说明准备个人词库。
+- [macOS 鼠须管数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.08/moc-wubi86-macos-2026.10.08.zip)：包含输入法数据、默认玫枫及备用蓝色遐想。首次复制data内容后部署，以后换皮肤只替换外观文件并重新部署。
+- [Windows／Linux 通用数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.08/moc-wubi86-data-2026.10.08.zip)：包含双模式注册和 Control＋Shift＋0，沿用自己前端的外观。
+- [macOS助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.08/wubi-code-assistant-macos-1.2.zip)：Apple Silicon与Intel通用App，解压后运行。首次使用前按助手说明准备个人词库。
 
 已有设置和个人词库须保留，复制前查看包内说明。
 
-本项目保存在Personal-repository的 `moc-rime/` 目录。也可通过Code → Download ZIP获取源码，Rime数据在 `moc-rime/rime-wubi86-moc/data/`；助手源码在 `moc-rime/wubi-code-assistant/Source/`，需要macOS开发工具构建。macOS 用户希望一次复制包含外观时，使用上面的鼠须管数据ZIP。源码仓库不保存打包App、构建缓存或私人词库。
+本项目保存在Personal-repository的 `moc-rime-wubi86/` 目录。也可通过Code → Download ZIP获取源码，Rime数据在 `moc-rime-wubi86/rime-wubi86-moc/data/`；助手源码在 `moc-rime-wubi86/wubi-code-assistant/Source/`，需要macOS开发工具构建。macOS 用户希望一次复制包含外观时，使用上面的鼠须管数据ZIP。源码仓库不保存打包App、构建缓存或私人词库。
 
 ## 配合使用
 

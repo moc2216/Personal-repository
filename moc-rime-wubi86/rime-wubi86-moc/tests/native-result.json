@@ -45,13 +45,13 @@
   "short_code_first_candidates_unchanged": true,
   "synthetic_personal_priority_passed_both_modes": true,
   "zip_checksum_verified": true,
-  "new_deploy_data_bytes": 2842490,
-  "archive_bytes": 1122859,
-  "repack_date": "2026-10-07",
-  "documentation_revision": "2026-10-07 新手复制后部署",
+  "new_deploy_data_bytes": 2842534,
+  "archive_bytes": 1124096,
+  "repack_date": "2026-10-08",
+  "documentation_revision": "2026-10-08 项目目录与下载入口整理",
   "initial_release_source_commit": "3a899f6cc6e3d089fbdae72bf6bf6ccac491c1d1",
   "single_project_verification": {
-    "directory": "moc-rime",
+    "directory": "moc-rime-wubi86",
     "data_checks": 26,
     "relative_document_links_within_project": true,
     "compiled_schemas": [
@@ -65,7 +65,7 @@
     "original_14_deployment_files_unchanged": true
   },
   "librime": "1.16.0",
-  "package_version": "2026.10.07",
+  "package_version": "2026.10.08",
   "original_14_deployment_files_unchanged": true,
   "copy_only_registration_regression": {
     "date": "2026-10-07",
@@ -231,7 +231,7 @@
     "packaged_default_custom_yaml": true,
     "fresh_default_mode": "moc_wubi86_simp"
   },
-  "release_tag": "moc-rime-2026.10.07-appearance",
+  "release_tag": "moc-rime-wubi86-2026.10.08",
   "shipped_macos_zip_files": 23,
   "macos_appearance_regression": {
     "date": "2026-10-07",
@@ -307,5 +307,34 @@
       "data/lua/moc_date_time.lua": "f83acd3426a71dbaa293b8fbe706e9832d95502a3c0e02be7f28ffb401e07e30"
     },
     "original_dictionary_schema_and_lua_bytes_unchanged": true
-  }
+  },
+  "directory_rename_verification": {
+    "date": "2026-10-08",
+    "directory": "moc-rime-wubi86",
+    "unit_checks": 26,
+    "runtime_files_sha256_unchanged": true,
+    "assistant_source_and_zip_unchanged": true,
+    "historical_native_evidence_reused": true,
+    "native_frontend_rerun_in_this_revision": false,
+    "real_user_directory_written": false,
+    "packages": [
+      {
+        "name": "moc-wubi86-data-2026.10.08.zip",
+        "bytes": 1124096,
+        "sha256": "b1ce403fd1187662f9c9430f9606bd97bf2d0b70caf090efa76457e73a8e216f"
+      },
+      {
+        "name": "moc-wubi86-macos-2026.10.08.zip",
+        "bytes": 1126030,
+        "sha256": "4799c29e582fe4b03c32f4064db37cb96a5e13fde68f2a219258f040966836f5"
+      },
+      {
+        "name": "wubi-code-assistant-macos-1.2.zip",
+        "bytes": 9657773,
+        "sha256": "35add029b2bc21182085b618fdf0bf71a26015cf5b2e8320f1fe1b55a5eb8ae5"
+      }
+    ],
+    "relative_document_links_checked": 15
+  },
+  "macos_archive_bytes": 1126030
 }

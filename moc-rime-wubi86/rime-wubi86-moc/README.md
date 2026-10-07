@@ -2,9 +2,9 @@
 
 给已安装 Rime 的用户使用的简体五笔86数据。提供“纯净”和“全功能”两个模式，默认纯净；两者都支持五笔补全、拼音找字和日常工具。
 
-**数据包：2026.10.07，试用版。** 适用于支持 librime-lua 的 macOS、Windows、Linux Rime 输入法。词库版本为2026.10.06-clean。
+**数据包：2026.10.08，试用版。** 适用于支持 librime-lua 的 macOS、Windows、Linux Rime 输入法。词库版本为2026.10.06-clean。
 
-[macOS 鼠须管数据包（含两套外观）](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/moc-wubi86-macos-2026.10.07.zip) · [Windows／Linux 通用数据包](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-appearance/moc-wubi86-data-2026.10.07.zip)
+[macOS 鼠须管数据包（含两套外观）](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.08/moc-wubi86-macos-2026.10.08.zip) · [Windows／Linux 通用数据包](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.08/moc-wubi86-data-2026.10.08.zip)
 
 ## 第一次使用：复制后部署
 
@@ -81,7 +81,7 @@ patch:
 - **拼音找字**：反引号引导拼音反查，候选显示五笔编码，适合遇到不会拆的字。
 - **中英混输**：全功能中直接输入英文拼写，提供英文候选；无候选时可提交原始字母。
 - **日常工具**：日期、时间、计算器、金额大写、农历转换和常用符号；保留原选词、翻页和中英切换习惯。
-- **个人词条可维护**：修改共用个人表后重新部署，也可配合 [五笔编码助手](https://github.com/moc2216/Personal-repository/tree/main/moc-rime/wubi-code-assistant) 计算、查重后添加。
+- **个人词条可维护**：修改共用个人表后重新部署，也可配合 [五笔编码助手](https://github.com/moc2216/Personal-repository/tree/main/moc-rime-wubi86/wubi-code-assistant) 计算、查重后添加。
 - **内容审核可追溯**：删除理由、来源内词频分位、原记录及前后候选对照在源码报告中；不把各来源原始数值直接混合。
 
 ## 使用
@@ -132,13 +132,15 @@ macOS 包自带玫枫及备用蓝色遐想；Windows／Linux 通用包不包含�
 2. **简体日常审核**：核对一级、二级6500字范围，补充缺码和修正旧名单；对繁体、异体、古旧词及个人场景低需求字做精确处理。姓名、地名和工程词不能仅凭生僻或低频一概删除。
 3. **双模式共用数据**：基础独立保存，补充词组与英文合并成扩展；两个小入口组合相应词库，配置、反查和Lua共用。移除安装器和默认全局外观覆盖，改为已有Rime直接复制部署。
 4. **2026-10-06冷门清理**：删除1234条主记录及21条反查。知乎与维基各在相同词条交集、相同词长分组中取来源内分位；缺失保留为未知。用途判断与频率证据结合，低频工程词保留；删除清单可恢复本轮清理前记录。
-5. **2026-10-07同仓库整理**：与五笔编码助手合并为moc-rime，数据与助手独立下载。合并不改变14个部署文件；助手独立按固定单字表生成规则码，词库只参与查重。
+5. **2026-10-07同仓库整理**：与五笔编码助手合并为本项目，数据与助手独立下载。合并不改变14个部署文件；助手独立按固定单字表生成规则码，词库只参与查重。
 
-排序权重与冷门内容审核分别处理。**本次没有重新校准所有保留词的排序权重**，不能据此保证候选顺序等于个人真实使用频率。当前验证确认一二级简码首选、完整码保留候选的相对顺序和个人词优先；详细结果见 [清理报告](https://github.com/moc2216/Personal-repository/blob/main/moc-rime/rime-wubi86-moc/reports/cleanup.md)。
+6. **2026-10-08目录整理**：项目统一使用moc-rime-wubi86名称，输入法数据与编码助手仍独立使用；部署数据与规则未变，说明和下载入口同步更新。
+
+排序权重与冷门内容审核分别处理。**本次没有重新校准所有保留词的排序权重**，不能据此保证候选顺序等于个人真实使用频率。当前验证确认一二级简码首选、完整码保留候选的相对顺序和个人词优先；详细结果见 [清理报告](https://github.com/moc2216/Personal-repository/blob/main/moc-rime-wubi86/rime-wubi86-moc/reports/cleanup.md)。
 
 ## 维护、许可与致谢
 
-当前 `data/` 是定稿源数据；`tools/` 提供审核算法和打包，`tests/` 保存自动检查与实机记录，`reports/` 保存清理证据，详见源码中的 [维护说明](https://github.com/moc2216/Personal-repository/blob/main/moc-rime/rime-wubi86-moc/MAINTAIN.md)。这些维护材料不进入默认部署ZIP。
+当前 `data/` 是定稿源数据；`tools/` 提供审核算法和打包，`tests/` 保存自动检查与实机记录，`reports/` 保存清理证据，详见源码中的 [维护说明](https://github.com/moc2216/Personal-repository/blob/main/moc-rime-wubi86/rime-wubi86-moc/MAINTAIN.md)。这些维护材料不进入默认部署ZIP。
 
 定稿数据、维护工具、验证记录和来源说明均在本项目内，维护以这里的 `data/` 为准。当前工具不会从原始上游语料完整重建所有精简结果，普通部署及当前维护流程不需要另行取得版权词表。
 

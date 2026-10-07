@@ -6,7 +6,7 @@
 
 ## 使用
 
-1. 下载[Release中的助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07/wubi-code-assistant-macos-1.2.zip)，解压后运行 `Wubi Code Assistant.app`，也可放入Applications。
+1. 下载[Release中的助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.08/wubi-code-assistant-macos-1.2.zip)，解压后运行 `Wubi Code Assistant.app`，也可放入Applications。
 2. 配合本仓库的Rime数据使用时，先部署数据。已有 `~/Library/Rime/moc_wubi86_user.dict.yaml` 必须保留；首次使用可采用Rime数据中的空模板。当前助手固定写入这个文件，不管理其他个人词库。
 3. 输入词语，自动生成编码与逐字取码。根据重复提示确认是否需要添加，可修改编码或默认50000权重。
 4. 点击“添加并重新部署”，确认后才写入；个人表同词同码会阻止重复，同词异码可保留或替换。备份位于 `~/Library/Rime/.moc_wubi86_backups/`。

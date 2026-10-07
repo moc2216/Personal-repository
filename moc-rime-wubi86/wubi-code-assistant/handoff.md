@@ -8,7 +8,7 @@
 
 当前卡点：无。限制：6500字以外手填；最近方案记录不能代表每个应用实时上下文；其他主方案与不支持引用格式显示未完成；Intel未实机运行，App未Apple公证。
 
-下一步：按README试用；源码保存到Personal-repository/moc-rime，独立AppZIP放在Release。数据部署见同仓库rime-wubi86-moc。无必须新增功能。个人表缺失时禁用添加，不自动用模板替换。
+下一步：按README试用；源码保存到Personal-repository/moc-rime-wubi86，独立AppZIP放在Release。数据部署见同仓库rime-wubi86-moc。无必须新增功能。个人表缺失时禁用添加，不自动用模板替换。
 
 坑：不重新引入整词优先；不扫所有备用词库；不把未知当没有；不覆盖真实个人表；图像仅展示，不用图片推断字根；不删资源bundle导致运行时找不到单字表；用进程确认关窗退出，观察工具可能重新启动已退出App。
 

@@ -31,7 +31,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 tools/pack.py
 ```
 
-输出通用 `releases/moc-wubi86-data-2026.10.07.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.07.zip` 与SHA256SUMS。通用ZIP包含15个数据文件及6份说明许可，共21文件；macOS ZIP再映射默认玫枫为data/squirrel.custom.yaml，并附备用蓝色文件，共23文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时合并switcher/hotkeys。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
+输出通用 `releases/moc-wubi86-data-2026.10.08.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.08.zip` 与SHA256SUMS。通用ZIP包含15个数据文件及6份说明许可，共21文件；macOS ZIP再映射默认玫枫为data/squirrel.custom.yaml，并附备用蓝色文件，共23文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时合并switcher/hotkeys。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
 
 源文件上传GitHub，ZIP与校验作为Release附件；不制作重复源码ZIP，不上传缓存、原语料、私人备份。通用包无皮肤，数据三平台共用。macOS包默认玫枫，备用蓝色；原玫枫源在optional/macos/squirrel.custom.yaml，蓝色源在其blue-reverie子目录。两套完整配置的默认英文场景一致：PyCharm、Terminal、electerm、SecurityAgent和authorizationhost。后两项对应同一类系统密码授权场景。
 
@@ -51,7 +51,7 @@ Windows/Linux前端尚未实测；用户补丁与Lua版本可能影响效果。�
 
 ## 同仓库整理 · 2026-10-07
 
-本模块位于moc-rime/rime-wubi86-moc，兄弟目录wubi-code-assistant提供独立编码助手。原有14个数据文件不变，新增方案注册模板后共15文件；更新复制部署说明，重打ZIP并隔离验证。助手单字表与本模块词库精简解耦，不复制完整词库到App。
+本模块位于moc-rime-wubi86/rime-wubi86-moc，兄弟目录wubi-code-assistant提供独立编码助手。原有14个数据文件不变，新增方案注册模板后共15文件；更新复制部署说明，重打ZIP并隔离验证。助手单字表与本模块词库精简解耦，不复制完整词库到App。
 
 ## 外观与快捷键回归 · 2026-10-07
 
@@ -62,3 +62,7 @@ Windows/Linux前端尚未实测；用户补丁与Lua版本可能影响效果。�
 26项自动检查通过；原生librime验证快捷键实际打开双模式菜单，两个模式的补全、分号／单引号选词、方括号翻页和Shift切中英通过。配置使用本机Squirrel 1.1.2的librime 1.16.0部署，结果记录在tests/native-result.json。四类英文场景完成部署配置核验，PyCharm、Terminal和electerm应用标识与本机安装核对；未自动操作真实密码弹窗或逐个应用交互，不将这些核验写成全部前端场景实测。真实用户配置和个人词库均未写入。
 
 来源依据：[Squirrel部署入口](https://github.com/rime/squirrel/blob/master/sources/SquirrelApplicationDelegate.swift)、[librime配置变化检测](https://github.com/rime/librime/blob/master/src/rime/lever/deployment_tasks.cc)。
+
+## 项目目录与发布入口 · 2026-10-08
+
+唯一现役项目为moc-rime-wubi86，输入法与编码助手仍是两个独立模块。当前Release为moc-rime-wubi86-2026.10.08，数据包2026.10.08，词库2026.10.06-clean，助手1.2/build3。本次更新目录名称、说明和下载入口；data、两套皮肤、助手源码及App字节不变，沿用原日期的运行证据并重新检查打包内容。不能将本次字节核验冒充新的前端交互实测。schema_id、字典名及个人表名保持不变；两套皮肤ZIP时间须不同。不写真实个人词库，不恢复退役材料。当前卡点无，后续等待试用反馈。
