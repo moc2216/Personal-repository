@@ -4,7 +4,7 @@
 
 **数据包：2026.10.07，试用版。** 适用于支持 librime-lua 的 macOS、Windows、Linux Rime 输入法。词库版本为2026.10.06-clean。
 
-[下载最新数据包](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07/moc-wubi86-data-2026.10.07.zip)
+[下载最新数据包](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-ready/moc-wubi86-data-2026.10.07.zip)
 
 ## 第一次使用：复制后部署
 

@@ -15,10 +15,10 @@ Rime数据以 [极点86](https://github.com/KyleBing/rime-wubi86-jidian) 基础�
 
 ## 下载
 
-[Release下载页面](https://github.com/moc2216/Personal-repository/releases/tag/moc-rime-2026.10.07)分别提供两个下载物，按需要选择：
+[Release下载页面](https://github.com/moc2216/Personal-repository/releases/tag/moc-rime-2026.10.07-ready)分别提供两个下载物，按需要选择：
 
-- [Rime数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07/moc-wubi86-data-2026.10.07.zip)：输入法数据，已包含方案注册配置；首次使用将data内的内容复制到用户资料夹并重新部署。已有设置和个人词库须保留，详见包内说明。
-- [macOS助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07/wubi-code-assistant-macos-1.2.zip)：Apple Silicon与Intel通用App，解压后运行。首次使用前按助手说明准备个人词库。
+- [Rime数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-ready/moc-wubi86-data-2026.10.07.zip)：输入法数据，已包含方案注册配置；首次使用将data内的内容复制到用户资料夹并重新部署。已有设置和个人词库须保留，详见包内说明。
+- [macOS助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-2026.10.07-ready/wubi-code-assistant-macos-1.2.zip)：Apple Silicon与Intel通用App，解压后运行。首次使用前按助手说明准备个人词库。
 
 本项目保存在Personal-repository的 `moc-rime/` 目录。也可通过Code → Download ZIP获取源码，Rime数据在 `moc-rime/rime-wubi86-moc/data/`；助手源码在 `moc-rime/wubi-code-assistant/Source/`，需要macOS开发工具构建。源码仓库不保存打包App、构建缓存或私人词库。
 

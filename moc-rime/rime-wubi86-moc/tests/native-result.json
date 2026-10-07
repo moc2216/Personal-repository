@@ -46,7 +46,7 @@
   "synthetic_personal_priority_passed_both_modes": true,
   "zip_checksum_verified": true,
   "new_deploy_data_bytes": 2842490,
-  "archive_bytes": 1122855,
+  "archive_bytes": 1122859,
   "repack_date": "2026-10-07",
   "documentation_revision": "2026-10-07 新手复制后部署",
   "initial_release_source_commit": "3a899f6cc6e3d089fbdae72bf6bf6ccac491c1d1",
@@ -230,5 +230,6 @@
     "unit_checks": 21,
     "packaged_default_custom_yaml": true,
     "fresh_default_mode": "moc_wubi86_simp"
-  }
+  },
+  "release_tag": "moc-rime-2026.10.07-ready"
 }

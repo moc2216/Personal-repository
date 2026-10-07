@@ -24,7 +24,7 @@ Rime部署源为15文件，含首次使用的方案注册模板：共用基础�
 - 助手：34项Swift检查，默认1项可选隔离测试跳过，另行在两套临时部署目录分别通过；真实App验证规则码、图解、确认取消与关窗退出。写入与备份仅使用临时个人表。
 - 下载物：数据21文件，App包含独立单字资源；解压后逐文件核验、SHA256、签名、arm64/x86_64与macOS13最低版本核验。
 
-维护命令分别见两个模块README/MAINTAIN。数据包2026.10.07，词库沿用2026.10.06-clean，助手1.2/build3。Release标签moc-rime-2026.10.07，上传两份ZIP及合并SHA256SUMS；只提交moc-rime目录，不改其他仓库内容。具体验证记录在各模块tests/native-result.json。
+维护命令分别见两个模块README/MAINTAIN。数据包2026.10.07，词库沿用2026.10.06-clean，助手1.2/build3。Release标签moc-rime-2026.10.07-ready，上传两份ZIP及合并SHA256SUMS；只提交moc-rime目录，不改其他仓库内容。具体验证记录在各模块tests/native-result.json。
 
 ## 已知限制
 
