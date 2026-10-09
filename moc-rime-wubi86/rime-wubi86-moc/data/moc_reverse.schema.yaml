@@ -2,7 +2,7 @@
 schema:
   schema_id: moc_reverse
   name: moc 拼音反查
-  version: "2026.10.06-clean"
+  version: "2026.10.09"
 engine:
   translators: [table_translator]
 speller:

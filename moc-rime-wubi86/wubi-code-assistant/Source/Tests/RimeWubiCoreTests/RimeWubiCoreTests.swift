@@ -35,6 +35,28 @@ final class RimeWubiCoreTests: XCTestCase {
     )
   }
 
+  func testThreeColumnPersonalDictionaryCanBeAddedAndInspectedAgain() throws {
+    let fixture = try makeFixture(rows: [])
+    let original = "columns: [text, code, weight]\n...\n已有词\tabcd\t40000\n"
+    try original.write(to: fixture.dictionary, atomically: true, encoding: .utf8)
+    let store = PersonalDictionaryStore(dictionaryURL: fixture.dictionary, backupDirectoryURL: fixture.backups)
+    XCTAssertTrue(try store.inspect(text: "已有词", code: "abcd").hasExactMatch)
+    let result = try store.add(text: "新词", code: "efgh", weight: 50000, mode: .addVariant)
+    XCTAssertEqual(try String(contentsOf: fixture.dictionary, encoding: .utf8), original + "新词\tefgh\t50000\n")
+    XCTAssertEqual(try String(contentsOf: result.backupURL, encoding: .utf8), original)
+    XCTAssertTrue(try store.inspect(text: "新词", code: "efgh").hasExactMatch)
+    XCTAssertThrowsError(try store.add(text: "新词", code: "efgh", weight: 50000, mode: .addVariant))
+  }
+
+  func testLegacyStemIsPreservedWhenAppendingThreeColumnEntry() throws {
+    let fixture = try makeFixture(rows: ["旧词\tabcd\t40000\tabcd"])
+    let store = PersonalDictionaryStore(dictionaryURL: fixture.dictionary, backupDirectoryURL: fixture.backups)
+    try store.add(text: "新词", code: "efgh", weight: 50000, mode: .addVariant)
+    let rows = try RimeDictionaryParser.parseFile(at: fixture.dictionary, source: .personal, strict: true)
+    XCTAssertEqual(rows.map(\.stem), ["abcd", ""])
+    XCTAssertTrue(try store.inspect(text: "新词", code: "efgh").hasExactMatch)
+  }
+
   func testExistingPhraseDoesNotOverrideRuleGeneratedEncoding() throws {
     let entries = [
       DictionaryEntry(text: "我", code: "trnt", weight: 40_000, source: .core),
@@ -148,7 +170,7 @@ final class RimeWubiCoreTests: XCTestCase {
     XCTAssertEqual(Set(sameCode.sameCodeEntries.map(\.text)), Set(["仓位", "旧词"]))
   }
 
-  func testAddPreservesExistingContentCreatesBackupAndUsesFourColumns() throws {
+  func testAddPreservesExistingContentCreatesBackupAndUsesThreeColumns() throws {
     let fixture = try makeFixture(rows: ["仓位\twbwu\t50000\t"])
     let original = try String(contentsOf: fixture.dictionary, encoding: .utf8)
     let store = PersonalDictionaryStore(
@@ -160,7 +182,7 @@ final class RimeWubiCoreTests: XCTestCase {
 
     let updated = try String(contentsOf: fixture.dictionary, encoding: .utf8)
     XCTAssertTrue(updated.hasPrefix(original))
-    XCTAssertTrue(updated.hasSuffix("新词\tabcd\t50000\t\n"))
+    XCTAssertTrue(updated.hasSuffix("新词\tabcd\t50000\n"))
     XCTAssertEqual(try String(contentsOf: result.backupURL, encoding: .utf8), original)
   }
 
@@ -181,7 +203,7 @@ final class RimeWubiCoreTests: XCTestCase {
     XCTAssertFalse(updated.contains("同词\taaaa"))
     XCTAssertFalse(updated.contains("同词\tcccc"))
     XCTAssertTrue(updated.contains("保留\tbbbb"))
-    XCTAssertTrue(updated.contains("同词\tdddd\t50000\t"))
+    XCTAssertTrue(updated.contains("同词\tdddd\t50000\n"))
     XCTAssertEqual(result.replacedCount, 2)
   }
 

@@ -34,10 +34,6 @@ public enum RimeDictionaryParser {
         if strict { throw RimeCoreError.malformedRow(lineNumber) }
         continue
       }
-      if strict, fields.count < 4 {
-        throw RimeCoreError.malformedRow(lineNumber)
-      }
-
       entries.append(
         DictionaryEntry(
           text: fields[0],

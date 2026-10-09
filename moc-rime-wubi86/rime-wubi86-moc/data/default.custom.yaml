@@ -6,4 +6,4 @@ patch:
     - schema: moc_wubi86_simp
     - schema: moc_wubi86_simp_plus
   switcher/hotkeys:
-    - "Shift+Control+0"
+    __include: moc_settings:/switcher/hotkeys

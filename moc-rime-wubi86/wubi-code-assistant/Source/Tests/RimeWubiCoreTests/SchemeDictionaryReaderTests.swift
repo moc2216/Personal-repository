@@ -39,6 +39,13 @@ final class SchemeDictionaryReaderTests: XCTestCase {
     XCTAssertTrue(read().check(text: "人工智能", code: "watc")!.hasExactMatch)
   }
 
+  func testThreeColumnTablesSupportSchemeDuplicateCheck() throws {
+    try write("moc_wubi86_user.dict.yaml", "columns: [text, code, weight]\n...\n个人词\tabcd\t50000\n")
+    try write("moc_wubi86_core.dict.yaml", "columns:\n  - text\n  - code\n  - weight\n...\n我们\ttrwu\t40000\n")
+    XCTAssertEqual(read().check(text: "我们", code: "trwu")?.hasExactMatch, true)
+    XCTAssertEqual(read().check(text: "个人词", code: "abcd")?.hasExactMatch, false)
+  }
+
   func testSchemeSwitchIsObservedWithoutRestartingReader() throws {
     let reader = SchemeDictionaryReader(rimeDirectoryURL: root)
     XCTAssertFalse(reader.read().check(text: "人工智能", code: "watc")!.hasExactMatch)

@@ -1,5 +1,5 @@
 {
-  "version": "2026.10.06-clean",
+  "version": "2026.10.09",
   "main_records": 135495,
   "main_records_sha256": "c82e73f16df40677dd323b545cdcbbf918ed26101d1835d701a79f27a7387dc9",
   "reverse_records": 6817,
@@ -53,7 +53,7 @@
     "黼"
   ],
   "lua_sha256": {
-    "moc_number_translator.lua": "29a1e787dd9ec93717f28397bbb34afc17f736331e8342f389c980733234a995",
+    "moc_number_translator.lua": "705c07378c510d4e96b2af0e9d352fdb7d8c69bf4a4587b64dde8697dd172648",
     "moc_clear_empty.lua": "0bbd98bdb97f48af4b2b364fae48f09913675dba3639a6966e7495bcad1b2c20",
     "moc_chineseLunarCalendar_translator.lua": "3e4bd6c0c136625230fa938790ba3e33a925d262b6c82e186bb33138d39d0a8a",
     "moc_calculator.lua": "01ab3421cfb521b96357a97dca51f64604f8c3a7d94423ef2977c61ccc823246",

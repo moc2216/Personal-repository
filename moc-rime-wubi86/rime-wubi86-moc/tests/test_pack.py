@@ -17,16 +17,16 @@ class PackageTests(unittest.TestCase):
             macos=pack.archive(Path(tmp)/'macos.zip',macos=True)
             with zipfile.ZipFile(generic) as common, zipfile.ZipFile(macos) as mac:
                 self.assertEqual(set(mac.namelist())-set(common.namelist()),
-                    {'data/squirrel.custom.yaml','optional/macos/blue-reverie/squirrel.custom.yaml'})
+                    {'data/squirrel.custom.yaml','optional/macos/squirrel.custom.yaml','optional/macos/blue-reverie/squirrel.custom.yaml'})
                 for name in common.namelist():
                     self.assertEqual(common.read(name),mac.read(name))
                 self.assertEqual(mac.read('data/squirrel.custom.yaml'),
-                    (ROOT/'optional/macos/squirrel.custom.yaml').read_bytes())
+                    (ROOT/'data/squirrel.custom.yaml').read_bytes())
                 self.assertEqual(mac.read('optional/macos/blue-reverie/squirrel.custom.yaml'),
                     (ROOT/'optional/macos/blue-reverie/squirrel.custom.yaml').read_bytes())
-                self.assertEqual(len(mac.namelist()),23)
+                self.assertEqual(len(mac.namelist()),25)
                 self.assertNotEqual(mac.getinfo('data/squirrel.custom.yaml').date_time,
-                    mac.getinfo('optional/macos/blue-reverie/squirrel.custom.yaml').date_time)
+                    mac.getinfo('optional/macos/squirrel.custom.yaml').date_time)
                 self.assertFalse(any(Path(n).suffix in ['.py','.sh','.command','.cmd','.bin'] for n in mac.namelist()))
 
     def test_macos_private_frontend_configuration_stops_packaging(self):
@@ -56,9 +56,9 @@ class PackageTests(unittest.TestCase):
             path=pack.archive(Path(tmp)/'data.zip')
             with zipfile.ZipFile(path) as z:
                 names=set(z.namelist())
-                self.assertEqual(names,{'data/'+n for n in pack.DATA_FILES}|set(pack.SUPPORT_FILES))
+                self.assertEqual(names,{'data/'+n for n in pack.DATA_FILES if n != 'squirrel.custom.yaml'}|set(pack.SUPPORT_FILES))
                 self.assertEqual(set(pack.DATA_FILES),FILES)
-                self.assertEqual(len(names),21)
+                self.assertEqual(len(names),22)
                 self.assertFalse(any(Path(n).suffix in ['.py','.sh','.command','.cmd','.bin'] for n in names))
                 self.assertFalse(any(n.startswith(('tools/','tests/','optional/','vendor/')) for n in names))
 

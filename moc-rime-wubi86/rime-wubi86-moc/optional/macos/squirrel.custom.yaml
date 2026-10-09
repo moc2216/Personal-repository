@@ -92,13 +92,4 @@ patch:
       hilited_back_color: 0xEFEFF4
 
   app_options:
-    com.apple.Terminal:
-      ascii_mode: true
-    org.electerm.electerm:
-      ascii_mode: true
-    com.jetbrains.pycharm:
-      ascii_mode: true
-    com.apple.SecurityAgent:
-      ascii_mode: true
-    com.apple.authorizationhost:
-      ascii_mode: true
+    __include: moc_settings:/app_options

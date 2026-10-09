@@ -1,0 +1,24 @@
+# 常用设置：修改后重新部署。两种方案、两套鼠须管外观共用此文件。
+# 方案菜单快捷键
+switcher:
+  hotkeys:
+    - "Shift+Control+0"
+
+# 每页候选数量
+menu:
+  page_size: 6
+
+# macOS 默认英文应用；填写程序的 Bundle ID。
+app_options:
+  com.apple.Terminal:
+    ascii_mode: true
+  org.electerm.electerm:
+    ascii_mode: true
+  com.jetbrains.pycharm:
+    ascii_mode: true
+  com.apple.SecurityAgent:
+    ascii_mode: true
+  com.apple.LocalAuthenticationRemoteService:
+    ascii_mode: true
+  com.apple.AuthenticationServices.Helper:
+    ascii_mode: true

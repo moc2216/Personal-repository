@@ -12,3 +12,7 @@
 参考Rime记录选择的上游实现：[librime Switcher](https://github.com/rime/librime/blob/f81c971f45209550c4daa5491226545072e19e2f/src/rime/switcher.cc)。比对读取持久化记录与已部署文件，无法完成时不当作零结果。上游来源与本地隔离运行相互核验。
 
 Apache-2.0、Unicode、MIT条款随源码与App的ThirdParty目录保留，GPL完整条款随下载包提供。未分发真实用户词库、数据库或备份。
+
+## 修改 2026-10-09
+
+助手1.3/build4新写入三列个人词条，兼容三列与旧四列字典，原有stem保留；固定单字表与五笔规则不变。

@@ -44,7 +44,7 @@ public struct PersonalDictionaryStore: Sendable {
       replacedCount = result.removedCount
     }
     if !updated.hasSuffix("\n") { updated.append("\n") }
-    updated.append("\(text)\t\(code)\t\(weight)\t\n")
+    updated.append("\(text)\t\(code)\t\(weight)\n")
 
     let parsedUpdated = try RimeDictionaryParser.parse(updated, source: .personal, strict: true)
     guard

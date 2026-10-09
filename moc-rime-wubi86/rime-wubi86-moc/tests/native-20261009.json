@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-09",
+  "version": "2026.10.09",
+  "frontend": "Squirrel 1.1.2",
+  "librime": "1.16.0",
+  "isolation": "temporary public data and artificial personal entries only",
+  "real_rime_written": false,
+  "automated_tests": 27,
+  "package_checks": {
+    "macos": {
+      "files": 25,
+      "fresh_deploy": true,
+      "candidate_checks": true
+    },
+    "skin_roundtrip": [
+      "blue",
+      "rose",
+      "blue",
+      "rose"
+    ],
+    "data": {
+      "files": 22,
+      "fresh_deploy": true,
+      "candidate_checks": true
+    }
+  },
+  "shared_settings_changed_in_both_modes_and_skins": true,
+  "shared_setting_variant": {
+    "hotkey": "F8",
+    "page_size": 10,
+    "app_ascii_mode": false
+  },
+  "default_settings": {
+    "hotkey": "Shift+Control+0",
+    "page_size": 6
+  },
+  "punctuation": {
+    "chinese_half_shape": "direct commit U+3001",
+    "chinese_full_shape": "direct commit U+3001",
+    "with_complete_composition": "commit composition followed by U+3001",
+    "english_half_shape": "frontend passthrough backslash",
+    "english_full_shape": "U+FF3C (native full-shape behavior)"
+  },
+  "three_column_personal_priority": true,
+  "currency_candidates": [
+    [
+      "叁仟贰佰叁拾肆元玖角叁分",
+      "〔金额大写〕"
+    ],
+    [
+      "叁仟贰佰叁拾肆点玖叁",
+      "〔数字大写〕"
+    ]
+  ],
+  "currency_zero_and_decimal": true,
+  "currency_incomplete_input_no_lua_errors": true,
+  "removed_fh_no_candidates": true,
+  "date_time_calculator_lunar_reverse": true,
+  "authentication": {
+    "observed_window_owners": [
+      "LocalAuthenticationRemoteService",
+      "AuthenticationServicesHelper"
+    ],
+    "bundle_ids": [
+      "com.apple.LocalAuthenticationRemoteService",
+      "com.apple.AuthenticationServices.Helper"
+    ],
+    "windows_reported_onscreen": false,
+    "compiled_app_options_verified": true,
+    "secure_password_field_input_state_verified": false,
+    "authorizationhost_entry_removed": true
+  },
+  "completion_research": {
+    "production_sort_or_weights_changed": false,
+    "temporary_experiments": {
+      "native": {
+        "moc_wubi86_simp": 8,
+        "moc_wubi86_simp_plus": 31
+      },
+      "eager": {
+        "moc_wubi86_simp": 8,
+        "moc_wubi86_simp_plus": 18
+      },
+      "eager-raised": {
+        "moc_wubi86_simp": 2,
+        "moc_wubi86_simp_plus": 2
+      },
+      "eager-personal": {
+        "moc_wubi86_simp": 2,
+        "moc_wubi86_simp_plus": 2
+      }
+    }
+  },
+  "windows_linux_frontend_tested": false
+}

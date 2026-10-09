@@ -2,12 +2,14 @@
 
 ## 数据组织
 
-`data/` 内15个文件是可部署源数据，包含首次使用的方案注册模板。基础72241条，扩展63254条（补充词组53911条＋英文9343条），合计135495条；反查6817条，主词库含6455个规范单字。个人表为空模板。基础与扩展各存一份，没有第二份完整词库、编译缓存或安装程序。
+`data/` 内17个文件是可部署源数据，包含注册模板、集中设置和默认蓝色外观。基础72241条，扩展63254条（补充词组53911条＋英文9343条），合计135495条；反查6817条，主词库含6455个规范单字。个人表为空三列模板。基础与扩展各存一份，没有第二份完整词库、编译缓存或安装程序。
 
 纯净加载“个人表、基础”；全功能加载“个人表、基础、扩展”，个人表优先。纯净通过Rime原生 `__include` 复用全功能配置，仅覆盖方案身份、描述和字典引用。两种模式共用反查依赖与五个Lua，保留补全及按键习惯。先前已去掉空末列Tab，六个有效stem保留。
 
 | 文件 | 作用 |
 | --- | --- |
+| `moc_settings.yaml` | 快捷键、候选数量、默认英文应用的唯一值来源 |
+| `squirrel.custom.yaml` | macOS默认蓝色副本，通用包不含此文件 |
 | `default.custom.yaml` | 首次使用的双模式注册模板，纯净排在首位，Control＋Shift＋0打开菜单；已有同名配置时保留并合并 |
 | `moc_wubi86_core.dict.yaml` | 共用基础字词 |
 | `moc_wubi86_extra.dict.yaml` | 全功能补充词组和英文 |
@@ -31,17 +33,25 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 tools/pack.py
 ```
 
-输出通用 `releases/moc-wubi86-data-2026.10.08.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.08.zip` 与SHA256SUMS。通用ZIP包含15个数据文件及6份说明许可，共21文件；macOS ZIP再映射默认玫枫为data/squirrel.custom.yaml，并附备用蓝色文件，共23文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时合并switcher/hotkeys。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
+输出通用 `releases/moc-wubi86-data-2026.10.09.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.09.zip` 与SHA256SUMS。通用ZIP含16数据+6说明许可，共22文件；macOS ZIP含17个data文件、optional两套外观和6说明许可，共25文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时引用moc_settings。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
 
-源文件上传GitHub，ZIP与校验作为Release附件；不制作重复源码ZIP，不上传缓存、原语料、私人备份。通用包无皮肤，数据三平台共用。macOS包默认玫枫，备用蓝色；原玫枫源在optional/macos/squirrel.custom.yaml，蓝色源在其blue-reverie子目录。两套完整配置的默认英文场景一致：PyCharm、Terminal、electerm、SecurityAgent和authorizationhost。后两项对应同一类系统密码授权场景。
+源文件上传GitHub，ZIP与校验作为Release附件；不制作重复源码ZIP，不上传缓存、原语料、私人备份。通用包无皮肤，数据三平台共用。macOS包默认蓝色；optional保留原玫枫和蓝色完整配置。两套均引用moc_settings中的默认英文应用：PyCharm、Terminal、electerm、SecurityAgent及通行密钥流程的LocalAuthenticationRemoteService、AuthenticationServices.Helper。后两组件来自本机窗口元信息，尚未实测安全密码框的默认输入状态；后台authorizationhost已移除。
 
 ## 验证与留痕
 
-26项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
+27项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。主字典摘要规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
 
 真实鼠须管（librime 1.16.0）隔离验证：纯净3500组、全功能3822组输入，包括全部637/638个现有一二级简码、各1000个固定随机种子的四码、删除影响编码及补全/反查/辅助用例。短码首选不变，保留词完整编码候选相对顺序通过，删除词不再出现；各4组人造个人词优先检查通过。删除会改变宽前缀补全队列，不能宣称所有补全尾页顺序不变。最终ZIP在临时目录直接复制data内容后部署；已有配置的合并路径另外验证，结果在tests/native-result.json。
 
-Windows/Linux前端尚未实测；用户补丁与Lua版本可能影响效果。原金额Lua不完整输入诊断仍存在。本轮语义筛选不是所有保留词的逐项审核，也不保证每个词都适合所有用户。
+Windows/Linux前端尚未实测；用户补丁与Lua版本可能影响效果。本轮修正金额Lua零值及不完整输入处理。语义筛选不是所有保留词的逐项审核，也不保证每个词都适合所有用户。
+
+## 当前配置 · 2026-10-09
+
+当前版本2026.10.09。集中设置采用Rime原生__include；顿号映射在导入标点预设后用__patch替换，避免直接合并列表与commit映射导致部署错误。中文半角、全角按反斜杠直接提交顿号，有完整词组时一起上屏。英文半角由前端处理普通反斜杠，全角按Rime约定输出全角反斜杠。
+
+金额只有两个大写候选；取消/fh。个人模板三列，助手新写入三列、兼容旧四列；基础和扩展的有效stem不动。默认蓝色与optional蓝色副本同时间，玫枫相差2秒，支持反复换色部署。
+
+本轮证据在tests/native-20261009.json。历史native-result.json及以下带日期记录保留原测试事实，不代表当前包的文件数或默认皮肤。补全研究见reports/completion-ranking.md；已定位原因并验证临时原型，正式方案未加入重排Lua或修改词库权重。
 
 ## 复盘
 
@@ -65,4 +75,4 @@ Windows/Linux前端尚未实测；用户补丁与Lua版本可能影响效果。�
 
 ## 项目目录与发布入口 · 2026-10-08
 
-唯一现役项目为moc-rime-wubi86，输入法与编码助手仍是两个独立模块。当前Release为moc-rime-wubi86-2026.10.08，数据包2026.10.08，词库2026.10.06-clean，助手1.2/build3。本次更新目录名称、说明和下载入口；data、两套皮肤、助手源码及App字节不变，沿用原日期的运行证据并重新检查打包内容。不能将本次字节核验冒充新的前端交互实测。schema_id、字典名及个人表名保持不变；两套皮肤ZIP时间须不同。不写真实个人词库，不恢复退役材料。当前卡点无，后续等待试用反馈。
+唯一现役项目为moc-rime-wubi86，输入法与编码助手仍是两个独立模块。当时Release为moc-rime-wubi86-2026.10.08，数据包2026.10.08，词库2026.10.06，助手1.2/build3。本次更新目录名称、说明和下载入口；data、两套皮肤、助手源码及App字节不变，沿用原日期的运行证据并重新检查打包内容。不能将本次字节核验冒充新的前端交互实测。schema_id、字典名及个人表名保持不变；两套皮肤ZIP时间须不同。不写真实个人词库，不恢复退役材料。当前卡点无，后续等待使用反馈。

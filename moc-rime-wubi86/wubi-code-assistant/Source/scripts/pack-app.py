@@ -22,7 +22,7 @@ def main():
         for f in files:
             if f.is_symlink() or f.name=='.DS_Store':raise ValueError('App包含未审核项')
             relative=f.relative_to(APP.parent) if APP in f.parents else f.relative_to(ROOT)
-            entry=zipfile.ZipInfo(relative.as_posix(),date_time=(2026,10,7,0,0,0))
+            entry=zipfile.ZipInfo(relative.as_posix(),date_time=(2026,10,9,0,0,0))
             entry.create_system=3;entry.external_attr=f.stat().st_mode<<16
             z.writestr(entry,f.read_bytes(),compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
     digest=hashlib.sha256(archive.read_bytes()).hexdigest()

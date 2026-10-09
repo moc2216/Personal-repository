@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-09",
+  "version": "1.3",
+  "build": 4,
+  "swift_tests": 37,
+  "default_optional_isolated_test_skipped": 1,
+  "three_column_regression_initial_old_implementation_failed": true,
+  "three_column_add_reinspect_backup_duplicate_test_passed": true,
+  "four_column_legacy_stem_preserved": true,
+  "scheme_reader_three_and_four_columns": true,
+  "encoding_rules_and_6500_resource_unchanged": true,
+  "close_last_window_termination_test": true,
+  "real_personal_dictionary_written_for_tests": false,
+  "isolated_scheme_integration": {
+    "full": true,
+    "pure": true
+  },
+  "universal_architectures": [
+    "arm64",
+    "x86_64"
+  ],
+  "min_macos_both_slices": "13.0",
+  "codesign_deep_strict": true,
+  "apple_notarized": false,
+  "intel_runtime_tested": false,
+  "new_app_ui_interaction_tested": false,
+  "archive": {
+    "name": "wubi-code-assistant-macos-1.3.zip",
+    "sha256": "66911c1b42b54c32ca122633c3f46a6a146f4b066990508ba6d0843c11ea679d"
+  }
+}

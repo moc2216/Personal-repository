@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 DATA=ROOT/'data'
 EXPECTED=json.loads((ROOT/'tests/expected.json').read_text(encoding='utf-8'))
-FILES={'default.custom.yaml','moc_wubi86_simp.schema.yaml','moc_wubi86_simp.dict.yaml',
+FILES={'moc_settings.yaml','squirrel.custom.yaml','default.custom.yaml','moc_wubi86_simp.schema.yaml','moc_wubi86_simp.dict.yaml',
        'moc_wubi86_simp_plus.schema.yaml','moc_wubi86_simp_plus.dict.yaml',
        'moc_reverse.schema.yaml','moc_reverse.dict.yaml','moc_wubi86_user.dict.yaml',
        'moc_wubi86_core.dict.yaml','moc_wubi86_extra.dict.yaml'} | {'lua/'+n for n in EXPECTED['lua_sha256']}
@@ -98,6 +98,6 @@ class DataTests(unittest.TestCase):
             self.assertEqual(imports.strip(),'\n  '.join('- '+p for p in parts))
             self.assertEqual(rows(name),[])
 
-    def test_lua_implementations_unchanged(self):
+    def test_lua_implementations_match_reviewed_digests(self):
         for n,digest in EXPECTED['lua_sha256'].items():
             self.assertEqual(hashlib.sha256((DATA/'lua'/n).read_bytes()).hexdigest(),digest)

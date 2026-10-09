@@ -95,7 +95,7 @@ final class AppViewModelTests: XCTestCase {
     XCTAssertEqual(try Data(contentsOf: dictionary), before)
     model.confirmAdd(mode: .addVariant)
     XCTAssertTrue(
-      try String(contentsOf: dictionary, encoding: .utf8).contains("仓位\twbwu\t50000\t\n"))
+      try String(contentsOf: dictionary, encoding: .utf8).contains("仓位\twbwu\t50000\n"))
     let backups = try FileManager.default.contentsOfDirectory(
       at: root.appendingPathComponent("backups"), includingPropertiesForKeys: nil)
     XCTAssertEqual(backups.count, 1)
@@ -114,7 +114,7 @@ final class AppViewModelTests: XCTestCase {
     let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
     let user = root.appendingPathComponent("moc_wubi86_user.dict.yaml")
-    try ("name: moc_wubi86_user\ncolumns: [text, code, weight, stem]\n...\n" + rows).write(
+    try ("name: moc_wubi86_user\ncolumns: [text, code, weight]\n...\n" + rows).write(
       to: user, atomically: true, encoding: .utf8)
     let environment = RimeEnvironment(
       rimeDirectoryURL: root, userDictionaryURL: user,

@@ -79,9 +79,12 @@ public struct SchemeDictionaryReader: Sendable {
       return !trimmed.isEmpty && !trimmed.hasPrefix("#")
     }
     // 空聚合字典无需列声明；有正文时只支持本项目列顺序，不静默漏词。
+    let supportedColumns = [["text", "code", "weight"], ["text", "code", "weight", "stem"]]
     guard
-      rows.isEmpty || scalar(header, path: ["columns"]) == "[text, code, weight, stem]"
-        || blockList(header, key: "columns") == ["text", "code", "weight", "stem"]
+      rows.isEmpty || supportedColumns.contains(where: {
+        scalar(header, path: ["columns"]) == "[" + $0.joined(separator: ", ") + "]"
+          || blockList(header, key: "columns") == $0
+      })
     else { throw RimeCoreError.invalidText }
     for line in rows {
       let trimmed = line.trimmingCharacters(in: .whitespaces)

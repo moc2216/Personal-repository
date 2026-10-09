@@ -1,7 +1,7 @@
 # 个人词表优先；保留聚合层以维持同权重候选的原有顺序。
 ---
 name: moc_wubi86_simp_plus
-version: "2026.10.06-clean"
+version: "2026.10.09"
 sort: by_weight
 import_tables:
   - moc_wubi86_user

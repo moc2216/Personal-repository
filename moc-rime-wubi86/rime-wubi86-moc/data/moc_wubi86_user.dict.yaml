@@ -1,8 +1,8 @@
 # 已有同名个人词表时保留原文件，不用此模板覆盖。
 ---
 name: moc_wubi86_user
-version: "2026.10.06-clean"
+version: "2026.10.09"
 sort: by_weight
-columns: [text, code, weight, stem]
+columns: [text, code, weight]
 ...
-# 文本、编码、权重、stem，用 Tab 分隔；stem 可留空。
+# 文本、编码、权重，用 Tab 分隔。
