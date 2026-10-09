@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-09",
+  "version": "1.3.2",
+  "build": 6,
+  "change": "Restore original compact default window; retain padded inputs, aspect-fit diagrams and page scrolling.",
+  "default_content_size_points": [
+    720,
+    680
+  ],
+  "minimum_content_size_points": [
+    600,
+    540
+  ],
+  "swift_tests": 38,
+  "test_failures": 0,
+  "optional_isolated_test_skipped": 1,
+  "universal_architectures": [
+    "arm64",
+    "x86_64"
+  ],
+  "min_macos_both_slices": "13.0",
+  "codesign_deep_strict": true,
+  "archive_bundle_bytes_match_installed_app": true,
+  "encoding_and_diagram_resources_unchanged": true,
+  "real_personal_dictionary_written_for_tests": false,
+  "ui_runtime_this_version_verified": false,
+  "ui_verification_limit": "Mac locked; no attempt to unlock. Previous padded-input and scrolling interaction evidence remains in layout-1.3.1.json.",
+  "apple_notarized": false,
+  "intel_runtime_tested": false,
+  "archive": {
+    "name": "wubi-code-assistant-macos-1.3.2.zip",
+    "sha256": "0c5fc71d768954cffc566c1dd187c8405e0458d7c981da01c8e78d211b534431"
+  }
+}

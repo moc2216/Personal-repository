@@ -16,7 +16,7 @@ struct RimeWubiAssistantApp: App {
       ContentView(model: model)
         .frame(minWidth: 600, minHeight: 540)
     }
-    .defaultSize(width: 720, height: 740)
+    .defaultSize(width: 720, height: 680)
     .windowResizability(.contentMinSize)
     .commands {
       CommandGroup(replacing: .newItem) {}

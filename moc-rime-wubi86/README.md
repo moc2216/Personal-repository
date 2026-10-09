@@ -19,7 +19,7 @@ Rime数据以 [极点86](https://github.com/KyleBing/rime-wubi86-jidian) 基础�
 
 - [macOS 鼠须管数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.09/moc-wubi86-macos-2026.10.09.zip)：包含输入法数据、默认蓝色遐想，optional另存两套完整外观。首次复制data内容后部署，以后换皮肤只替换外观文件并重新部署。
 - [Windows／Linux 通用数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.09/moc-wubi86-data-2026.10.09.zip)：包含双模式注册和 Control＋Shift＋0，沿用自己前端的外观。
-- [macOS助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/wubi-code-assistant-1.3.1/wubi-code-assistant-macos-1.3.1.zip)：Apple Silicon与Intel通用App，解压后运行。首次使用前按助手说明准备个人词库。
+- [macOS助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/wubi-code-assistant-1.3.2/wubi-code-assistant-macos-1.3.2.zip)：Apple Silicon与Intel通用App，解压后运行。首次使用前按助手说明准备个人词库。
 
 已有设置和个人词库须保留，复制前查看包内说明。
 
