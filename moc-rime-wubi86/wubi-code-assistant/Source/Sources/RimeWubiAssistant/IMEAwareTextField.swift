@@ -1,9 +1,39 @@
 import AppKit
 import SwiftUI
 
-struct IMEAwareTextField: NSViewRepresentable {
+struct IMEAwareTextField: View {
   @Binding var text: String
   let placeholder: String
+  var font: NSFont = .systemFont(ofSize: 18)
+  var focusesInitially = false
+  let onChange: (String, Bool) -> Void
+  @State private var isFocused = false
+
+  var body: some View {
+    NativeTextField(
+      text: $text, isFocused: $isFocused, placeholder: placeholder,
+      font: font, focusesInitially: focusesInitially, onChange: onChange
+    )
+    .frame(height: 24)
+    .padding(.horizontal, 10)
+    .padding(.vertical, 8)
+    .background(Color(nsColor: .textBackgroundColor), in: RoundedRectangle(cornerRadius: 7))
+    .overlay {
+      RoundedRectangle(cornerRadius: 7)
+        .strokeBorder(
+          isFocused ? Color.accentColor : Color(nsColor: .separatorColor),
+          lineWidth: isFocused ? 2 : 1
+        )
+    }
+  }
+}
+
+private struct NativeTextField: NSViewRepresentable {
+  @Binding var text: String
+  @Binding var isFocused: Bool
+  let placeholder: String
+  let font: NSFont
+  let focusesInitially: Bool
   let onChange: (String, Bool) -> Void
 
   func makeCoordinator() -> Coordinator {
@@ -14,15 +44,21 @@ struct IMEAwareTextField: NSViewRepresentable {
     let field = NSTextField(string: text)
     field.delegate = context.coordinator
     field.placeholderString = placeholder
-    field.font = .systemFont(ofSize: 18)
-    field.controlSize = .large
-    field.isBezeled = true
-    field.bezelStyle = .roundedBezel
-    field.focusRingType = .default
+    field.font = font
+    field.isBezeled = false
+    field.isBordered = false
+    field.drawsBackground = false
+    field.focusRingType = .none
+    field.usesSingleLineMode = true
     field.lineBreakMode = .byTruncatingTail
+    field.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    field.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+    field.setContentCompressionResistancePriority(.required, for: .vertical)
 
-    DispatchQueue.main.async {
-      field.window?.makeFirstResponder(field)
+    if focusesInitially {
+      DispatchQueue.main.async {
+        field.window?.makeFirstResponder(field)
+      }
     }
     return field
   }
@@ -35,10 +71,14 @@ struct IMEAwareTextField: NSViewRepresentable {
   }
 
   final class Coordinator: NSObject, NSTextFieldDelegate {
-    var parent: IMEAwareTextField
+    var parent: NativeTextField
 
-    init(parent: IMEAwareTextField) {
+    init(parent: NativeTextField) {
       self.parent = parent
+    }
+
+    func controlTextDidBeginEditing(_ notification: Notification) {
+      parent.isFocused = true
     }
 
     func controlTextDidChange(_ notification: Notification) {
@@ -50,6 +90,7 @@ struct IMEAwareTextField: NSViewRepresentable {
     }
 
     func controlTextDidEndEditing(_ notification: Notification) {
+      parent.isFocused = false
       guard let field = notification.object as? NSTextField else { return }
       let value = field.stringValue
       parent.text = value

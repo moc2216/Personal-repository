@@ -6,17 +6,26 @@ struct ContentView: View {
   @ObservedObject var model: AppViewModel
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 20) {
-      header
-      wordInput
-      suggestion
-      decomposition
-      weight
-      Spacer(minLength: 0)
-      status
-      addButton
+    VStack(spacing: 0) {
+      ScrollView(.vertical) {
+        VStack(alignment: .leading, spacing: 16) {
+          header
+          wordInput
+          suggestion
+          decomposition
+          weight
+        }
+        .padding(EdgeInsets(top: 20, leading: 24, bottom: 20, trailing: 24))
+        .frame(maxWidth: .infinity)
+      }
+      Divider()
+      VStack(alignment: .leading, spacing: 12) {
+        status
+        addButton
+      }
+      .padding(.horizontal, 24)
+      .padding(.vertical, 16)
     }
-    .padding(EdgeInsets(top: 24, leading: 28, bottom: 26, trailing: 28))
     .toolbar { lowFrequencyMenu }
     .alert(
       model.hasBuiltinExactMatch ? "词库已有此词，仍添加个人词条？" : "确认添加", isPresented: $model.showConfirmation
@@ -54,11 +63,11 @@ struct ContentView: View {
         .font(.headline)
       IMEAwareTextField(
         text: $model.word,
-        placeholder: "请输入常用简体词语"
+        placeholder: "请输入常用简体词语",
+        focusesInitially: true
       ) { value, isComposing in
         model.wordDidChange(value, isComposing: isComposing)
       }
-      .frame(height: 32)
     }
   }
 
@@ -66,14 +75,15 @@ struct ContentView: View {
     VStack(alignment: .leading, spacing: 8) {
       Text("建议编码")
         .font(.headline)
-      TextField("自动生成，也可手动修改", text: $model.code)
-        .textFieldStyle(.roundedBorder)
-        .font(.system(size: 22, weight: .semibold, design: .monospaced))
-        .onChange(of: model.code) { _ in model.refreshDuplicateStatus() }
+      IMEAwareTextField(
+        text: $model.code,
+        placeholder: "自动生成，也可手动修改",
+        font: .monospacedSystemFont(ofSize: 18, weight: .semibold)
+      ) { _, _ in model.refreshDuplicateStatus() }
       Text(model.explanation)
         .font(.callout)
         .foregroundStyle(.secondary)
-        .lineLimit(2)
+        .fixedSize(horizontal: false, vertical: true)
         .frame(minHeight: 18, alignment: .leading)
     }
   }
@@ -92,17 +102,10 @@ struct ContentView: View {
               .foregroundStyle(.tertiary)
             Spacer()
           }
-          .frame(height: 128)
+          .frame(height: 96)
         } else {
           VStack(spacing: 0) {
-            if model.characterBreakdowns.count <= 2 {
-              breakdownRows
-            } else {
-              ScrollView(.vertical) {
-                breakdownRows
-              }
-              .frame(maxHeight: 268)
-            }
+            breakdownRows
 
             Divider()
             ResultCodeRow(breakdowns: model.characterBreakdowns, resultCode: model.code)
@@ -220,7 +223,7 @@ private struct CharacterBreakdownRow: View {
     HStack(spacing: 16) {
       VStack(spacing: 5) {
         Text(item.character)
-          .font(.system(size: 34, weight: .medium))
+          .font(.system(size: 30, weight: .medium))
         HighlightedCode(code: item.fullCode, selectedCount: item.selectedCount)
       }
       .frame(width: 88)
@@ -229,10 +232,12 @@ private struct CharacterBreakdownRow: View {
         .padding(.vertical, 12)
 
       DecompositionImage(character: item.character, fullCode: item.fullCode)
-        .frame(maxWidth: .infinity, minHeight: 82, maxHeight: 92)
+        .frame(maxWidth: .infinity)
+        .frame(height: 80)
     }
     .padding(.horizontal, 14)
     .padding(.vertical, 7)
+    .fixedSize(horizontal: false, vertical: true)
     .opacity(item.selectedCount == 0 ? 0.48 : 1)
   }
 }

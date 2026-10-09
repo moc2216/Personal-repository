@@ -70,6 +70,11 @@ final class AppViewModel: ObservableObject {
 
     let normalizedWord = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
     guard !isComposing, !normalizedWord.isEmpty else { return }
+    // 离开词语框也会结束编辑；相同词语不能再次生成并覆盖手填编码。
+    if normalizedWord == lastSuggestedWord && !characterBreakdowns.isEmpty {
+      refreshDuplicateStatus()
+      return
+    }
     suggestionTask = Task { [weak self] in
       try? await Task.sleep(nanoseconds: 260_000_000)
       guard !Task.isCancelled else { return }

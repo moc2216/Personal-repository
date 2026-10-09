@@ -7,6 +7,24 @@ import XCTest
 
 final class AppViewModelTests: XCTestCase {
   @MainActor
+  func testFinishingUnchangedWordEditingDoesNotOverwriteManualCode() async throws {
+    let (model, root) = try fixture(rows: "")
+    defer { try? FileManager.default.removeItem(at: root) }
+    model.word = "仓位"
+    model.generateSuggestion()
+    model.wordDidChange("仓位", isComposing: false)
+    model.code = "zzzz"
+    try await Task.sleep(nanoseconds: 500_000_000)
+    XCTAssertEqual(model.code, "zzzz")
+    // 清空后重新输入相同词语，仍须重新生成，不能沿用上一次的显示状态。
+    model.wordDidChange("", isComposing: false)
+    model.wordDidChange("仓位", isComposing: false)
+    try await Task.sleep(nanoseconds: 500_000_000)
+    XCTAssertEqual(model.code, "wbwu")
+    XCTAssertFalse(model.characterBreakdowns.isEmpty)
+  }
+
+  @MainActor
   func testRuleCodeIsNotOverriddenByPersonalCode() async throws {
     let (model, root) = try fixture(rows: "仓位\tzzzz\t50000\t\n")
     defer { try? FileManager.default.removeItem(at: root) }

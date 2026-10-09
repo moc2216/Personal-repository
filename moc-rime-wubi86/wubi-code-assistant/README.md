@@ -2,14 +2,16 @@
 
 输入中文，按五笔86组词规则生成编码并展示逐字取码；核对重复情况，确认后备份并加入个人词库，再请求鼠须管重新部署。编码与权重可手动修改。关闭最后一个窗口即退出程序。
 
-**版本1.3（build 4）**，macOS 13及以上，Apple Silicon与Intel通用App。当前实机验证为Apple Silicon；Intel只完成编译与签名检查。
+**版本1.3.1（build 5）**，macOS 13及以上，Apple Silicon与Intel通用App。当前实机验证为Apple Silicon；Intel只完成编译与签名检查。
 
 ## 使用
 
-1. 下载[Release中的助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.09/wubi-code-assistant-macos-1.3.zip)，解压后运行 `Wubi Code Assistant.app`，也可放入Applications。
+1. 下载[Release中的助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/wubi-code-assistant-1.3.1/wubi-code-assistant-macos-1.3.1.zip)，解压后运行 `Wubi Code Assistant.app`，也可放入Applications。
 2. 配合本仓库的Rime数据使用时，先部署数据。已有 `~/Library/Rime/moc_wubi86_user.dict.yaml` 必须保留；首次使用可采用Rime数据中的空模板。当前助手固定写入这个文件，不管理其他个人词库。
 3. 输入词语，自动生成编码与逐字取码。根据重复提示确认是否需要添加，可修改编码或默认50000权重。
 4. 点击“添加并重新部署”，确认后才写入；个人表同词同码会阻止重复，同词异码可保留或替换。备份位于 `~/Library/Rime/.moc_wubi86_backups/`。
+
+窗口可调整大小。词语与编码输入框留出上下边距，拆字图按比例完整显示；长词可滚动查看整页，底部提示和添加按钮保持可见。切换输入框不会重复生成并覆盖已手动填写的编码。
 
 个人词表使用文本、编码、权重三列，以Tab分隔。助手新写入三列，仍兼容旧四列词表；不会改写已有记录的stem。
 

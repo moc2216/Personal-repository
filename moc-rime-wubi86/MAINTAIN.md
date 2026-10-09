@@ -24,7 +24,7 @@ Rime部署源为17文件：共用基础、扩展、三列空个人模板，两�
 - 助手：37项Swift检查，默认1项可选隔离测试跳过；三列写入、查重、备份与旧四列兼容通过。历史App交互证据保留原日期，写入验证仅用临时个人表。
 - 下载物：通用数据22文件、macOS数据25文件；通用App的资源、摘要与签名另行核验。
 
-维护命令见两个模块。数据包及字典2026.10.09，助手1.3/build4；Release标签moc-rime-wubi86-2026.10.09。上传三份ZIP及合并SHA256SUMS，只提交moc-rime-wubi86目录。当前证据在各模块tests/native-20261009.json；历史证据保留原日期。
+维护命令见两个模块。数据包及字典2026.10.09，数据Release标签moc-rime-wubi86-2026.10.09；助手1.3.1/build5，助手Release标签wubi-code-assistant-1.3.1。只更新助手时独立发布App ZIP和SHA256SUMS，不重新打包未变化的Rime数据。只提交moc-rime-wubi86目录。数据及三列改动的证据在各模块tests/native-20261009.json；界面修正另见助手tests/layout-1.3.1.json，历史证据保留原日期。
 
 ## 已知限制
 

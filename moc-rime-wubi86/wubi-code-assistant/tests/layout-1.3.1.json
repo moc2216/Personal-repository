@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-09",
+  "version": "1.3.1",
+  "build": 5,
+  "swift_tests": 38,
+  "test_failures": 0,
+  "optional_isolated_test_skipped": 1,
+  "manual_code_regression_red_then_green": true,
+  "reenter_same_word_after_clearing_regression_passed": true,
+  "ui_checks": {
+    "platform": "macOS Apple Silicon",
+    "blank_field_placeholders_complete": true,
+    "two_character_images_complete": true,
+    "code_descenders_and_focus_border_complete": true,
+    "final_installed_app_launched": true,
+    "long_word_example": "中华人民共和国中央人民政府",
+    "long_word_rule_code": "kwwy",
+    "whole_page_scrollbar_reached_one": true,
+    "last_character_image_visible": true,
+    "footer_button_remained_visible": true,
+    "manual_code_preserved_after_switching_fields": true,
+    "zoomed_window_observed": true,
+    "minimum_window_size_verified": false,
+    "minimum_size_verification_limit": "Native UI drag tool reported noWindowsAvailable; minimum size is configured, but not claimed as runtime verified."
+  },
+  "universal_architectures": ["arm64", "x86_64"],
+  "min_macos_both_slices": "13.0",
+  "codesign_deep_strict": true,
+  "apple_notarized": false,
+  "intel_runtime_tested": false,
+  "real_personal_dictionary_written_for_tests": false,
+  "encoding_rules_and_6500_resource_unchanged": true,
+  "archive_bundle_bytes_match_installed_app": true,
+  "archive": {
+    "name": "wubi-code-assistant-macos-1.3.1.zip",
+    "sha256": "63a0b1ba1ddce86913708f8e3c1102ae9a639f6eb5f34848be326c6a8402d3f1"
+  }
+}

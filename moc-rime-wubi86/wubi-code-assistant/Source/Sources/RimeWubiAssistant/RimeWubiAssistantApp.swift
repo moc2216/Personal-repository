@@ -14,9 +14,10 @@ struct RimeWubiAssistantApp: App {
   var body: some Scene {
     WindowGroup("Wubi Code Assistant") {
       ContentView(model: model)
-        .frame(width: 720, height: 680)
+        .frame(minWidth: 600, minHeight: 540)
     }
-    .windowResizability(.contentSize)
+    .defaultSize(width: 720, height: 740)
+    .windowResizability(.contentMinSize)
     .commands {
       CommandGroup(replacing: .newItem) {}
     }
