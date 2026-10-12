@@ -7,11 +7,87 @@ import XCTest
 
 final class AppViewModelTests: XCTestCase {
   @MainActor
+  func testGenerationReturnsBeforeDuplicateIOAndDisablesAddUntilChecked() async throws {
+    let (model, root) = try fixture(rows: "")
+    defer { try? FileManager.default.removeItem(at: root) }
+    try addBuiltin(to: root)
+    model.word = "仓位"
+    model.generateSuggestion()
+    XCTAssertEqual(model.code, "wbwu")
+    XCTAssertFalse(model.canRequestAdd, "查重应在后台完成，等待期间不能使用旧结果添加")
+    XCTAssertFalse(model.hasBuiltinExactMatch)
+    await model.duplicateTask?.value
+    XCTAssertTrue(model.hasBuiltinExactMatch)
+    XCTAssertTrue(model.canRequestAdd)
+  }
+
+  @MainActor
+  func testLatestManualCodeWinsOverPendingDuplicateResult() async throws {
+    let (model, root) = try fixture(rows: "仓位\tzzzz\t50000\n")
+    defer { try? FileManager.default.removeItem(at: root) }
+    try addBuiltin(to: root)
+    model.word = "仓位"
+    model.generateSuggestion()
+    let previous = model.duplicateTask
+    model.code = "zzzz"
+    model.refreshDuplicateStatus()
+    await previous?.value
+    await model.duplicateTask?.value
+    XCTAssertEqual(model.code, "zzzz")
+    XCTAssertFalse(model.hasBuiltinExactMatch)
+    XCTAssertFalse(model.canRequestAdd)
+    XCTAssertTrue(model.statusMessage.contains("个人词库已有同词同码"))
+  }
+
+  @MainActor
+  func testClearingAndCompositionCannotApplyPendingResult() async throws {
+    let (model, root) = try fixture(rows: "")
+    defer { try? FileManager.default.removeItem(at: root) }
+    model.word = "仓位"
+    model.generateSuggestion()
+    let previous = model.duplicateTask
+    model.wordDidChange("", isComposing: false)
+    await previous?.value
+    XCTAssertFalse(model.canRequestAdd)
+    XCTAssertTrue(model.code.isEmpty)
+    model.wordDidChange("仓位", isComposing: true)
+    XCTAssertTrue(model.code.isEmpty)
+    XCTAssertFalse(model.canRequestAdd)
+    model.wordDidChange("仓位", isComposing: false)
+    XCTAssertEqual(model.code, "wbwu", "组合输入提交后应立即生成，不额外等待260毫秒")
+    await model.duplicateTask?.value
+    XCTAssertTrue(model.canRequestAdd)
+  }
+
+  @MainActor
+  func testPersonalEditAfterCheckOrConfirmationStillBlocksDuplicateWrite() async throws {
+    let (model, root) = try fixture(rows: "")
+    defer { try? FileManager.default.removeItem(at: root) }
+    let user = root.appendingPathComponent("moc_wubi86_user.dict.yaml")
+    let empty = try String(contentsOf: user, encoding: .utf8)
+    let duplicate = empty + "仓位\twbwu\t50000\n"
+    model.word = "仓位"
+    model.generateSuggestion()
+    await model.duplicateTask?.value
+    try duplicate.write(to: user, atomically: true, encoding: .utf8)
+    model.requestAdd()
+    XCTAssertFalse(model.showConfirmation)
+    try empty.write(to: user, atomically: true, encoding: .utf8)
+    model.requestAdd()
+    XCTAssertTrue(model.showConfirmation)
+    try duplicate.write(to: user, atomically: true, encoding: .utf8)
+    model.confirmAdd(mode: .addVariant)
+    XCTAssertEqual(try String(contentsOf: user, encoding: .utf8), duplicate)
+    XCTAssertFalse(FileManager.default.fileExists(atPath: root.appendingPathComponent("backups").path))
+  }
+
+  @MainActor
   func testFinishingUnchangedWordEditingDoesNotOverwriteManualCode() async throws {
     let (model, root) = try fixture(rows: "")
     defer { try? FileManager.default.removeItem(at: root) }
     model.word = "仓位"
     model.generateSuggestion()
+    await model.duplicateTask?.value
     model.wordDidChange("仓位", isComposing: false)
     model.code = "zzzz"
     try await Task.sleep(nanoseconds: 500_000_000)
@@ -30,6 +106,7 @@ final class AppViewModelTests: XCTestCase {
     defer { try? FileManager.default.removeItem(at: root) }
     model.word = "仓位"
     model.generateSuggestion()
+    await model.duplicateTask?.value
     XCTAssertEqual(model.code, "wbwu")
     XCTAssertTrue(model.canRequestAdd)
     model.requestAdd()
@@ -43,11 +120,13 @@ final class AppViewModelTests: XCTestCase {
     defer { try? FileManager.default.removeItem(at: root) }
     model.word = "仓位"
     model.generateSuggestion()
+    await model.duplicateTask?.value
     XCTAssertFalse(model.canRequestAdd)
     model.requestAdd()
     XCTAssertFalse(model.showConfirmation)
     model.code = "zzzz"
     model.refreshDuplicateStatus()
+    await model.duplicateTask?.value
     XCTAssertTrue(model.canRequestAdd)
     model.requestAdd()
     XCTAssertTrue(model.showConfirmation)
@@ -60,6 +139,7 @@ final class AppViewModelTests: XCTestCase {
     defer { try? FileManager.default.removeItem(at: root) }
     model.word = "仓位"
     model.generateSuggestion()
+    await model.duplicateTask?.value
     XCTAssertEqual(model.code, "wbwu")
     XCTAssertTrue(model.statusMessage.contains("未完成"))
     model.requestAdd()
@@ -74,6 +154,7 @@ final class AppViewModelTests: XCTestCase {
     try FileManager.default.removeItem(at: root.appendingPathComponent("moc_wubi86_user.dict.yaml"))
     model.word = "仓位"
     model.generateSuggestion()
+    await model.duplicateTask?.value
     XCTAssertEqual(model.code, "wbwu")
     XCTAssertFalse(model.canRequestAdd)
     model.requestAdd()
@@ -87,6 +168,7 @@ final class AppViewModelTests: XCTestCase {
     try addBuiltin(to: root)
     model.word = "仓位"
     model.generateSuggestion()
+    await model.duplicateTask?.value
     XCTAssertTrue(model.hasBuiltinExactMatch)
     XCTAssertTrue(model.canRequestAdd)
     model.requestAdd()
@@ -95,6 +177,7 @@ final class AppViewModelTests: XCTestCase {
     // 修改编码后必须按最终编码重新比对，不沿用先前相同结论。
     model.code = "zzzz"
     model.refreshDuplicateStatus()
+    await model.duplicateTask?.value
     model.requestAdd()
     XCTAssertFalse(model.hasBuiltinExactMatch)
     XCTAssertTrue(model.confirmationMessage.contains("wbwu"))
@@ -108,6 +191,7 @@ final class AppViewModelTests: XCTestCase {
     let before = try Data(contentsOf: dictionary)
     model.word = "仓位"
     model.generateSuggestion()
+    await model.duplicateTask?.value
     model.requestAdd()
     XCTAssertTrue(model.showConfirmation)
     XCTAssertEqual(try Data(contentsOf: dictionary), before)

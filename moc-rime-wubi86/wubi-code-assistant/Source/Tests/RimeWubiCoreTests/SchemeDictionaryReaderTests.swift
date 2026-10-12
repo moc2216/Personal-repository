@@ -119,6 +119,95 @@ final class SchemeDictionaryReaderTests: XCTestCase {
   private func read() -> SchemeDictionaryStatus {
     SchemeDictionaryReader(rimeDirectoryURL: root).read()
   }
+
+  func testCacheObservesSchemeAndImportChanges() async throws {
+    let cache = SchemeDictionaryCache(rimeDirectoryURL: root)
+    let pure = await cache.read()
+    XCTAssertFalse(pure.check(text: "人工智能", code: "watc")!.hasExactMatch)
+    let again = await cache.read()
+    XCTAssertTrue(again.check(text: "我们", code: "trwu")!.hasExactMatch)
+    try configure("moc_wubi86_simp_plus", imports: ["moc_wubi86_extra"])
+    let full = await cache.read()
+    XCTAssertTrue(full.check(text: "人工智能", code: "watc")!.hasExactMatch)
+    XCTAssertFalse(full.check(text: "我们", code: "trwu")!.hasExactMatch)
+    try configure("moc_wubi86_simp_plus", imports: ["moc_wubi86_core"])
+    let changedImports = await cache.read()
+    XCTAssertFalse(changedImports.check(text: "人工智能", code: "watc")!.hasExactMatch)
+    XCTAssertTrue(changedImports.check(text: "我们", code: "trwu")!.hasExactMatch)
+  }
+
+  func testCacheRejectsUndeployedChangesAndRefreshesAfterDeployment() async throws {
+    let cache = SchemeDictionaryCache(rimeDirectoryURL: root)
+    _ = await cache.read()
+    try write("moc_wubi86_core.dict.yaml", marker + "更新词\tabcd\t40000\n")
+    try FileManager.default.setAttributes(
+      [.modificationDate: Date().addingTimeInterval(100)],
+      ofItemAtPath: root.appendingPathComponent("moc_wubi86_core.dict.yaml").path)
+    let stale = await cache.read()
+    XCTAssertNil(stale.check(text: "更新词", code: "abcd"))
+    try FileManager.default.setAttributes(
+      [.modificationDate: Date().addingTimeInterval(200)],
+      ofItemAtPath: root.appendingPathComponent("build/moc_wubi86_simp.table.bin").path)
+    let deployed = await cache.read()
+    XCTAssertTrue(deployed.check(text: "更新词", code: "abcd")!.hasExactMatch)
+    XCTAssertFalse(deployed.check(text: "我们", code: "trwu")!.hasExactMatch)
+  }
+
+  func testCacheDetectsAtomicReplacementWithSameSizeAndMtime() async throws {
+    let cache = SchemeDictionaryCache(rimeDirectoryURL: root)
+    _ = await cache.read()
+    let url = root.appendingPathComponent("moc_wubi86_core.dict.yaml")
+    let date = try url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate!
+    let old = try String(contentsOf: url, encoding: .utf8)
+    let new = old.replacingOccurrences(of: "我们", with: "你们")
+    XCTAssertEqual(old.utf8.count, new.utf8.count)
+    try new.write(to: url, atomically: true, encoding: .utf8)
+    try FileManager.default.setAttributes([.modificationDate: date], ofItemAtPath: url.path)
+    let replaced = await cache.read()
+    XCTAssertTrue(replaced.check(text: "你们", code: "trwu")!.hasExactMatch)
+    XCTAssertFalse(replaced.check(text: "我们", code: "trwu")!.hasExactMatch)
+  }
+
+  func testCacheObservesAddedAndRemovedDictionaryPatch() async throws {
+    let cache = SchemeDictionaryCache(rimeDirectoryURL: root)
+    _ = await cache.read()
+    try write("moc_wubi86_core.dict.custom.yaml", "patch:\n  other: value\n")
+    let patched = await cache.read()
+    XCTAssertNil(patched.check(text: "我们", code: "trwu"))
+    try FileManager.default.removeItem(at: root.appendingPathComponent("moc_wubi86_core.dict.custom.yaml"))
+    let restored = await cache.read()
+    XCTAssertTrue(restored.check(text: "我们", code: "trwu")!.hasExactMatch)
+  }
+
+  func testCacheTracksPersonalDependencyWithoutCallingItBuiltin() async throws {
+    let cache = SchemeDictionaryCache(rimeDirectoryURL: root)
+    let initial = await cache.read()
+    XCTAssertFalse(initial.check(text: "个人词", code: "abcd")!.hasExactMatch)
+    try FileManager.default.setAttributes(
+      [.modificationDate: Date().addingTimeInterval(100)],
+      ofItemAtPath: root.appendingPathComponent("moc_wubi86_user.dict.yaml").path)
+    let stale = await cache.read()
+    XCTAssertNil(stale.check(text: "个人词", code: "abcd"))
+  }
+
+  func testCacheTracksCompiledSchema() async throws {
+    let cache = SchemeDictionaryCache(rimeDirectoryURL: root)
+    _ = await cache.read()
+    try write("build/moc_wubi86_simp.schema.yaml", "translator:\n  dictionary: not_found\n")
+    let changed = await cache.read()
+    XCTAssertNil(changed.check(text: "我们", code: "trwu"))
+  }
+
+  func testCacheDoesNotKeepSuccessWhenTableMissingOrFailureAfterRecovery() async throws {
+    let cache = SchemeDictionaryCache(rimeDirectoryURL: root)
+    _ = await cache.read()
+    try FileManager.default.removeItem(at: root.appendingPathComponent("build/moc_wubi86_simp.table.bin"))
+    let missing = await cache.read()
+    XCTAssertNil(missing.check(text: "我们", code: "trwu"))
+    try configure("moc_wubi86_simp", imports: ["moc_wubi86_core"])
+    let recovered = await cache.read()
+    XCTAssertTrue(recovered.check(text: "我们", code: "trwu")!.hasExactMatch)
+  }
   private func assertUnavailable(file: StaticString = #filePath, line: UInt = #line) {
     if case .available = read() { XCTFail("应该明确显示未完成比对", file: file, line: line) }
     XCTAssertNil(read().check(text: "人工智能", code: "watc"), file: file, line: line)

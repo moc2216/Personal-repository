@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-12",
+  "version": "1.3.3",
+  "build": 7,
+  "swift_tests": 49,
+  "test_failures": 0,
+  "optional_isolated_test_skipped": 1,
+  "generation_async_regression_red_then_green": true,
+  "regressions": [
+    "pending check blocks add",
+    "latest manual code wins",
+    "clear and composition reject stale results",
+    "fresh personal checks before confirmation and write",
+    "mode and imports invalidate cache",
+    "undeployed source rejected, deployment refreshes",
+    "same-size same-mtime atomic replacement detected",
+    "dictionary patch creation and removal observed",
+    "personal dependency is tracked, excluded from builtin entries",
+    "compiled schema change observed",
+    "missing table invalidates success; recovery observed"
+  ],
+  "benchmark": {
+    "scope": "Swift -O, exact core source; public dictionary bytes matched live data; isolated generated personal table; 7 samples per mode. Not end-to-end UI frame latency.",
+    "pure_entries": 72241,
+    "full_entries": 135495,
+    "before_pure_read_and_two_checks_median_ms": 92.3,
+    "before_full_read_and_two_checks_median_ms": 184.75,
+    "after_pure_cached_read_and_one_check_median_ms": 3.283916,
+    "after_full_cached_read_and_one_check_median_ms": 5.235208,
+    "first_full_background_load_ms": 177.00375,
+    "fixed_260ms_delay_removed": true
+  },
+  "ui_checks": {
+    "platform": "macOS Apple Silicon",
+    "installed_version_launched": true,
+    "word_generated_code_and_two_images": true,
+    "manual_code_refreshed_check": true,
+    "manual_code_preserved_across_focus_switch": true,
+    "clearing_word_cleared_code_and_disabled_add": true,
+    "default_content_size_points": [
+      720,
+      680
+    ],
+    "real_personal_dictionary_written_for_tests": false,
+    "native_frame_latency_profiled": false
+  },
+  "universal_architectures": [
+    "arm64",
+    "x86_64"
+  ],
+  "min_macos_both_slices": "13.0",
+  "codesign_deep_strict": true,
+  "apple_notarized": false,
+  "intel_runtime_tested": false,
+  "encoding_rules_and_resources_unchanged": true,
+  "archive": {
+    "name": "wubi-code-assistant-macos-1.3.3.zip",
+    "sha256": "8ff923524da3086ab7b9411eaa0baa0e6e400404332ae416a76350664c41254b"
+  },
+  "archive_bundle_matches_installed": true
+}

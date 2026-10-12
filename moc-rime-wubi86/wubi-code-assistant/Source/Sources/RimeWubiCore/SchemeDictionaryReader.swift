@@ -6,12 +6,56 @@ public enum SchemeDictionaryStatus: Sendable {
 
   public func check(text: String, code: String) -> DictionaryCheck? {
     guard case .available(_, _, let entries) = self else { return nil }
+    let normalizedCode = code.lowercased()
     return DictionaryCheck(
-      hasExactMatch: entries.contains { $0.text == text && $0.code == code.lowercased() },
-      sameTextEntries: entries.filter { $0.text == text && $0.code != code.lowercased() },
-      sameCodeEntries: entries.filter { $0.code == code.lowercased() && $0.text != text }
+      hasExactMatch: entries.contains { $0.text == text && $0.code == normalizedCode },
+      sameTextEntries: entries.filter { $0.text == text && $0.code != normalizedCode },
+      sameCodeEntries: entries.filter { $0.code == normalizedCode && $0.text != text }
     )
   }
+}
+
+/// 仅缓存成功读取的数据；每次使用前核对所有依赖，缺失或更新时重新读取。
+public actor SchemeDictionaryCache {
+  private let reader: SchemeDictionaryReader
+  private var snapshot: SchemeSnapshot?
+
+  public init(rimeDirectoryURL: URL) {
+    reader = SchemeDictionaryReader(rimeDirectoryURL: rimeDirectoryURL)
+  }
+
+  public func read() -> SchemeDictionaryStatus {
+    guard !Task.isCancelled else { return .unavailable("比对已取消") }
+    if let snapshot, snapshot.isCurrent { return snapshot.status }
+    let loaded = reader.readSnapshot()
+    if case .available = loaded.status { snapshot = loaded } else { snapshot = nil }
+    return loaded.status
+  }
+}
+
+fileprivate enum SchemeFileStamp: Equatable, Sendable {
+  case absent
+  case present(modified: Date, size: UInt64, inode: UInt64)
+
+  init(_ url: URL) {
+    guard let attributes = try? FileManager.default.attributesOfItem(atPath: url.path),
+      let modified = attributes[.modificationDate] as? Date
+    else { self = .absent; return }
+    self = .present(
+      modified: modified, size: (attributes[.size] as? NSNumber)?.uint64Value ?? 0,
+      inode: (attributes[.systemFileNumber] as? NSNumber)?.uint64Value ?? 0)
+  }
+
+  var modified: Date? {
+    if case .present(let modified, _, _) = self { return modified }
+    return nil
+  }
+}
+
+fileprivate struct SchemeSnapshot: Sendable {
+  let status: SchemeDictionaryStatus
+  let dependencies: [URL: SchemeFileStamp]
+  var isCurrent: Bool { dependencies.allSatisfy { SchemeFileStamp($0.key) == $0.value } }
 }
 
 /// 只读Rime最近选择的方案及其已部署主字典，不初始化另一个Rime会话。
@@ -21,34 +65,47 @@ public struct SchemeDictionaryReader: Sendable {
   public init(rimeDirectoryURL: URL) { self.rimeDirectoryURL = rimeDirectoryURL }
 
   public func read() -> SchemeDictionaryStatus {
+    readSnapshot().status
+  }
+
+  fileprivate func readSnapshot() -> SchemeSnapshot {
+    var dependencies: [URL: SchemeFileStamp] = [:]
     do {
-      let state = try contents("user.yaml")
+      let state = try contents("user.yaml", dependencies: &dependencies)
       guard let schemaID = scalar(state, path: ["var", "previously_selected_schema"]),
         ["moc_wubi86_simp", "moc_wubi86_simp_plus"].contains(schemaID)
-      else { return .unavailable("未确认正在使用的moc五笔方案") }
-      let schema = try contents("build/\(schemaID).schema.yaml")
+      else { throw RimeCoreError.invalidText }
+      let schema = try contents("build/\(schemaID).schema.yaml", dependencies: &dependencies)
       guard let dictionary = scalar(schema, path: ["translator", "dictionary"]),
         validName(dictionary)
-      else { return .unavailable("无法识别已部署方案的主字典") }
+      else { throw RimeCoreError.invalidText }
       let name = scalar(schema, path: ["schema", "name"]) ?? schemaID
       let tableURL = rimeDirectoryURL.appendingPathComponent("build/\(dictionary).table.bin")
-      let compiledDate =
-        try tableURL.resourceValues(forKeys: [.contentModificationDateKey])
-        .contentModificationDate ?? .distantPast
+      let tableStamp = SchemeFileStamp(tableURL)
+      dependencies[tableURL] = tableStamp
+      guard let compiledDate = tableStamp.modified else { throw RimeCoreError.invalidText }
       var visited: Set<String> = []
       var stack: Set<String> = []
       var entries: [DictionaryEntry] = []
       try load(
-        dictionary, compiledDate: compiledDate, visited: &visited, stack: &stack, entries: &entries)
-      return .available(schemaID: schemaID, name: name, entries: entries)
+        dictionary, compiledDate: compiledDate, visited: &visited, stack: &stack,
+        entries: &entries, dependencies: &dependencies)
+      let snapshot = SchemeSnapshot(
+        status: .available(schemaID: schemaID, name: name, entries: entries),
+        dependencies: dependencies)
+      guard snapshot.isCurrent else { throw RimeCoreError.invalidText }
+      return snapshot
     } catch {
-      return .unavailable("方案数据缺失、尚未重新部署或格式无法识别")
+      return SchemeSnapshot(
+        status: .unavailable("方案数据缺失、尚未重新部署或格式无法识别"),
+        dependencies: dependencies)
     }
   }
 
   private func load(
     _ name: String, compiledDate: Date, visited: inout Set<String>,
-    stack: inout Set<String>, entries: inout [DictionaryEntry]
+    stack: inout Set<String>, entries: inout [DictionaryEntry],
+    dependencies: inout [URL: SchemeFileStamp]
   ) throws {
     guard validName(name), !stack.contains(name), visited.count < 128 else {
       throw RimeCoreError.invalidText
@@ -57,14 +114,15 @@ public struct SchemeDictionaryReader: Sendable {
     stack.insert(name)
     defer { stack.remove(name) }
     let url = rimeDirectoryURL.appendingPathComponent("\(name).dict.yaml")
+    let stamp = SchemeFileStamp(url)
+    dependencies[url] = stamp
     guard
-      let modified = try url.resourceValues(forKeys: [.contentModificationDateKey])
-        .contentModificationDate,
+      let modified = stamp.modified,
       modified <= compiledDate
     else { throw RimeCoreError.invalidText }
-    guard
-      !FileManager.default.fileExists(
-        atPath: rimeDirectoryURL.appendingPathComponent("\(name).dict.custom.yaml").path)
+    let custom = rimeDirectoryURL.appendingPathComponent("\(name).dict.custom.yaml")
+    dependencies[custom] = SchemeFileStamp(custom)
+    guard !FileManager.default.fileExists(atPath: custom.path)
     else {
       throw RimeCoreError.invalidText
     }
@@ -103,13 +161,16 @@ public struct SchemeDictionaryReader: Sendable {
     }
     for child in blockList(header, key: "import_tables") {
       try load(
-        child, compiledDate: compiledDate, visited: &visited, stack: &stack, entries: &entries)
+        child, compiledDate: compiledDate, visited: &visited, stack: &stack,
+        entries: &entries, dependencies: &dependencies)
     }
     visited.insert(name)
   }
 
-  private func contents(_ path: String) throws -> String {
-    try String(contentsOf: rimeDirectoryURL.appendingPathComponent(path), encoding: .utf8)
+  private func contents(_ path: String, dependencies: inout [URL: SchemeFileStamp]) throws -> String {
+    let url = rimeDirectoryURL.appendingPathComponent(path)
+    dependencies[url] = SchemeFileStamp(url)
+    return try String(contentsOf: url, encoding: .utf8)
   }
 
   private func validName(_ name: String) -> Bool {

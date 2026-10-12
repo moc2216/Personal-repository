@@ -19,12 +19,21 @@ final class AppViewModel: ObservableObject {
   private let environment: RimeEnvironment
   private let store: PersonalDictionaryStore
   private let reloader: SquirrelReloader
+  private let schemeCache: SchemeDictionaryCache
   private var encoder: WubiEncoder?
   private var lastSuggestedWord = ""
   private var personalMatches: [DictionaryEntry] = []
   private var personalDictionaryReady = false
   @Published private(set) var hasBuiltinExactMatch = false
-  private var suggestionTask: Task<Void, Never>?
+  private(set) var duplicateTask: Task<Void, Never>?
+  private var duplicateRevision = 0
+
+  private struct DuplicateResult: Sendable {
+    let personalMatches: [DictionaryEntry]
+    let personalError: String?
+    let scheme: SchemeDictionaryStatus
+    let check: DictionaryCheck?
+  }
 
   enum StatusKind {
     case neutral
@@ -40,6 +49,7 @@ final class AppViewModel: ObservableObject {
       backupDirectoryURL: environment.backupDirectoryURL
     )
     self.reloader = SquirrelReloader(executableURL: environment.squirrelExecutableURL)
+    self.schemeCache = SchemeDictionaryCache(rimeDirectoryURL: environment.rimeDirectoryURL)
   }
 
   var canRequestAdd: Bool {
@@ -57,7 +67,8 @@ final class AppViewModel: ObservableObject {
 
   func wordDidChange(_ newValue: String, isComposing: Bool) {
     word = newValue
-    suggestionTask?.cancel()
+    duplicateTask?.cancel()
+    duplicateRevision += 1
     if newValue.trimmingCharacters(in: .whitespacesAndNewlines) != lastSuggestedWord {
       code = ""
       explanation = newValue.isEmpty ? "输入常用简体词语，将自动生成编码。" : "正在识别…"
@@ -69,17 +80,14 @@ final class AppViewModel: ObservableObject {
     }
 
     let normalizedWord = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+    if isComposing || normalizedWord.isEmpty { personalDictionaryReady = false }
     guard !isComposing, !normalizedWord.isEmpty else { return }
     // 离开词语框也会结束编辑；相同词语不能再次生成并覆盖手填编码。
     if normalizedWord == lastSuggestedWord && !characterBreakdowns.isEmpty {
       refreshDuplicateStatus()
       return
     }
-    suggestionTask = Task { [weak self] in
-      try? await Task.sleep(nanoseconds: 260_000_000)
-      guard !Task.isCancelled else { return }
-      self?.generateSuggestion(expectedWord: normalizedWord)
-    }
+    generateSuggestion(expectedWord: normalizedWord)
   }
 
   func generateSuggestion(expectedWord: String? = nil) {
@@ -104,45 +112,78 @@ final class AppViewModel: ObservableObject {
   }
 
   func refreshDuplicateStatus() {
+    duplicateTask?.cancel()
+    duplicateRevision += 1
+    let revision = duplicateRevision
     let text = word.trimmingCharacters(in: .whitespacesAndNewlines)
     let normalizedCode = code.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+    personalDictionaryReady = false
+    personalMatches = []
+    hasBuiltinExactMatch = false
     guard !text.isEmpty, !normalizedCode.isEmpty else { return }
+    let environment = environment
+    let cache = schemeCache
+    let work = Task.detached(priority: .userInitiated) { () -> DuplicateResult? in
+      var personalMatches: [DictionaryEntry] = []
+      var personalError: String?
+      do {
+        let entries = try RimeDictionaryParser.parseFile(
+          at: environment.userDictionaryURL, source: .personal, strict: true)
+        personalMatches = entries.filter { $0.text == text }
+      } catch { personalError = error.localizedDescription }
+      guard !Task.isCancelled else { return nil }
+      let status = await cache.read()
+      guard !Task.isCancelled else { return nil }
+      return DuplicateResult(
+        personalMatches: personalMatches, personalError: personalError,
+        scheme: status, check: status.check(text: text, code: normalizedCode))
+    }
+    duplicateTask = Task { [weak self] in
+      let result = await withTaskCancellationHandler {
+        await work.value
+      } onCancel: { work.cancel() }
+      guard !Task.isCancelled, let result, let self,
+        revision == self.duplicateRevision,
+        text == self.word.trimmingCharacters(in: .whitespacesAndNewlines),
+        normalizedCode == self.code.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+      else { return }
+      self.applyDuplicateResult(result, code: normalizedCode)
+    }
+  }
+
+  private func applyDuplicateResult(_ result: DuplicateResult, code: String) {
     var messages: [String] = []
     var warning = false
-    do {
-      let entries = try RimeDictionaryParser.parseFile(
-        at: environment.userDictionaryURL, source: .personal, strict: true)
-      personalMatches = entries.filter { $0.text == text }
+    personalMatches = result.personalMatches
+    if let error = result.personalError {
+      personalDictionaryReady = false
+      messages.append("个人词库检查未完成，写入前需先解决：\(error)")
+      warning = true
+    } else {
       personalDictionaryReady = true
-      if personalMatches.contains(where: { $0.code == normalizedCode }) {
+      if personalMatches.contains(where: { $0.code == code }) {
         messages.append("个人词库已有同词同码，无需重复添加。")
         warning = true
       } else if !personalMatches.isEmpty {
         messages.append("个人词库已有编码：\(personalMatches.map(\.code).joined(separator: "、"))。")
         warning = true
       }
-    } catch {
-      personalDictionaryReady = false
-      personalMatches = []
-      messages.append("个人词库检查未完成，写入前需先解决：\(error.localizedDescription)")
-      warning = true
     }
-    let status = SchemeDictionaryReader(rimeDirectoryURL: environment.rimeDirectoryURL).read()
-    hasBuiltinExactMatch = status.check(text: text, code: normalizedCode)?.hasExactMatch == true
-    messages.append(contentsOf: schemeMessages(status, text: text, code: normalizedCode))
-    if case .unavailable = status { warning = true }
+    hasBuiltinExactMatch = result.check?.hasExactMatch == true
+    messages.append(contentsOf: schemeMessages(result.scheme, check: result.check))
+    if case .unavailable = result.scheme { warning = true }
     if hasBuiltinExactMatch { warning = true }
     setStatus(messages.joined(separator: "\n"), kind: warning ? .warning : .neutral)
   }
 
-  private func schemeMessages(_ status: SchemeDictionaryStatus, text: String, code: String)
+  private func schemeMessages(_ status: SchemeDictionaryStatus, check: DictionaryCheck?)
     -> [String]
   {
     switch status {
     case .unavailable(let reason):
       return ["当前方案比对未完成：\(reason)。仍可按规则生成编码。"]
     case .available(_, let name, _):
-      guard let check = status.check(text: text, code: code) else { return [] }
+      guard let check else { return [] }
       if check.hasExactMatch {
         return ["\(name)已有同词同码，通常无需添加；需要个人权重时仍可添加。"]
       }
@@ -161,6 +202,8 @@ final class AppViewModel: ObservableObject {
   }
 
   func requestAdd() {
+    duplicateTask?.cancel()
+    duplicateRevision += 1
     guard let weight = Int(weightText) else {
       setStatus(RimeCoreError.invalidWeight.localizedDescription, kind: .error)
       return
@@ -181,14 +224,11 @@ final class AppViewModel: ObservableObject {
         messages.append("同码已有 \(check.sameCodeEntries.count) 个词，这是正常的候选重码。")
       }
       let status = SchemeDictionaryReader(rimeDirectoryURL: environment.rimeDirectoryURL).read()
-      hasBuiltinExactMatch =
-        status.check(
-          text: word.trimmingCharacters(in: .whitespacesAndNewlines),
-          code: code.trimmingCharacters(in: .whitespacesAndNewlines))?.hasExactMatch == true
-      messages.append(
-        contentsOf: schemeMessages(
-          status, text: word.trimmingCharacters(in: .whitespacesAndNewlines),
-          code: code.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()))
+      let builtinCheck = status.check(
+        text: word.trimmingCharacters(in: .whitespacesAndNewlines),
+        code: code.trimmingCharacters(in: .whitespacesAndNewlines).lowercased())
+      hasBuiltinExactMatch = builtinCheck?.hasExactMatch == true
+      messages.append(contentsOf: schemeMessages(status, check: builtinCheck))
       messages.append("确认后将备份词典、写入并请求鼠须管重新部署。")
       confirmationMessage = messages.joined(separator: "\n\n")
       showConfirmation = true
@@ -198,6 +238,8 @@ final class AppViewModel: ObservableObject {
   }
 
   func confirmAdd(mode: AddMode) {
+    duplicateTask?.cancel()
+    duplicateRevision += 1
     showConfirmation = false
     guard let weight = Int(weightText) else {
       setStatus(RimeCoreError.invalidWeight.localizedDescription, kind: .error)
@@ -244,6 +286,8 @@ final class AppViewModel: ObservableObject {
   }
 
   private func finishSuccessfulAdd(_ message: String, kind: StatusKind = .success) {
+    duplicateTask?.cancel()
+    duplicateRevision += 1
     word = ""
     code = ""
     lastSuggestedWord = ""
