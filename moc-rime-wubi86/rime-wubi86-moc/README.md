@@ -2,9 +2,9 @@
 
 给已安装 Rime 的用户使用的简体五笔86数据。提供“纯净”和“全功能”两个模式，默认纯净；两者都支持五笔补全、拼音找字和日常工具。
 
-**数据包：2026.10.09。** 适用于支持 librime-lua 的 macOS、Windows、Linux Rime 输入法。方案与字典版本均为2026.10.09。
+**数据包：2026.10.15。** 适用于支持 librime-lua 的 macOS、Windows、Linux Rime 输入法。方案版本2026.10.15；字典内容未变，版本仍为2026.10.09。
 
-[macOS 鼠须管数据包（含两套外观）](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.09/moc-wubi86-macos-2026.10.09.zip) · [Windows／Linux 通用数据包](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.09/moc-wubi86-data-2026.10.09.zip)
+[macOS 鼠须管数据包（含两套外观）](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.15/moc-wubi86-macos-2026.10.15.zip) · [Windows／Linux 通用数据包](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.15/moc-wubi86-data-2026.10.15.zip)
 
 ## 第一次使用：复制后部署
 
@@ -87,6 +87,7 @@ patch:
 - **五笔补全**：不必一次记住词组完整码。输入前缀可找候选，注释提示还缺哪些编码。
 - **拼音找字**：反引号引导拼音反查，候选显示五笔编码，适合遇到不会拆的字。
 - **中英混输**：全功能中直接输入英文拼写，提供英文候选；无候选时可提交原始字母。
+- **临时输入大写**：中文状态下输入纯字母编码，再按 CapsLock，立即以大写字母上屏；两个模式都支持。
 - **日常工具**：日期、时间、计算器、金额大写、农历转换；保留原选词、翻页和中英切换习惯。
 - **个人词条可维护**：修改共用个人表后重新部署，也可配合 [五笔编码助手](https://github.com/moc2216/Personal-repository/tree/main/moc-rime-wubi86/wubi-code-assistant) 计算、查重后添加。
 - **内容审核可追溯**：删除理由、来源内词频分位、原记录及前后候选对照在源码报告中；不把各来源原始数值直接混合。
@@ -101,6 +102,8 @@ patch:
 “纯净”指词库范围，不表示取消补全、拼音反查或辅助功能。两个模式共用个人词表，词库无需重复保存。
 
 两个模式输入 `trw` 并翻页可找到“我们”，`~u` 表示还缺 `u`，完整编码 `trwu`；全功能输入 `wat` 可找到“人工智能”，提示 `~c`，纯净未收录这个词组。补全词可能在后面的页面。每页六项，分号选第二项、单引号选第三项，方括号翻页，Shift 切中英。
+
+临时需要大写字母时，可以先在中文状态输入 `abc`，再按 CapsLock，直接上屏 `ABC`，无需选候选或再按回车。CapsLock 的正常大写锁定仍保留：继续输入时为大写英文，再按一次关闭后恢复中文。此处理只针对尚未上屏的纯字母串；拼音反查、日期、计算和金额等带引导符或数字的输入保持原行为。
 
 拼音反查以反引号开头，例如 `` `jie ``。日期 `/rq`、时间 `/sj`、计算 `/calc1+2`、金额大写 `R123`、公历转农历 `N20261006`；无候选时空格或回车提交原始字母。
 

@@ -24,7 +24,7 @@ class PackageTests(unittest.TestCase):
                     (ROOT/'data/squirrel.custom.yaml').read_bytes())
                 self.assertEqual(mac.read('optional/macos/blue-reverie/squirrel.custom.yaml'),
                     (ROOT/'optional/macos/blue-reverie/squirrel.custom.yaml').read_bytes())
-                self.assertEqual(len(mac.namelist()),25)
+                self.assertEqual(len(mac.namelist()),26)
                 self.assertNotEqual(mac.getinfo('data/squirrel.custom.yaml').date_time,
                     mac.getinfo('optional/macos/squirrel.custom.yaml').date_time)
                 self.assertFalse(any(Path(n).suffix in ['.py','.sh','.command','.cmd','.bin'] for n in mac.namelist()))
@@ -58,7 +58,7 @@ class PackageTests(unittest.TestCase):
                 names=set(z.namelist())
                 self.assertEqual(names,{'data/'+n for n in pack.DATA_FILES if n != 'squirrel.custom.yaml'}|set(pack.SUPPORT_FILES))
                 self.assertEqual(set(pack.DATA_FILES),FILES)
-                self.assertEqual(len(names),22)
+                self.assertEqual(len(names),23)
                 self.assertFalse(any(Path(n).suffix in ['.py','.sh','.command','.cmd','.bin'] for n in names))
                 self.assertFalse(any(n.startswith(('tools/','tests/','optional/','vendor/')) for n in names))
 

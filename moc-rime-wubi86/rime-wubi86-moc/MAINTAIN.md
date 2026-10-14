@@ -2,9 +2,9 @@
 
 ## 数据组织
 
-`data/` 内17个文件是可部署源数据，包含注册模板、集中设置和默认蓝色外观。基础72241条，扩展63254条（补充词组53911条＋英文9343条），合计135495条；反查6817条，主词库含6455个规范单字。个人表为空三列模板。基础与扩展各存一份，没有第二份完整词库、编译缓存或安装程序。
+`data/` 内18个文件是可部署源数据，包含注册模板、集中设置和默认蓝色外观。基础72241条，扩展63254条（补充词组53911条＋英文9343条），合计135495条；反查6817条，主词库含6455个规范单字。个人表为空三列模板。基础与扩展各存一份，没有第二份完整词库、编译缓存或安装程序。
 
-纯净加载“个人表、基础”；全功能加载“个人表、基础、扩展”，个人表优先。纯净通过Rime原生 `__include` 复用全功能配置，仅覆盖方案身份、描述和字典引用。两种模式共用反查依赖与五个Lua，保留补全及按键习惯。先前已去掉空末列Tab，六个有效stem保留。
+纯净加载“个人表、基础”；全功能加载“个人表、基础、扩展”，个人表优先。纯净通过Rime原生 `__include` 复用全功能配置，仅覆盖方案身份、描述和字典引用。两种模式共用反查依赖与六个Lua，保留补全及按键习惯。先前已去掉空末列Tab，六个有效stem保留。
 
 | 文件 | 作用 |
 | --- | --- |
@@ -16,7 +16,7 @@
 | `moc_wubi86_user.dict.yaml` | 共用个人表模板 |
 | 两个主dict与schema | 词库组合与模式切换入口 |
 | `moc_reverse.dict.yaml` / `moc_reverse.schema.yaml` | 共用拼音找字数据及依赖 |
-| `lua/` 内五个文件 | 共用辅助功能 |
+| `lua/` 内六个文件 | 共用辅助功能，含CapsLock大写提交 |
 
 ## 冷门清理原则
 
@@ -33,13 +33,21 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 tools/pack.py
 ```
 
-输出通用 `releases/moc-wubi86-data-2026.10.09.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.09.zip` 与SHA256SUMS。通用ZIP含16数据+6说明许可，共22文件；macOS ZIP含17个data文件、optional两套外观和6说明许可，共25文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时引用moc_settings。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
+输出通用 `releases/moc-wubi86-data-2026.10.15.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.15.zip` 与SHA256SUMS。通用ZIP含17数据+6说明许可，共23文件；macOS ZIP含18个data文件、optional两套外观和6说明许可，共26文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时引用moc_settings。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
 
 源文件上传GitHub，ZIP与校验作为Release附件；不制作重复源码ZIP，不上传缓存、原语料、私人备份。通用包无皮肤，数据三平台共用。macOS包默认蓝色；optional保留原玫枫和蓝色完整配置。两套均引用moc_settings中的默认英文应用：PyCharm、Terminal、electerm、SecurityAgent及通行密钥流程的LocalAuthenticationRemoteService、AuthenticationServices.Helper。后两组件来自本机窗口元信息，尚未实测安全密码框的默认输入状态；后台authorizationhost已移除。
 
 ## 验证与留痕
 
-27项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。主字典摘要规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
+29项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。CapsLock的26项Lua用例需维护机已有Lua解释器，缺少时明确跳过；普通部署不需要解释器。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。主字典摘要规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
+
+## CapsLock大写提交 · 2026-10-15
+
+方案版本2026.10.15，词表版本仍为2026.10.09。新增moc_capslock放在ascii_composer之前，只对中文状态、CapsLock按下且无Shift/Control/Alt/Command组合的纯ASCII字母编码提交大写。返回kNoop保留原生CapsLock处理；不能返回kAccepted吞掉切换，也不能放在ascii_composer之后，否则clear已清掉编码。空输入、英文状态、释放事件、数字及工具前缀不转换。纯净继承相同处理，不复制脚本或完整方案。
+
+回归先用旧数据复现两个模式共10个大写提交失败，再修改脚本与注册顺序。29项自动检查、26项Lua边界用例、Squirrel 1.1.2所带librime 1.16.0隔离环境的26项用例通过，包括有/无候选、英文候选、混合大小写、空输入、英文编辑、释放事件、工具及反查，关闭CapsLock后继续五笔选词正常。候选及词表记录未修改。当前证据tests/native-capslock-20261015.json；Windows/Linux物理键事件与macOS实际键盘交互尚未实测，不把引擎模拟当成前端实测。
+
+本机更新仅写新Lua及共用方案，先备份后检查两个编译方案的处理顺序，再重新加载。个人词表等15个受保护源文件摘要未变。维护者使用rime_deployer --build时，共享目录参数须指向鼠须管Contents/SharedSupport，不能用只有个性化数据的用户资料夹；--reload属于Squirrel主程序，不属于rime_deployer。
 
 真实鼠须管（librime 1.16.0）隔离验证：纯净3500组、全功能3822组输入，包括全部637/638个现有一二级简码、各1000个固定随机种子的四码、删除影响编码及补全/反查/辅助用例。短码首选不变，保留词完整编码候选相对顺序通过，删除词不再出现；各4组人造个人词优先检查通过。删除会改变宽前缀补全队列，不能宣称所有补全尾页顺序不变。最终ZIP在临时目录直接复制data内容后部署；已有配置的合并路径另外验证，结果在tests/native-result.json。
 

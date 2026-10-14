@@ -1,0 +1,299 @@
+{
+  "date": "2026-10-15",
+  "schema_version": "2026.10.15",
+  "dictionary_version": "2026.10.09",
+  "frontend_library": "Squirrel 1.1.2",
+  "librime": "1.16.0",
+  "verification": "isolated engine key-event simulation, not physical keyboard UI",
+  "automated_checks": 29,
+  "lua_boundary_cases": 26,
+  "red_uppercase_failures": 10,
+  "source_cases": [
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "wubi_candidate",
+      "committed_hex": "545257",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "caps_off_then_wubi",
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "plain_letters",
+      "committed_hex": "414243",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "no_candidates",
+      "committed_hex": "4f50454e434c4157",
+      "had_candidates": 0,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "english_candidate",
+      "committed_hex": "48454c4c4f",
+      "had_candidates": 0,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "mixed_case",
+      "committed_hex": "4d49584544",
+      "had_candidates": 0,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "empty",
+      "committed_hex": "",
+      "had_candidates": 0,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "release",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 1,
+      "ascii": 0,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "english_inline",
+      "committed_hex": "",
+      "had_candidates": 0,
+      "composing": 1,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "amount",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "date",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "reverse",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp",
+      "case": "calculator",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "wubi_candidate",
+      "committed_hex": "545257",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "caps_off_then_wubi",
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "plain_letters",
+      "committed_hex": "414243",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "no_candidates",
+      "committed_hex": "4f50454e434c4157",
+      "had_candidates": 0,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "english_candidate",
+      "committed_hex": "48454c4c4f",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "mixed_case",
+      "committed_hex": "4d49584544",
+      "had_candidates": 0,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "empty",
+      "committed_hex": "",
+      "had_candidates": 0,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "release",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 1,
+      "ascii": 0,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "english_inline",
+      "committed_hex": "",
+      "had_candidates": 0,
+      "composing": 1,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "amount",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "date",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "reverse",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    },
+    {
+      "schema": "moc_wubi86_simp_plus",
+      "case": "calculator",
+      "committed_hex": "",
+      "had_candidates": 1,
+      "composing": 0,
+      "ascii": 1,
+      "caps_accepted": 0,
+      "passed": 1
+    }
+  ],
+  "package_checks": {
+    "data": {
+      "files": 23,
+      "fresh_deploy": true,
+      "engine_cases": 26,
+      "failures": 0
+    },
+    "macos": {
+      "files": 26,
+      "fresh_deploy": true,
+      "engine_cases": 26,
+      "failures": 0
+    }
+  },
+  "native_capslock_switch_preserved": true,
+  "words_weights_and_other_lua_unchanged": true,
+  "physical_keyboard_verified": false,
+  "windows_linux_frontend_verified": false,
+  "engine_tests_used_real_personal_dictionary": false,
+  "local_update": {
+    "source_files_changed": [
+      "moc_wubi86_simp_plus.schema.yaml",
+      "lua/moc_capslock.lua"
+    ],
+    "compiled_order_verified_in_both_modes": true,
+    "frontend_reload_exit_code": 0,
+    "protected_source_files_unchanged": 15,
+    "real_personal_dictionary_written": false,
+    "physical_keyboard_verified": false
+  },
+  "independent_checker": {
+    "blocking_findings": 0,
+    "automated_checks_passed": 29,
+    "dictionaries_original_lua_assistant_byte_equal": true,
+    "zip_source_and_privacy_verified": true
+  }
+}
