@@ -6,7 +6,9 @@ Rime方案及数据包2026.10.15.1保留原生CapsLock路径，新增默认关�
 
 ## 交付边界
 
-项目保存在 [Personal-repository/moc-rime-wubi86](https://github.com/moc2216/Personal-repository/tree/main/moc-rime-wubi86)。两个目录独立取用，Release提供通用Rime数据ZIP、含两套皮肤的macOS数据ZIP和macOS助手ZIP。源码不含App二进制、编译缓存或私人备份；普通使用不依赖Python。作者本次明确授权公开的个人词典单独保存于personal-dictionary，不进入默认部署包；不自动收集或同步后续个人词条。
+项目保存在 [Personal-repository/moc-rime-wubi86](https://github.com/moc2216/Personal-repository/tree/main/moc-rime-wubi86)。两个目录独立取用，Release提供通用Rime数据ZIP、含两套皮肤的macOS数据ZIP和macOS助手ZIP。源码不含App二进制、编译缓存或私人备份；普通使用不依赖Python。作者本次明确授权公开的个人词典单独保存于rime-wubi86-moc/optional根目录，不进入默认部署包；不自动收集或同步后续个人词条。
+
+Release列表只保留最新Rime数据与最新编码助手两项，历史发布条目及附件清理，Git标签和代码历史保留。本次仅整理目录和说明，版本不变；数据ZIP的说明同步更新，运行数据不变。
 
 Rime数据提供已有Rime用户直接复制部署的个性化数据，不提供安装器。助手按五笔86规则生成编码，查重、确认后加入个人词库。moc-rime-wubi86是唯一维护入口，所需源数据、来源说明、许可、审核记录与工具都在本项目内。
 

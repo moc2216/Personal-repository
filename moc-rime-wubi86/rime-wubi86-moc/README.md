@@ -51,6 +51,8 @@ macOS 数据包同时保存两套外观，首次复制 `data` 后默认使用蓝
 
 ## 已有配置或个人词库
 
+作者授权公开的[个人词典](https://github.com/moc2216/Personal-repository/blob/main/moc-rime-wubi86/rime-wubi86-moc/optional/moc_wubi86_user.dict.yaml)位于源码 `optional/` 根目录，可单独下载；词典本身可用于三平台。默认数据ZIP仍提供空个人模板。有自己的个人词典时，只合并需要的词条，勿覆盖原文件。
+
 - **已有 `moc_wubi86_user.dict.yaml`：** 复制时跳过这个文件，继续使用自己的个人词库。
 - **已有 `moc_settings.yaml`：** 保留当前快捷键、候选数量和应用规则，按需要合并新增设置。
 - **已有 `squirrel.custom.yaml`（macOS）：** 先跳过它。希望采用本包外观时，备份原文件后按上方步骤替换；自定义设置按说明合并。
