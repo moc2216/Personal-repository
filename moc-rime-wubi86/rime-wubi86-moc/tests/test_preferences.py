@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-SKINS=('optional/macos/squirrel.custom.yaml',
+SKINS=('optional/macos/rose-maple/squirrel.custom.yaml',
        'optional/macos/blue-reverie/squirrel.custom.yaml')
 ENGLISH_APPS={'com.apple.Terminal','org.electerm.electerm',
               'com.jetbrains.pycharm','com.apple.SecurityAgent',

@@ -11,22 +11,36 @@ spec=importlib.util.spec_from_file_location('pack',ROOT/'tools/pack.py')
 pack=importlib.util.module_from_spec(spec);spec.loader.exec_module(pack)
 
 class PackageTests(unittest.TestCase):
+    def test_authorized_personal_dictionary_is_optional_in_both_archives(self):
+        optional='optional/moc_wubi86_user.dict.yaml'
+        with tempfile.TemporaryDirectory() as tmp:
+            for macos in (False,True):
+                with self.subTest(macos=macos):
+                    path=pack.archive(Path(tmp)/f'{macos}.zip',macos=macos)
+                    with zipfile.ZipFile(path) as z:
+                        self.assertIn(optional,z.namelist())
+                        self.assertEqual(z.read(optional),(ROOT/optional).read_bytes())
+                        self.assertNotIn('optional/macos/moc_wubi86_user.dict.yaml',z.namelist())
+                        template=z.read('data/moc_wubi86_user.dict.yaml').decode('utf-8').split('\n...\n',1)[1]
+                        self.assertFalse(any(line.strip() and not line.lstrip().startswith('#')
+                                             for line in template.splitlines()))
+
     def test_macos_package_copies_default_skin_and_keeps_switchable_backup(self):
         with tempfile.TemporaryDirectory() as tmp:
             generic=pack.archive(Path(tmp)/'generic.zip')
             macos=pack.archive(Path(tmp)/'macos.zip',macos=True)
             with zipfile.ZipFile(generic) as common, zipfile.ZipFile(macos) as mac:
                 self.assertEqual(set(mac.namelist())-set(common.namelist()),
-                    {'data/squirrel.custom.yaml','optional/macos/squirrel.custom.yaml','optional/macos/blue-reverie/squirrel.custom.yaml'})
+                    {'data/squirrel.custom.yaml','optional/macos/rose-maple/squirrel.custom.yaml','optional/macos/blue-reverie/squirrel.custom.yaml'})
                 for name in common.namelist():
                     self.assertEqual(common.read(name),mac.read(name))
                 self.assertEqual(mac.read('data/squirrel.custom.yaml'),
                     (ROOT/'data/squirrel.custom.yaml').read_bytes())
                 self.assertEqual(mac.read('optional/macos/blue-reverie/squirrel.custom.yaml'),
                     (ROOT/'optional/macos/blue-reverie/squirrel.custom.yaml').read_bytes())
-                self.assertEqual(len(mac.namelist()),26)
+                self.assertEqual(len(mac.namelist()),27)
                 self.assertNotEqual(mac.getinfo('data/squirrel.custom.yaml').date_time,
-                    mac.getinfo('optional/macos/squirrel.custom.yaml').date_time)
+                    mac.getinfo('optional/macos/rose-maple/squirrel.custom.yaml').date_time)
                 self.assertFalse(any(Path(n).suffix in ['.py','.sh','.command','.cmd','.bin'] for n in mac.namelist()))
 
     def test_macos_private_frontend_configuration_stops_packaging(self):
@@ -36,7 +50,7 @@ class PackageTests(unittest.TestCase):
             shutil.copytree(ROOT/'optional',root/'optional')
             for relative in pack.SUPPORT_FILES:
                 p=root/relative;p.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/relative,p)
-            skin=root/'optional/macos/squirrel.custom.yaml'
+            skin=root/'optional/macos/rose-maple/squirrel.custom.yaml'
             with skin.open('a',encoding='utf-8') as f:
                 f.write('\n# private path fixture: /Users/example/private\n')
             with self.assertRaises(ValueError):pack.payload(root,macos=True)
@@ -56,16 +70,17 @@ class PackageTests(unittest.TestCase):
             path=pack.archive(Path(tmp)/'data.zip')
             with zipfile.ZipFile(path) as z:
                 names=set(z.namelist())
-                self.assertEqual(names,{'data/'+n for n in pack.DATA_FILES if n != 'squirrel.custom.yaml'}|set(pack.SUPPORT_FILES))
+                self.assertEqual(names,{'data/'+n for n in pack.DATA_FILES if n != 'squirrel.custom.yaml'}|set(pack.SUPPORT_FILES)|{'optional/moc_wubi86_user.dict.yaml'})
                 self.assertEqual(set(pack.DATA_FILES),FILES)
-                self.assertEqual(len(names),23)
+                self.assertEqual(len(names),24)
                 self.assertFalse(any(Path(n).suffix in ['.py','.sh','.command','.cmd','.bin'] for n in names))
-                self.assertFalse(any(n.startswith(('tools/','tests/','optional/','vendor/')) for n in names))
+                self.assertFalse(any(n.startswith(('tools/','tests/','vendor/')) for n in names))
 
     def test_accidental_private_data_or_extra_files_stop_packaging(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/'repo'
             shutil.copytree(ROOT/'data',root/'data')
+            shutil.copytree(ROOT/'optional',root/'optional')
             for relative in pack.SUPPORT_FILES:
                 p=root/relative;p.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/relative,p)
             user=root/'data/moc_wubi86_user.dict.yaml'

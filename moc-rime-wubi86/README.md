@@ -27,7 +27,7 @@ Rime数据以 [极点86](https://github.com/KyleBing/rime-wubi86-jidian) 基础�
 
 使用 Capslox 的用户可开启可选兼容：中文状态提交当前大写，英文状态开关持续大写；不改变系统锁定或键盘灯。未使用 Capslox 的用户保持默认设置。配置步骤和其他输入法的影响见 [数据使用说明](rime-wubi86-moc/README.md#使用)。
 
-作者授权公开的[个人词典](rime-wubi86-moc/optional/moc_wubi86_user.dict.yaml)放在 `optional/` 根目录，按需取用，不包含在默认数据ZIP中。首次使用且没有个人词典时可选用；已有同名个人词典时请合并需要的词条，勿直接覆盖。部署包中的个人词典仍是空模板。
+作者授权公开的[个人词典](rime-wubi86-moc/optional/moc_wubi86_user.dict.yaml)放在 `optional/` 根目录，两种数据ZIP也包含这份可选词典。首次使用且没有个人词典时可选用；已有同名个人词典时请合并需要的词条，勿直接覆盖。`data/` 中的个人词典仍是空模板，复制data不会自动启用作者词条。
 
 本项目保存在Personal-repository的 `moc-rime-wubi86/` 目录。也可通过Code → Download ZIP获取源码，Rime数据在 `moc-rime-wubi86/rime-wubi86-moc/data/`；助手源码在 `moc-rime-wubi86/wubi-code-assistant/Source/`，需要macOS开发工具构建。macOS 用户希望一次复制包含外观时，使用上面的鼠须管数据ZIP。源码仓库不保存打包App或构建缓存；个人词典仅包含作者明确授权公开的独立文件。
 

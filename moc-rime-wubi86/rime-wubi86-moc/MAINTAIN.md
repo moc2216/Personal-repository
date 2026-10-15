@@ -2,6 +2,8 @@
 
 当前交付版本2026.10.15.1；字典仍为2026.10.09，数据记录未改。Capslox兼容默认关闭，配置和限制见README。原生CapsLock路径保持独立。
 
+本轮修正ZIP与仓库目录不一致：授权个人词典随两种包放入optional根目录，data仍用空模板；主题分别位于optional/macos/blue-reverie和optional/macos/rose-maple。31项检查通过，包括个人词典缺包的失败回归及主题路径检查；以下原生引擎和前端实测记录保留原范围。
+
 ## 数据组织
 
 `data/` 内18个文件是可部署源数据，包含注册模板、集中设置和默认蓝色外观。基础72241条，扩展63254条（补充词组53911条＋英文9343条），合计135495条；反查6817条，主词库含6455个规范单字。个人表为空三列模板。基础与扩展各存一份，没有第二份完整词库、编译缓存或安装程序。
@@ -35,13 +37,13 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 tools/pack.py
 ```
 
-输出通用 `releases/moc-wubi86-data-2026.10.15.1.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.15.1.zip` 与SHA256SUMS。通用ZIP含17数据+6说明许可，共23文件；macOS ZIP含18个data文件、optional两套外观和6说明许可，共26文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时引用moc_settings。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
+输出通用 `releases/moc-wubi86-data-2026.10.15.1.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.15.1.zip` 与SHA256SUMS。通用ZIP含17数据、optional授权个人词典和6说明许可，共24文件；macOS ZIP含18个data文件、同一份optional个人词典、两套外观和6说明许可，共27文件。两套皮肤不复制主词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供；optional词典按需选用，不自动启用。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时引用moc_settings。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
 
 源文件上传GitHub，ZIP与校验作为Release附件；不制作重复源码ZIP，不上传缓存、原语料、私人备份。通用包无皮肤，数据三平台共用。macOS包默认蓝色；optional保留原玫枫和蓝色完整配置。两套均引用moc_settings中的默认英文应用：PyCharm、Terminal、electerm、SecurityAgent及通行密钥流程的LocalAuthenticationRemoteService、AuthenticationServices.Helper。后两组件来自本机窗口元信息，尚未实测安全密码框的默认输入状态；后台authorizationhost已移除。
 
 ## 验证与留痕
 
-30项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。CapsLock的26项原生Lua边界及Capslox状态用例需维护机已有Lua解释器，缺少时明确跳过；普通部署不需要解释器。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。主字典摘要规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
+31项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。CapsLock的26项原生Lua边界及Capslox状态用例需维护机已有Lua解释器，缺少时明确跳过；普通部署不需要解释器。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。主字典摘要规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
 
 ## CapsLock大写提交 · 2026-10-15
 

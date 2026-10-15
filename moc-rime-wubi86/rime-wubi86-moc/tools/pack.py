@@ -22,8 +22,9 @@ SUPPORT_FILES=('README.md','NOTICE.md','LICENSE','licenses/Apache-2.0.txt',
 def payload(root=ROOT, *, macos=False):
     files={'data/'+n:root/'data'/n for n in DATA_FILES if macos or n != 'squirrel.custom.yaml'}
     files.update({n:root/n for n in SUPPORT_FILES})
+    files['optional/moc_wubi86_user.dict.yaml']=root/'optional/moc_wubi86_user.dict.yaml'
     if macos:
-        files['optional/macos/squirrel.custom.yaml']=root/'optional/macos/squirrel.custom.yaml'
+        files['optional/macos/rose-maple/squirrel.custom.yaml']=root/'optional/macos/rose-maple/squirrel.custom.yaml'
         files['optional/macos/blue-reverie/squirrel.custom.yaml']=root/'optional/macos/blue-reverie/squirrel.custom.yaml'
     actual={p.relative_to(root/'data').as_posix() for p in (root/'data').rglob('*') if p.is_file()}
     if actual != set(DATA_FILES): raise ValueError('data文件集合不是审核后的18文件')
@@ -44,7 +45,7 @@ def archive(output, root=ROOT, *, macos=False):
         for name,p in sorted(files.items()):
             entry=zipfile.ZipInfo(name,date_time=(2026,10,15,1,0,0))
             # Rime按文件时间检测配置变化；备用皮肤需与默认皮肤不同。
-            if name=='optional/macos/squirrel.custom.yaml':
+            if name=='optional/macos/rose-maple/squirrel.custom.yaml':
                 entry.date_time=(2026,10,15,1,0,2)
             entry.create_system=3; entry.external_attr=(0o100644<<16)
             z.writestr(entry,p.read_bytes(),compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)

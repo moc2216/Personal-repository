@@ -33,7 +33,7 @@ macOS 数据包同时保存两套外观，首次复制 `data` 后默认使用蓝
 | 外观 | 下载包中的配置文件 |
 | --- | --- |
 | 蓝色遐想，默认 | `data/squirrel.custom.yaml`，备用副本在 `optional/macos/blue-reverie/squirrel.custom.yaml` |
-| 玫枫 | `optional/macos/squirrel.custom.yaml` |
+| 玫枫 | `optional/macos/rose-maple/squirrel.custom.yaml` |
 
 1. 在解压后的包中找到想用的外观文件。
 2. **只复制这个 `squirrel.custom.yaml`** 到鼠须管用户资料夹，替换当前同名文件。
@@ -51,7 +51,7 @@ macOS 数据包同时保存两套外观，首次复制 `data` 后默认使用蓝
 
 ## 已有配置或个人词库
 
-作者授权公开的[个人词典](https://github.com/moc2216/Personal-repository/blob/main/moc-rime-wubi86/rime-wubi86-moc/optional/moc_wubi86_user.dict.yaml)位于源码 `optional/` 根目录，可单独下载；词典本身可用于三平台。默认数据ZIP仍提供空个人模板。有自己的个人词典时，只合并需要的词条，勿覆盖原文件。
+作者授权公开的[个人词典](https://github.com/moc2216/Personal-repository/blob/main/moc-rime-wubi86/rime-wubi86-moc/optional/moc_wubi86_user.dict.yaml)位于 `optional/moc_wubi86_user.dict.yaml`，源码和两种数据ZIP的相对位置一致，词典可用于三平台。`data/` 内仍是空个人模板。首次使用且希望采用作者词条时，将optional中的该文件复制到Rime用户资料夹；有自己的个人词典时，只合并需要的词条，勿覆盖原文件。
 
 - **已有 `moc_wubi86_user.dict.yaml`：** 复制时跳过这个文件，继续使用自己的个人词库。
 - **已有 `moc_settings.yaml`：** 保留当前快捷键、候选数量和应用规则，按需要合并新增设置。
@@ -154,7 +154,7 @@ macOS 包默认蓝色遐想，optional保留蓝色遐想和玫枫两份完整配
 | [Unicode 16.0 Unihan](https://www.unicode.org/Public/16.0.0/ucd/Unihan.zip) 与 [general_standard_chinese](https://github.com/ben-hua/general_standard_chinese) | 规范字范围的正式字段核对与名单交叉核验 |
 | [first20hours/google-10000-english](https://github.com/first20hours/google-10000-english) | 英文词序排名参考；英文独立判断，不与中文频数合并 |
 
-金额Lua内部另保留98wubi-tables来源，农历Lua内部保留rime-fast-xhup来源。组件经过多个项目传承，这些署名继续保留。鼠须管原有玫枫亮／暗外观位于 `optional/macos/squirrel.custom.yaml`，蓝色遐想来自 [hunter-ji/blue-reverie-rime-theme](https://github.com/hunter-ji/blue-reverie-rime-theme)，两套随macOS包提供，通用包保持平台中立。
+金额Lua内部另保留98wubi-tables来源，农历Lua内部保留rime-fast-xhup来源。组件经过多个项目传承，这些署名继续保留。鼠须管原有玫枫亮／暗外观位于 `optional/macos/rose-maple/squirrel.custom.yaml`，蓝色遐想来自 [hunter-ji/blue-reverie-rime-theme](https://github.com/hunter-ji/blue-reverie-rime-theme)，两套随macOS包提供，通用包保持平台中立。
 
 ## 发展过程
 
