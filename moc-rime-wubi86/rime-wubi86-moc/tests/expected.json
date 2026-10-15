@@ -58,7 +58,7 @@
     "moc_chineseLunarCalendar_translator.lua": "3e4bd6c0c136625230fa938790ba3e33a925d262b6c82e186bb33138d39d0a8a",
     "moc_calculator.lua": "01ab3421cfb521b96357a97dca51f64604f8c3a7d94423ef2977c61ccc823246",
     "moc_date_time.lua": "f83acd3426a71dbaa293b8fbe706e9832d95502a3c0e02be7f28ffb401e07e30",
-    "moc_capslock.lua": "0bad17c436bdd09072e00874e418fe3843a925dc5792c05784f34824f64c5779"
+    "moc_capslock.lua": "58ccbd6918385cbfcc8e4274b8dbcfc29b298fa514791831bfdd6e5c522b0cc9"
   },
   "core_records": 72241,
   "core_records_sha256": "feb59cb13d3945509d316169ffed828689e0cc1c95fdd441a079c9e13760c7b7",

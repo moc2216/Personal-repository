@@ -8,6 +8,10 @@ switcher:
 menu:
   page_size: 6
 
+# 仅在 Capslox 将短按 CapsLock 设为 f18 时开启；不改变系统大写锁定及键盘灯。
+moc_capslock:
+  capslox_compat: false
+
 # macOS 默认英文应用；填写程序的 Bundle ID。
 app_options:
   com.apple.Terminal:

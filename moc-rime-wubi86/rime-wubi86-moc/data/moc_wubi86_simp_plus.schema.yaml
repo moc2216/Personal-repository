@@ -5,7 +5,7 @@
 schema:
   schema_id: moc_wubi86_simp_plus
   name: "moc 极点86五笔-全功能"
-  version: "2026.10.15"
+  version: "2026.10.15.1"
   dependencies:
     - moc_reverse
   author:
@@ -23,6 +23,9 @@ switches:
   - name: ascii_punct
     reset: 0
     states: [ 。，, ．， ]
+
+moc_capslock:
+  __include: moc_settings:/moc_capslock
 
 ascii_composer:
   good_old_caps_lock: true

@@ -295,5 +295,127 @@
     "automated_checks_passed": 29,
     "dictionaries_original_lua_assistant_byte_equal": true,
     "zip_source_and_privacy_verified": true
+  },
+  "capslox_followup": {
+    "date": "2026-10-15",
+    "environment": {
+      "Capslox": "3.1.1.0",
+      "Squirrel": "1.1.2",
+      "librime": "1.16.0"
+    },
+    "physical_event_trace_observed": true,
+    "composition_commit_physically_verified": false,
+    "trace_summary": {
+      "capslock_hid_remap": "F17",
+      "f17_keydown_reaches_session": false,
+      "session_caps_changed_keycodes": [
+        255,
+        12,
+        51
+      ],
+      "standard_caps_keycode": 57
+    },
+    "implementation_check": {
+      "native_action": "toggleCapslock -> KeyboardHelper.capslockState -> IOHIDGetModifierLockState/IOHIDSetModifierLockState",
+      "squirrel": "flagsChanged ignores unchanged modifiers; otherwise converts event.keyCode instead of normalizing all caps changes"
+    },
+    "controlled_window_tests": {
+      "baseline": {
+        "standard_caps_event": false,
+        "system_lock_changed": true,
+        "hold_capslox_s_left_preserved": true
+      },
+      "send_caps_only": {
+        "standard_caps_event": true,
+        "caps_flag_changed": false,
+        "usable_fix": false
+      },
+      "toggle_then_send_caps": {
+        "standard_caps_on_event_with_changed_flag": false,
+        "usable_fix": false
+      },
+      "f18_then_toggle": {
+        "f18_reaches_session": true,
+        "system_lock_changed_in_sampled_IOHID_state": false,
+        "hold_capslox_s_left_preserved": true,
+        "full_fix_verified": false
+      }
+    },
+    "optional_trigger_prototype": {
+      "publicly_installed": false,
+      "public_runtime_changed": false,
+      "unit_boundaries_passed": 46,
+      "isolated_engine_cases_compat_off": 42,
+      "isolated_engine_cases_compat_on": 42,
+      "overall_fix_complete": false,
+      "pending": "User choice: uppercase current composition only versus retain persistent CapsLock state"
+    },
+    "rollback": {
+      "original_capslox_config_restored_byte_equal": true,
+      "live_rime_unchanged": true,
+      "real_personal_dictionary_used_for_automated_testing": false,
+      "real_personal_dictionary_written": false,
+      "temporary_monitors_stopped": true
+    },
+    "scope": "Version-specific Capslox interaction; ordinary users keep standard CapsLock Lua. No alternate default runtime or Capslox requirement.",
+    "sources": [
+      "https://capslox.com/cn/docs/configuration/#custom-modifiers",
+      "https://capslox.com/cn/docs/configuration/#action-sequence",
+      "https://github.com/rime/squirrel/blob/1.1.2/sources/SquirrelInputController.swift#L58-L75",
+      "https://github.com/rime/squirrel/blob/1.1.2/sources/MacOSKeyCodes.swift#L33-L70"
+    ]
+  },
+  "capslox_stateful_implementation": {
+    "date": "2026-10-15",
+    "status": "user_confirmed_rime_scope_accepted_for_release",
+    "user_accepted_scope": "Rime-only uppercase; system lock LED and other input methods not required",
+    "automated_checks": 30,
+    "tdd_red_failures": 2,
+    "isolated_native_cases_passed": 26,
+    "isolated_compat_cases_passed": 24,
+    "package_checks": {
+      "data": {
+        "fresh_deploy": true,
+        "compat_engine_cases_passed": 24,
+        "native_engine_cases_passed": 26,
+        "files": 23
+      },
+      "macos": {
+        "fresh_deploy": true,
+        "compat_engine_cases_passed": 24,
+        "native_engine_cases_passed": 26,
+        "files": 26
+      }
+    },
+    "event_route_synthetic_hid_verified": true,
+    "existing_hold_left_binding_verified": true,
+    "physical_user_keyboard_verified": true,
+    "default_compatibility_enabled": false,
+    "new_public_runtime_files": 0,
+    "real_personal_dictionary_used_for_automated_tests": false,
+    "real_personal_dictionary_written": false,
+    "behavior": [
+      "Chinese pending letters commit uppercase then stay Chinese",
+      "English F18 toggles internal uppercase",
+      "Leaving English resets uppercase",
+      "Held Shift temporarily lowers case without toggling mode",
+      "Ctrl Alt Command and nonletters preserve native handling"
+    ],
+    "limitations": [
+      "No system lock LED update",
+      "Current Rime context only, not global across application windows",
+      "Capslox F18 tap does not activate Caps Lock outside Rime",
+      "Windows/Linux frontend untested"
+    ],
+    "user_feedback": {
+      "source": "user report, 2026-10-15",
+      "rime_chinese_and_english_capslock_expected": true,
+      "other_input_methods_differ_from_user_expectation": true,
+      "other_input_method_event_handling_verified": false
+    },
+    "release_version": "2026.10.15.1",
+    "other_input_methods_support_requested": false,
+    "default_personal_template_empty": true,
+    "authorized_personal_dictionary_separate": true
   }
 }

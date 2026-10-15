@@ -15,17 +15,21 @@ Rime数据以 [极点86](https://github.com/KyleBing/rime-wubi86-jidian) 基础�
 
 ## 下载
 
-[Release下载页面](https://github.com/moc2216/Personal-repository/releases/tag/moc-rime-wubi86-2026.10.15)提供以下下载物，按平台和需要选择：
+[Release下载页面](https://github.com/moc2216/Personal-repository/releases/tag/moc-rime-wubi86-2026.10.15.1)提供以下下载物，按平台和需要选择：
 
-- [macOS 鼠须管数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.15/moc-wubi86-macos-2026.10.15.zip)：包含输入法数据、默认蓝色遐想，optional另存两套完整外观。首次复制data内容后部署，以后换皮肤只替换外观文件并重新部署。
-- [Windows／Linux 通用数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.15/moc-wubi86-data-2026.10.15.zip)：包含双模式注册和 Control＋Shift＋0，沿用自己前端的外观。
+- [macOS 鼠须管数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.15.1/moc-wubi86-macos-2026.10.15.1.zip)：包含输入法数据、默认蓝色遐想，optional另存两套完整外观。首次复制data内容后部署，以后换皮肤只替换外观文件并重新部署。
+- [Windows／Linux 通用数据ZIP](https://github.com/moc2216/Personal-repository/releases/download/moc-rime-wubi86-2026.10.15.1/moc-wubi86-data-2026.10.15.1.zip)：包含双模式注册和 Control＋Shift＋0，沿用自己前端的外观。
 - [macOS助手ZIP](https://github.com/moc2216/Personal-repository/releases/download/wubi-code-assistant-1.3.3/wubi-code-assistant-macos-1.3.3.zip)：Apple Silicon与Intel通用App，解压后运行。首次使用前按助手说明准备个人词库。
 
 已有设置和个人词库须保留，复制前查看包内说明。
 
 部署后，快捷键、每页候选数量和默认英文应用统一在 [moc_settings.yaml](rime-wubi86-moc/data/moc_settings.yaml) 修改，保存后重新部署即可。
 
-本项目保存在Personal-repository的 `moc-rime-wubi86/` 目录。也可通过Code → Download ZIP获取源码，Rime数据在 `moc-rime-wubi86/rime-wubi86-moc/data/`；助手源码在 `moc-rime-wubi86/wubi-code-assistant/Source/`，需要macOS开发工具构建。macOS 用户希望一次复制包含外观时，使用上面的鼠须管数据ZIP。源码仓库不保存打包App、构建缓存或私人词库。
+使用 Capslox 的用户可开启可选兼容：中文状态提交当前大写，英文状态开关持续大写；不改变系统锁定或键盘灯。未使用 Capslox 的用户保持默认设置。配置步骤和其他输入法的影响见 [数据使用说明](rime-wubi86-moc/README.md#使用)。
+
+作者授权公开的[个人词典](personal-dictionary/moc_wubi86_user.dict.yaml)单独提供，可按需取用，不包含在默认数据ZIP中。首次使用且没有个人词典时可选用；已有同名个人词典时请合并需要的词条，勿直接覆盖。部署包中的个人词典仍是空模板。
+
+本项目保存在Personal-repository的 `moc-rime-wubi86/` 目录。也可通过Code → Download ZIP获取源码，Rime数据在 `moc-rime-wubi86/rime-wubi86-moc/data/`；助手源码在 `moc-rime-wubi86/wubi-code-assistant/Source/`，需要macOS开发工具构建。macOS 用户希望一次复制包含外观时，使用上面的鼠须管数据ZIP。源码仓库不保存打包App或构建缓存；个人词典仅包含作者明确授权公开的独立文件。
 
 ## 配合使用
 

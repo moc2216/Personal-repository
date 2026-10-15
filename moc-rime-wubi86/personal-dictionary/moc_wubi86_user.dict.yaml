@@ -1,0 +1,59 @@
+# Rime dictionary
+# encoding: utf-8
+---
+name: moc_wubi86_user
+version: "2026-10-09"
+sort: by_weight
+columns:
+  - text
+  - code
+  - weight
+...
+# 格式：文本<Tab>编码<Tab>权重（Tab 分隔；# 行 rime 忽略）
+#
+# 权重参考（校准后的 scale）：一级简码=99999，二级简码=80000，普通词≈30000-40000。
+# 个人词条想排第一位，权重填 50000 以上（高于二级简码，低于一级）。
+# 示例（照格式加自己的词条，删除 # 或新增行）：
+# 浮亏	iefn	50000
+B圈	blu	50000
+仓位	wbwu	50000
+开仓	gawb	50000
+调仓	ymwb	50000
+滑点	imhk	50000
+浮盈	ieec	50000
+浮亏	iefn	50000
+逐字稿	epty	50000
+--->	tuud	50000
+『』	xhkg	50000
+openclaw	opcl	50000
+repo	repo	50000
+ETH	eth	50000
+oMLX	omlx	50000
+工作区	awaq	50000
+工作簿	awti	50000
+生财有术	tmds	50000
+A股	aem	50000
+主理人	ygww	50000
+复盘	tjte	50000
+沧浪亭	iiyp	50000
+邢大	gadd	50000
+个性化	wnwx	50000
+妖币	vttm	50000
+算力	thlt	50000
+Qwen	quk	50000
+千问	quk	50000
+卡兹克	hudq	50000
+开跑	gakh	50000
+剪首尾	uunt	50000
+MTPLX	mtp	50000
+SOP	sop	50000
+rime	rime	50000
+ego lite	ego	50000
+Ctrl+V	ctv	50000
+GLM	glm	50000
+md	md	50000
+Kimi	kimi	50000
+DeepSeek	dp	50000
+wubi	wubi	50000
+Mimo	mimo	50000
+转钱	lfqg	50000

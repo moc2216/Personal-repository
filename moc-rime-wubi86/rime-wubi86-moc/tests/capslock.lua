@@ -1,4 +1,5 @@
-local processor = assert(loadfile(arg[1]))()
+local module = assert(loadfile(arg[1]))()
+local processor = type(module) == 'table' and module.func or module
 local cases = {
     { input = "abc", expected = "ABC" },
     { input = "trw", expected = "TRW", menu = true },
@@ -55,3 +56,80 @@ for index, case in ipairs(cases) do
     assert(#committed == (case.expected and 1 or 0))
 end
 print(#cases .. " cases passed")
+
+-- Stateful compatibility checks use a synthetic context, never a personal table.
+local function fixture(enabled)
+    local ctx = { input = '', english = false }
+    function ctx:get_option(name) assert(name == 'ascii_mode'); return self.english end
+    function ctx:clear() self.input = '' end
+    function ctx:set_english(value)
+        if self.english ~= value then
+            self.english = value
+            if self.listener then self.listener(self, 'ascii_mode') end
+        end
+    end
+    ctx.option_update_notifier = {}
+    local disconnected = false
+    function ctx.option_update_notifier:connect(callback)
+        ctx.listener = callback
+        return { disconnect = function() disconnected = true end }
+    end
+    local env = { engine = { context = ctx }, output = '', forwarded = 0 }
+    env.engine.schema = { config = { get_bool = function(_, name)
+        assert(name == 'moc_capslock/capslox_compat'); return enabled
+    end } }
+    function env.engine:commit_text(text) env.output = env.output .. text end
+    function env.engine:process_key(key)
+        env.forwarded = env.forwarded + 1
+        assert(processor(key, env) == 2, 'redispatch must reach native composer')
+        return false
+    end
+    if type(module) == 'table' then module.init(env) end
+    local function press(code, flags)
+        local key = { keycode = code, modifier = 0 }
+        for _, flag in ipairs({'release', 'ctrl', 'alt', 'super', 'shift'}) do
+            key[flag] = function() return flags and flags[flag] or false end
+        end
+        return processor(key, env)
+    end
+    return ctx, env, press, function()
+        if type(module) == 'table' then module.fini(env); if enabled then assert(disconnected) end end
+    end
+end
+function KeyEvent(code, modifier)
+    local key = { keycode = code, modifier = modifier }
+    for _, flag in ipairs({'release', 'ctrl', 'alt', 'super', 'shift'}) do
+        key[flag] = function() return false end
+    end
+    return key
+end
+do
+    local ctx, env, press, finish = fixture(true)
+    ctx.input = 'qmdh'
+    assert(press(0xffcf) == 1 and env.output == 'QMDH' and ctx.input == '',
+           'Capslox F18 must commit pending uppercase without leaving Chinese')
+    assert(not ctx.english)
+    assert(press(0xffcf, {release=true}) == 2 and env.output == 'QMDH')
+    ctx.input = 'R123'; press(0xffcf); assert(ctx.input == 'R123')
+    ctx.input = '/rq'; press(0xffcf); assert(ctx.input == '/rq')
+    ctx.input = '`jie'; press(0xffcf); assert(ctx.input == '`jie')
+    ctx:set_english(true); ctx.input = ''; env.output = ''
+    assert(press(0xffcf) == 1)
+    assert(press(97) == 1 and env.output == 'A' and env.forwarded == 1)
+    assert(press(98, {shift=true}) == 1 and env.output == 'Ab')
+    assert(press(99, {ctrl=true}) == 2 and env.output == 'Ab')
+    assert(press(99, {alt=true}) == 2 and env.output == 'Ab')
+    assert(press(99, {super=true}) == 2 and env.output == 'Ab')
+    assert(press(49) == 2 and press(32) == 2 and press(0xff08) == 2)
+    press(0xffcf); assert(press(99) == 2, 'second tap disables uppercase')
+    press(0xffcf); ctx:set_english(false); ctx:set_english(true)
+    assert(press(99) == 2, 'leaving English must reset uppercase')
+    finish()
+end
+do
+    local ctx, env, press, finish = fixture(false)
+    ctx.input = 'abc'; assert(press(0xffcf) == 2 and env.output == '' and ctx.input == 'abc')
+    assert(press(0xffffff) == 2 and press(0xffce) == 2)
+    finish()
+end
+print('Capslox cases passed')

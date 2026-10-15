@@ -1,5 +1,7 @@
 # 维护说明
 
+当前交付版本2026.10.15.1；字典仍为2026.10.09，数据记录未改。Capslox兼容默认关闭，配置和限制见README。原生CapsLock路径保持独立。
+
 ## 数据组织
 
 `data/` 内18个文件是可部署源数据，包含注册模板、集中设置和默认蓝色外观。基础72241条，扩展63254条（补充词组53911条＋英文9343条），合计135495条；反查6817条，主词库含6455个规范单字。个人表为空三列模板。基础与扩展各存一份，没有第二份完整词库、编译缓存或安装程序。
@@ -8,7 +10,7 @@
 
 | 文件 | 作用 |
 | --- | --- |
-| `moc_settings.yaml` | 快捷键、候选数量、默认英文应用的唯一值来源 |
+| `moc_settings.yaml` | 快捷键、候选数量、默认英文应用及可选Capslox兼容的唯一值来源 |
 | `squirrel.custom.yaml` | macOS默认蓝色副本，通用包不含此文件 |
 | `default.custom.yaml` | 首次使用的双模式注册模板，纯净排在首位，Control＋Shift＋0打开菜单；已有同名配置时保留并合并 |
 | `moc_wubi86_core.dict.yaml` | 共用基础字词 |
@@ -33,19 +35,33 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 tools/pack.py
 ```
 
-输出通用 `releases/moc-wubi86-data-2026.10.15.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.15.zip` 与SHA256SUMS。通用ZIP含17数据+6说明许可，共23文件；macOS ZIP含18个data文件、optional两套外观和6说明许可，共26文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时引用moc_settings。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
+输出通用 `releases/moc-wubi86-data-2026.10.15.1.zip`、鼠须管 `releases/moc-wubi86-macos-2026.10.15.1.zip` 与SHA256SUMS。通用ZIP含17数据+6说明许可，共23文件；macOS ZIP含18个data文件、optional两套外观和6说明许可，共26文件。两套皮肤不复制词库，不含tests、tools和报告，Python不是部署依赖。首次使用将data内容放入自己的Rime资料夹并重新部署，注册文件随包提供。已有default.custom.yaml保留并合并两个模式；希望沿用本套快捷键时引用moc_settings。已有squirrel.custom.yaml先备份、按需合并；空个人模板不可覆盖已有个人词。
 
 源文件上传GitHub，ZIP与校验作为Release附件；不制作重复源码ZIP，不上传缓存、原语料、私人备份。通用包无皮肤，数据三平台共用。macOS包默认蓝色；optional保留原玫枫和蓝色完整配置。两套均引用moc_settings中的默认英文应用：PyCharm、Terminal、electerm、SecurityAgent及通行密钥流程的LocalAuthenticationRemoteService、AuthenticationServices.Helper。后两组件来自本机窗口元信息，尚未实测安全密码框的默认输入状态；后台authorizationhost已移除。
 
 ## 验证与留痕
 
-29项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。CapsLock的26项Lua用例需维护机已有Lua解释器，缺少时明确跳过；普通部署不需要解释器。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。主字典摘要规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
+30项自动检查覆盖词频尺度、缺失、词长、并列、英文隔离、数据摘要、字符范围、精确规避、个人表、配置复用、Lua和打包。CapsLock的26项原生Lua边界及Capslox状态用例需维护机已有Lua解释器，缺少时明确跳过；普通部署不需要解释器。tests/expected.json固定当前规范化摘要，cleanup_summary.json固定清理前摘要；将removed.tsv按原位置插回可还原全部修改前记录。不要仅更新摘要掩盖误删。主字典摘要规范化格式为文本、编码、权重、stem四列加换行，缺失stem补空。
 
 ## CapsLock大写提交 · 2026-10-15
 
 方案版本2026.10.15，词表版本仍为2026.10.09。新增moc_capslock放在ascii_composer之前，只对中文状态、CapsLock按下且无Shift/Control/Alt/Command组合的纯ASCII字母编码提交大写。返回kNoop保留原生CapsLock处理；不能返回kAccepted吞掉切换，也不能放在ascii_composer之后，否则clear已清掉编码。空输入、英文状态、释放事件、数字及工具前缀不转换。纯净继承相同处理，不复制脚本或完整方案。
 
 回归先用旧数据复现两个模式共10个大写提交失败，再修改脚本与注册顺序。29项自动检查、26项Lua边界用例、Squirrel 1.1.2所带librime 1.16.0隔离环境的26项用例通过，包括有/无候选、英文候选、混合大小写、空输入、英文编辑、释放事件、工具及反查，关闭CapsLock后继续五笔选词正常。候选及词表记录未修改。当前证据tests/native-capslock-20261015.json；Windows/Linux物理键事件与macOS实际键盘交互尚未实测，不把引擎模拟当成前端实测。
+
+## Capslox事件兼容核验 · 2026-10-15
+
+通用实现依赖标准CapsLock事件，不要求安装Capslox。只在使用者运行Capslox或其他重映射工具时核对事件链；不要为本机环境改变所有用户的默认按键。此次本机版本为Capslox 3.1.1.0、Squirrel 1.1.2、librime 1.16.0，不能据此断言其他版本都有同样行为。
+
+实际按键的只读检测观察到：CapsLock经HID映射成F17，F17按下/释放只出现在Capslox处理前；处理后为系统大写标志变化，键码曾为255、12、51，未出现标准CapsLock的57。鼠须管按事件键码转换：255成为VoidSymbol，其他键码可能成为字母或退格，因而到不了Lua的Caps_Lock分支。对本机Capslox二进制的只读检查确认toggleCapslock调用KeyboardHelper.capslockState，后者用IOHIDGetModifierLockState/IOHIDSetModifierLockState切换状态。该结论同时依据本机事件和版本对应的前端实现，不仅依据配置文件或F17映射猜测。
+
+对照仅在不接收文字的临时窗口执行，未使用真实个人词库：原动作改变系统状态但不发标准CapsLock；只发`caps`得到键码57却没有大写标志变化，鼠须管会忽略未变化的flagsChanged；“切换状态后发caps”仍未得到正确的开启事件。F18能作为独立通知，按住Capslox+S仍发送左方向键；但“发F18后切换状态”的组合未通过系统锁定核验，不能称为完整兼容修复。失败试验当时均恢复原配置，不进入默认使用步骤。
+
+后续使用者明确接受只管理Rime内部的大写输出，不要求系统锁定、键盘灯或其他输入法。现有moc_capslock.lua增加默认关闭的兼容开关，由moc_settings通过原生include供两个模式共用；没有新运行文件。开启后F18在中文提交纯字母，在英文开关持续大写；ascii_mode改变即清除内部状态。英文大写时重新交原生处理链再按处理结果提交，确保按住Shift打字后不会因处理器吞字母而误触发中英文切换。Ctrl、Alt、Command及非字母沿用原处理。状态属于当前Rime上下文，不保证跨应用窗口保持。
+
+回归先出现两项预期失败，随后30项项目检查通过；原生路径26项及兼容路径24项隔离引擎用例通过，两个ZIP各自全新部署后分别通过上述26/24项。切换开关的夹具必须全新目录或确保修改时间跨秒，不能在同一秒改配置后把部署缓存当成最新行为。Lua摘要只在审查变更和行为检查后更新，词表及其他Lua不变。本机已备份部署并将Capslox短按改为f18；自动HID探针确认通知送达、原按住组合键保留，系统锁定仍关闭。使用者已确认物理键盘下Rime中英文与CapsLock配合符合预期；其他输入法具体响应未核验，不能算入验收。此次交付版本2026.10.15.1，不扩大兼容范围；普通用户不必安装Capslox或额外桥接工具。原始证据与本轮新证据在同一JSON中分开保存。
+
+依据：[Capslox动作与自定义修饰键](https://capslox.com/cn/docs/configuration/#custom-modifiers)、[鼠须管1.1.2状态事件处理](https://github.com/rime/squirrel/blob/1.1.2/sources/SquirrelInputController.swift#L58-L75)、[同版本键码转换](https://github.com/rime/squirrel/blob/1.1.2/sources/MacOSKeyCodes.swift#L33-L70)。物理事件捕获不等于实际大写上屏；本轮另由使用者确认Rime中英文的实际输入效果，其他输入法未纳入验收。
 
 本机更新仅写新Lua及共用方案，先备份后检查两个编译方案的处理顺序，再重新加载。个人词表等15个受保护源文件摘要未变。维护者使用rime_deployer --build时，共享目录参数须指向鼠须管Contents/SharedSupport，不能用只有个性化数据的用户资料夹；--reload属于Squirrel主程序，不属于rime_deployer。
 
