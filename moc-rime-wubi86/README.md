@@ -4,14 +4,14 @@
 
 Rime数据以 [极点86](https://github.com/KyleBing/rime-wubi86-jidian) 基础字词为底，配合 [白霜](https://github.com/gaboolic/rime-frost) 词组、英文和拼音数据，以及 [oh-my-rime](https://github.com/Mintimate/oh-my-rime) 来源的金额、农历工具。本项目在此基础上审核简体日常用字和冷门词，保留纯净／全功能两个入口、五笔补全和拼音反查，并提供独立的个人词库编码助手。
 
-**`moc-rime-wubi86/` 是唯一项目入口。** 输入法数据、编码助手、来源说明、许可和维护资料都保存在这个文件夹内。
+输入法数据（`rime-wubi86-moc/`）与编码助手（`wubi-code-assistant/`）已提级到仓库根目录；本文件夹保留项目说明、许可与维护记录。
 
 精简的对象是部署数据、重复词库和运行依赖。功能介绍、上游贡献与发展记录保留在项目中，方便使用者理解和后续维护。
 
 | 内容 | 平台 | 用途 |
 | --- | --- | --- |
-| [Rime五笔数据](rime-wubi86-moc/README.md) | macOS、Windows、Linux的Rime前端 | 直接复制部署，提供纯净/全功能、补全提示和拼音反查 |
-| [五笔编码助手](wubi-code-assistant/README.md) | macOS 13及以上 | 按五笔86规则生成编码，查重并确认后加入个人词库 |
+| [Rime五笔数据](../rime-wubi86-moc/README.md) | macOS、Windows、Linux的Rime前端 | 直接复制部署，提供纯净/全功能、补全提示和拼音反查 |
+| [五笔编码助手](../wubi-code-assistant/README.md) | macOS 13及以上 | 按五笔86规则生成编码，查重并确认后加入个人词库 |
 
 ## 下载
 
@@ -23,13 +23,13 @@ Rime数据以 [极点86](https://github.com/KyleBing/rime-wubi86-jidian) 基础�
 
 已有设置和个人词库须保留，复制前查看包内说明。
 
-部署后，快捷键、每页候选数量和默认英文应用统一在 [moc_settings.yaml](rime-wubi86-moc/data/moc_settings.yaml) 修改，保存后重新部署即可。
+部署后，快捷键、每页候选数量和默认英文应用统一在 [moc_settings.yaml](../rime-wubi86-moc/data/moc_settings.yaml) 修改，保存后重新部署即可。
 
-使用 Capslox 的用户可开启可选兼容：中文状态提交当前大写，英文状态开关持续大写；不改变系统锁定或键盘灯。未使用 Capslox 的用户保持默认设置。配置步骤和其他输入法的影响见 [数据使用说明](rime-wubi86-moc/README.md#使用)。
+使用 Capslox 的用户可开启可选兼容：中文状态提交当前大写，英文状态开关持续大写；不改变系统锁定或键盘灯。未使用 Capslox 的用户保持默认设置。配置步骤和其他输入法的影响见 [数据使用说明](../rime-wubi86-moc/README.md#使用)。
 
-作者授权公开的[个人词典](rime-wubi86-moc/optional/moc_wubi86_user.dict.yaml)放在 `optional/` 根目录，两种数据ZIP也包含这份可选词典。首次使用且没有个人词典时可选用；已有同名个人词典时请合并需要的词条，勿直接覆盖。`data/` 中的个人词典仍是空模板，复制data不会自动启用作者词条。
+作者授权公开的[个人词典](../rime-wubi86-moc/optional/moc_wubi86_user.dict.yaml)放在 `optional/` 根目录，两种数据ZIP也包含这份可选词典。首次使用且没有个人词典时可选用；已有同名个人词典时请合并需要的词条，勿直接覆盖。`data/` 中的个人词典仍是空模板，复制data不会自动启用作者词条。
 
-本项目保存在Personal-repository的 `moc-rime-wubi86/` 目录。也可通过Code → Download ZIP获取源码，Rime数据在 `moc-rime-wubi86/rime-wubi86-moc/data/`；助手源码在 `moc-rime-wubi86/wubi-code-assistant/Source/`，需要macOS开发工具构建。macOS 用户希望一次复制包含外观时，使用上面的鼠须管数据ZIP。源码仓库不保存打包App或构建缓存；个人词典仅包含作者明确授权公开的独立文件。
+源码位于Personal-repository根目录。也可通过Code → Download ZIP获取源码，Rime数据在 `rime-wubi86-moc/data/`；助手源码在 `wubi-code-assistant/Source/`，需要macOS开发工具构建。macOS 用户希望一次复制包含外观时，使用上面的鼠须管数据ZIP。源码仓库不保存打包App或构建缓存；个人词典仅包含作者明确授权公开的独立文件。
 
 ## 配合使用
 
@@ -44,7 +44,7 @@ Rime数据同时提供首次使用的方案注册模板和空个人表模板；�
 - **常用工具**：日期、时间、计算、金额大写及农历转换。macOS 包附带两套外观，详见数据模块。
 - **个人词库**：两种模式共用个人表；助手按规则计算编码，个人与方案词库只参与查重，确认后再添加。
 
-项目沿着“上游数据整合 → 简体日常审核 → 双模式共用数据 → 冷门内容清理 → 与编码助手合并”发展。数据模块首页提供 [功能说明、来源分工和发展记录](rime-wubi86-moc/README.md#发展过程)，各来源的许可和固定核验版本见NOTICE。
+项目沿着“上游数据整合 → 简体日常审核 → 双模式共用数据 → 冷门内容清理 → 与编码助手合并”发展。数据模块首页提供 [功能说明、来源分工和发展记录](../rime-wubi86-moc/README.md#发展过程)，各来源的许可和固定核验版本见NOTICE。
 
 当前源码提供定稿数据的检查、审核算法与打包工具，维护资料均在本项目内。当前流程不会从原始语料一键重建全部定稿数据。
 
@@ -52,4 +52,4 @@ Rime数据同时提供首次使用的方案注册模板和空个人表模板；�
 
 数据支持三平台共用，当前实机验证为macOS；助手当前只提供macOS版，Intel构建未实机运行。助手内置6500个一级、二级规范字的编码，范围之外可手动填写；拆字图覆盖约3500常用字，缺图时显示完整码说明。
 
-本仓库按GPL-3.0组合分发，具体来源、第三方Apache-2.0/MIT/Unicode许可分别保留在 [数据声明](rime-wubi86-moc/NOTICE.md) 和 [助手声明](wubi-code-assistant/NOTICE.md)。维护与验证见 [MAINTAIN.md](MAINTAIN.md)，交接见 [handoff.md](handoff.md)。
+本仓库按GPL-3.0组合分发，具体来源、第三方Apache-2.0/MIT/Unicode许可分别保留在 [数据声明](../rime-wubi86-moc/NOTICE.md) 和 [助手声明](../wubi-code-assistant/NOTICE.md)。维护与验证见 [MAINTAIN.md](MAINTAIN.md)，交接见 [handoff.md](handoff.md)。

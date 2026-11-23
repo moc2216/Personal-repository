@@ -51,7 +51,7 @@ macOS 数据包同时保存两套外观，首次复制 `data` 后默认使用蓝
 
 ## 已有配置或个人词库
 
-作者授权公开的[个人词典](https://github.com/moc2216/Personal-repository/blob/main/moc-rime-wubi86/rime-wubi86-moc/optional/moc_wubi86_user.dict.yaml)位于 `optional/moc_wubi86_user.dict.yaml`，源码和两种数据ZIP的相对位置一致，词典可用于三平台。`data/` 内仍是空个人模板。首次使用且希望采用作者词条时，将optional中的该文件复制到Rime用户资料夹；有自己的个人词典时，只合并需要的词条，勿覆盖原文件。
+作者授权公开的[个人词典](https://github.com/moc2216/Personal-repository/blob/main/rime-wubi86-moc/optional/moc_wubi86_user.dict.yaml)位于 `optional/moc_wubi86_user.dict.yaml`，源码和两种数据ZIP的相对位置一致，词典可用于三平台。`data/` 内仍是空个人模板。首次使用且希望采用作者词条时，将optional中的该文件复制到Rime用户资料夹；有自己的个人词典时，只合并需要的词条，勿覆盖原文件。
 
 - **已有 `moc_wubi86_user.dict.yaml`：** 复制时跳过这个文件，继续使用自己的个人词库。
 - **已有 `moc_settings.yaml`：** 保留当前快捷键、候选数量和应用规则，按需要合并新增设置。
@@ -91,7 +91,7 @@ patch:
 - **中英混输**：全功能中直接输入英文拼写，提供英文候选；无候选时可提交原始字母。
 - **临时输入大写**：中文状态下输入纯字母编码，再按 CapsLock，立即以大写字母上屏；两个模式都支持。
 - **日常工具**：日期、时间、计算器、金额大写、农历转换；保留原选词、翻页和中英切换习惯。
-- **个人词条可维护**：修改共用个人表后重新部署，也可配合 [五笔编码助手](https://github.com/moc2216/Personal-repository/tree/main/moc-rime-wubi86/wubi-code-assistant) 计算、查重后添加。
+- **个人词条可维护**：修改共用个人表后重新部署，也可配合 [五笔编码助手](https://github.com/moc2216/Personal-repository/tree/main/wubi-code-assistant) 计算、查重后添加。
 - **内容审核可追溯**：删除理由、来源内词频分位、原记录及前后候选对照在源码报告中；不把各来源原始数值直接混合。
 
 ## 使用
@@ -168,11 +168,11 @@ macOS 包默认蓝色遐想，optional保留蓝色遐想和玫枫两份完整配
 
 7. **2026-10-09配置精简**：常用设置集中；默认蓝色，optional保留两套外观；顿号直输，金额只留两个大写候选，取消符号列表；个人模板三列并同步助手兼容。补全研究和临时实验见 [补全排序核验](reports/completion-ranking.md)，正式词库权重与排序未改。
 
-排序权重与冷门内容审核分别处理。**本次没有重新校准所有保留词的排序权重**，不能据此保证候选顺序等于个人真实使用频率。当前验证确认一二级简码首选、完整码保留候选的相对顺序和个人词优先；详细结果见 [清理报告](https://github.com/moc2216/Personal-repository/blob/main/moc-rime-wubi86/rime-wubi86-moc/reports/cleanup.md)。
+排序权重与冷门内容审核分别处理。**本次没有重新校准所有保留词的排序权重**，不能据此保证候选顺序等于个人真实使用频率。当前验证确认一二级简码首选、完整码保留候选的相对顺序和个人词优先；详细结果见 [清理报告](https://github.com/moc2216/Personal-repository/blob/main/rime-wubi86-moc/reports/cleanup.md)。
 
 ## 维护、许可与致谢
 
-当前 `data/` 是定稿源数据；`tools/` 提供审核算法和打包，`tests/` 保存自动检查与实机记录，`reports/` 保存清理证据，详见源码中的 [维护说明](https://github.com/moc2216/Personal-repository/blob/main/moc-rime-wubi86/rime-wubi86-moc/MAINTAIN.md)。这些维护材料不进入默认部署ZIP。
+当前 `data/` 是定稿源数据；`tools/` 提供审核算法和打包，`tests/` 保存自动检查与实机记录，`reports/` 保存清理证据，详见源码中的 [维护说明](https://github.com/moc2216/Personal-repository/blob/main/rime-wubi86-moc/MAINTAIN.md)。这些维护材料不进入默认部署ZIP。
 
 定稿数据、维护工具、验证记录和来源说明均在本项目内，维护以这里的 `data/` 为准。当前工具不会从原始上游语料完整重建所有精简结果，普通部署及当前维护流程不需要另行取得版权词表。
 
